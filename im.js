@@ -98,8 +98,8 @@ function addButtons() {
 	createButton(2, '', 401, 240)
 	b1.onclick = function() {
 		resetMP++
-		if (resetMP > 80) resetMP = 16
-		else if (resetMP > 20) resetMP = 80
+		if (resetMP > 90) resetMP = 16
+		else if (resetMP > 25) resetMP = 90
 		this.innerText = 'Min Prestige: ' + resetMP
 		localStorage.setItem('resetMP', resetMP)
 		trackAP = []
