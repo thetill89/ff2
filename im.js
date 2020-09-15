@@ -43,7 +43,7 @@ function updateRunStats() {
 	var time = getRunTime()
 	var mp = getMajorPrestige()
 	var speed = getSpeedMulti() 
-	var ap = getCurrentAP() || 0
+	var ap = getCurrentAP()
 	var avgAp = ap/time*3.6
 	if (avgAp > bestAP[0]) { 
 		bestAP[0] = avgAp
