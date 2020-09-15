@@ -1,4 +1,4 @@
-var resetMP = localStorage.getItem('resetMP') || 16, bestAP = [0,0], trackAP = [], customStyle, log = false
+var resetMP = localStorage.getItem('resetMP') || 16, bestAP = [0,''], trackAP = [], customStyle, log = false
 
 addButtons()
 setStyle()
@@ -33,7 +33,7 @@ function doAscend() {
 		if (time < 10) trackAP.push([avgAp, time])
 		if (log) console.log(avgAp.toFixed(2) + ' ' + bestAP[1]  + ' | ' + speed +  ' | ' + prod)
 		game.ascend()
-		bestAP = [0,0]
+		bestAP = [0,'']
 	}
 }
 
@@ -43,7 +43,7 @@ function updateRunStats() {
 	var time = getRunTime()
 	var mp = getMajorPrestige()
 	var speed = getSpeedMulti() 
-	var ap = getCurrentAP()
+	var ap = getCurrentAP() || 0
 	var avgAp = ap/time*3.6
 	if (avgAp > bestAP[0]) { 
 		bestAP[0] = avgAp
