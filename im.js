@@ -3,6 +3,7 @@ var resetMP = localStorage.getItem('resetMP') || 16, bestAP = [0,0], trackAP = [
 addButtons()
 setStyle()
 clearInterval(auto)
+
 var auto = setInterval(function() {
 	
 	buyMax() 
@@ -106,6 +107,7 @@ function addButtons() {
 	}
 	b2.onclick = () => trackAP = []
 }
+
 function createButton(id, txt, right = 0 , width = 120) {
 	if (document.getElementById('b' + id)) document.getElementById('b' + id).remove()
 	let btn = document.createElement('button')
@@ -127,13 +129,11 @@ function createButton(id, txt, right = 0 , width = 120) {
 }
 
 function setStyle() {
-	if (!customStyle) {
-		var customStyle = document.createElement("style")
-		customStyle.type = "text/css"
-		customStyle.innerText = '* { transition: none!important; animation: none!important; }'
-		document.head.appendChild(customStyle)
-		document.getElementById('global-info').style.fontFamily = 'Consolas'
-		document.getElementsByClassName('game-title font-bold')[0].onclick = () => document.getElementById('ascension').click()
-	}
+	var customStyle = document.createElement("style")
+	customStyle.type = "text/css"
+	customStyle.innerText = '* { transition: none!important; animation: none!important; }'
+	document.head.appendChild(customStyle)
+	document.getElementById('global-info').style.fontFamily = 'Consolas'
+	document.getElementsByClassName('game-title font-bold')[0].onclick = () => document.getElementById('ascension').click()
 }
 
