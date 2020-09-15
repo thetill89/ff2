@@ -28,10 +28,8 @@ function doAscend() {
 		var time = getRunTime()
 		var ap = getCurrentAP()
 		var avgAp = ap/time*3.6
-		var speed = getSpeedMulti() 
-		var prod = getProdMulti()
 		if (time < 10) trackAP.push([avgAp, time])
-		if (log) console.log(avgAp.toFixed(2) + ' ' + bestAP[1]  + ' | ' + speed +  ' | ' + prod)
+		if (log) console.log(time.toFixed(2) + ' | ' + avgAp.toFixed(2) + ' ' + bestAP[1])
 		game.ascend()
 		bestAP = [0,'']
 	}
