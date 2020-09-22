@@ -1,7 +1,12 @@
 var mySpeed = 1
+var auto = setInterval(function() {	
+	var key = new KeyboardEvent("keydown", { bubbles: true, cancelable: true, altKey: true, keyCode: 65 })
+	document.body.dispatchEvent(key)
+}, 1000)
 
-createButton(1, 'Speed: ' + mySpeed, 690)
-createButton(2, 'Reset', 610)
+
+createButton(1, 'Speed: ' + mySpeed, 670)
+createButton(2, 'Reset', 590)
 b1.onclick = function() {
 	mySpeed++
 	if (mySpeed > 5) mySpeed = 1
