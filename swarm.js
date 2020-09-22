@@ -1,14 +1,17 @@
-var mySpeed = 4
-angular.element(document.querySelector('.ng-scope')).scope().game.gameSpeed = mySpeed
+var mySpeed = 4, autoBuy = false
 
-var auto = setInterval(function() {	
+angular.element(document.querySelector('.ng-scope')).scope().game.gameSpeed = mySpeed
+var auto = setInterval(function() { buyUpgrades() }, 1000)
+
+function buyUpgrades() {
+	if (!autoBuy) return
 	var key = new KeyboardEvent("keydown", { bubbles: true, cancelable: true, altKey: true, keyCode: 65 })
 	document.body.dispatchEvent(key)
-}, 1000)
-
+}
 
 createButton(1, 'Speed: ' + mySpeed, 620)
 createButton(2, 'Reset', 520)
+createButton(3, 'Auto: off', 420)
 b1.onclick = function() {
 	mySpeed *= 4
 	if (mySpeed > 64) mySpeed = 1
@@ -20,6 +23,11 @@ b2.onclick = function() {
 	b1.innerText = 'Speed: ' + mySpeed
 	angular.element(document.querySelector('.ng-scope')).scope().game.gameSpeed = mySpeed
 }
+b3.onclick = function() {
+	autoBuy = !autoBuy
+	b3.innerText = 'Auto: ' + (autoBuy ? 'on' : 'off')
+}
+
 function createButton(id, txt, right = 0 , width = 90) {
 	if (document.getElementById('b' + id)) document.getElementById('b' + id).remove()
 	let btn = document.createElement('button')
