@@ -7,8 +7,8 @@ var auto = setInterval(function() {
 }, 1000)
 
 
-createButton(1, 'Speed: ' + mySpeed, 670)
-createButton(2, 'Reset', 590)
+createButton(1, 'Speed: ' + mySpeed, 620)
+createButton(2, 'Reset', 540)
 b1.onclick = function() {
 	mySpeed++
 	if (mySpeed > 5) mySpeed = 1
