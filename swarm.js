@@ -35,7 +35,7 @@ function createButton(id, txt, right = 0 , width = 90) {
 	btn.innerText = txt
 	btn.style.fontSize = '16px'
 	btn.style.lineHeight = '12px'
-	btn.style.backgroundColor = '#222222'
+	btn.style.backgroundColor = 'black'//'#222222'
 	btn.style.border = 'none'
 	btn.style.color = 'white'
 	btn.style.position = 'absolute'
