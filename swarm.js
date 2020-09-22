@@ -33,7 +33,7 @@ function createButton(id, txt, right = 0 , width = 90) {
 	let btn = document.createElement('button')
 	btn.id = 'b' + id
 	btn.innerText = txt
-	btn.style.fontSize = '16px'
+	btn.style.fontSize = '15px'
 	btn.style.lineHeight = '12px'
 	btn.style.backgroundColor = 'black'//'#222222'
 	btn.style.border = 'none'
