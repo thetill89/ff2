@@ -1,16 +1,19 @@
 var mySpeed = 1
 
-createButton(1, 'Speed: ' + mySpeed)
+createButton(1, 'Speed: ' + mySpeed, 690)
+createButton(2, 'Reset', 610)
 b1.onclick = function() {
 	mySpeed++
 	if (mySpeed > 5) mySpeed = 1
-	else if (mySpeed > 25) mySpeed = 90
 	this.innerText = 'Speed: ' + mySpeed
 	angular.element(document.querySelector('.ng-scope')).scope().game.gameSpeed = mySpeed
 }
-
-
-function createButton(id, txt, right = 730 , width = 120) {
+b2.onclick = function() {
+	mySpeed = 1
+	b1.innerText = 'Speed: ' + mySpeed
+	angular.element(document.querySelector('.ng-scope')).scope().game.gameSpeed = mySpeed
+}
+function createButton(id, txt, right = 0 , width = 80) {
 	if (document.getElementById('b' + id)) document.getElementById('b' + id).remove()
 	let btn = document.createElement('button')
 	btn.id = 'b' + id
