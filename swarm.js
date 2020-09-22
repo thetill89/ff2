@@ -1,4 +1,6 @@
-var mySpeed = 1
+var mySpeed = 3
+angular.element(document.querySelector('.ng-scope')).scope().game.gameSpeed = mySpeed
+
 var auto = setInterval(function() {	
 	var key = new KeyboardEvent("keydown", { bubbles: true, cancelable: true, altKey: true, keyCode: 65 })
 	document.body.dispatchEvent(key)
