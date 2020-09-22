@@ -8,7 +8,7 @@ var auto = setInterval(function() {
 
 
 createButton(1, 'Speed: ' + mySpeed, 620)
-createButton(2, 'Reset', 530)
+createButton(2, 'Reset', 520)
 b1.onclick = function() {
 	mySpeed *= 2
 	if (mySpeed > 20) mySpeed = 1
@@ -20,7 +20,7 @@ b2.onclick = function() {
 	b1.innerText = 'Speed: ' + mySpeed
 	angular.element(document.querySelector('.ng-scope')).scope().game.gameSpeed = mySpeed
 }
-function createButton(id, txt, right = 0 , width = 80) {
+function createButton(id, txt, right = 0 , width = 90) {
 	if (document.getElementById('b' + id)) document.getElementById('b' + id).remove()
 	let btn = document.createElement('button')
 	btn.id = 'b' + id
