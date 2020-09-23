@@ -9,9 +9,9 @@ function buyUpgrades() {
 	document.body.dispatchEvent(key)
 }
 
-createButton(1, 'Reset', 590)
-createButton(2, 'Speed: ' + mySpeed, 490)
-createButton(3, 'Autobuy', 390)
+createButton(1, 'Reset', 580)
+createButton(2, 'Speed: ' + mySpeed, 480)
+createButton(3, 'Autobuy', 380)
 b1.onclick = function() {
 	mySpeed = 1
 	b1.innerText = 'Speed: ' + mySpeed
@@ -33,7 +33,7 @@ b3.onclick = function() {
 	else this.style.backgroundColor = 'black'
 }
 
-function createButton(id, txt, right = 0 , width = 100) {
+function createButton(id, txt, right = 0 , width = 90) {
 	if (document.getElementById('b' + id)) document.getElementById('b' + id).remove()
 	let btn = document.createElement('button')
 	btn.id = 'b' + id
