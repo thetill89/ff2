@@ -27,7 +27,7 @@ b2.onclick = function() {
 b3.onclick = function() {
 	autoBuy = !autoBuy
 	if (autoBuy) this.style.backgroundColor = '#2a9fd6'
-	else this.style.backgroundColor = '#black'
+	else this.style.backgroundColor = 'black'
 }
 
 function createButton(id, txt, right = 0 , width = 90) {
