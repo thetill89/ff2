@@ -1,7 +1,7 @@
 var mySpeed = 1, autoBuy = false
 
 angular.element(document.querySelector('.ng-scope')).scope().game.gameSpeed = mySpeed
-var auto = setInterval(function() { buyUpgrades() }, 1000)
+var auto = setInterval(function() { buyUpgrades() }, 250)
 
 function buyUpgrades() {
 	if (!autoBuy) return
