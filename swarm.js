@@ -12,9 +12,8 @@ function buyUpgrades() {
 createButton(1, 'Reset', 560)
 createButton(2, 'Speed: ' + mySpeed, 470)
 createButton(3, 'Autobuy', 370)
-b1.onclick = function() {
+b2.onclick = function() {
 	mySpeed = 1
-	b1.innerText = 'Speed: ' + mySpeed
 	angular.element(document.querySelector('.ng-scope')).scope().game.gameSpeed = mySpeed
 }
 b2.onclick = function() {
