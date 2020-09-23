@@ -9,8 +9,8 @@ function buyUpgrades() {
 	document.body.dispatchEvent(key)
 }
 
-createButton(1, 'Reset', 570)
-createButton(2, 'Speed: ' + mySpeed, 470)
+createButton(1, 'Reset', 590)
+createButton(2, 'Speed: ' + mySpeed, 480)
 createButton(3, 'Autobuy', 370)
 b1.onclick = function() {
 	mySpeed = 1
@@ -19,7 +19,7 @@ b1.onclick = function() {
 }
 b2.onclick = function() {
 	mySpeed *= 4
-	if (mySpeed > 64) mySpeed = 1
+	if (mySpeed > 128) mySpeed = 1
 	this.innerText = 'Speed: ' + mySpeed
 	angular.element(document.querySelector('.ng-scope')).scope().game.gameSpeed = mySpeed
 }
@@ -33,7 +33,7 @@ b3.onclick = function() {
 	else this.style.backgroundColor = 'black'
 }
 
-function createButton(id, txt, right = 0 , width = 90) {
+function createButton(id, txt, right = 0 , width = 100) {
 	if (document.getElementById('b' + id)) document.getElementById('b' + id).remove()
 	let btn = document.createElement('button')
 	btn.id = 'b' + id
