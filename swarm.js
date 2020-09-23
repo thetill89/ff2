@@ -10,8 +10,8 @@ function buyUpgrades() {
 }
 
 createButton(1, 'Reset', 590)
-createButton(2, 'Speed: ' + mySpeed, 480)
-createButton(3, 'Autobuy', 370)
+createButton(2, 'Speed: ' + mySpeed, 490)
+createButton(3, 'Autobuy', 390)
 b1.onclick = function() {
 	mySpeed = 1
 	b1.innerText = 'Speed: ' + mySpeed
