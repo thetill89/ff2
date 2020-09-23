@@ -9,9 +9,9 @@ function buyUpgrades() {
 	document.body.dispatchEvent(key)
 }
 
-createButton(1, 'Reset', 580)
-createButton(2, 'Speed: ' + mySpeed, 480)
-createButton(3, 'Autobuy', 380)
+createButton(1, 'Reset', 560)
+createButton(2, 'Speed: ' + mySpeed, 470)
+createButton(3, 'Autobuy', 370)
 b1.onclick = function() {
 	mySpeed = 1
 	b1.innerText = 'Speed: ' + mySpeed
