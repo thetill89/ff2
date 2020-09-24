@@ -19,7 +19,7 @@ b1.onclick = function() {
 }
 b2.onclick = function() {
 	mySpeed *= 3
-	if (mySpeed > 81) mySpeed = 1
+	if (mySpeed > 243) mySpeed = 1
 	this.innerText = 'Speed: ' + mySpeed
 	angular.element(document.querySelector('.ng-scope')).scope().game.gameSpeed = mySpeed
 }
