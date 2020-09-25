@@ -55,7 +55,7 @@ function createButton(id, txt, right = 0 , width = 90) {
 if (document.getElementsByClassName('navbar navbar-default ng-scope').length) document.getElementsByClassName('navbar navbar-default ng-scope')[0].remove()
 
 window.onkeydown = function (e) {
-    if (e.keyCode === 81) { 
+    if (e.keyCode === 220) { 
        	var key = new KeyboardEvent("keydown", { bubbles: true, cancelable: true, altKey: true, keyCode: 65 })
 		document.body.dispatchEvent(key)
     } 
