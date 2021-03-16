@@ -2122,13 +2122,13 @@ function loadSettings() {
 	}
 	todayRuns = JSON.parse(load(account + '_day_' + new Date().toLocaleDateString()))
 	if (!todayRuns) todayRuns = { r: 0, sp: 0, ep: 0, c: 0}
-	console.log(SETTINGSLOADED)
+	console.log('SETTINGSLOADED')
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 function createButtons() {
-	console.log(CREATE BUTTONS)
-	console.log('ST.version: ' + ST.version)
+	console.log('CREATE BUTTONS')
+	console.log('Version: ' + ST.version)
 	let btns = ['Autoplay','Finish','Time','Sleep','Sound','Calc','Stats',
 	'Cost','Mega','Growth','Daily','Prod','Clan','Research',
 	'Settings','Backup', 'Theme',ST.version ,'Farm','Collect', 'Idle']
