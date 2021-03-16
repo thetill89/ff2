@@ -2092,7 +2092,7 @@ function loadSettings() {
 		autoMission = ST.autoMission	
 		highLevel = ST.highLevel		
 		theme = ST.theme
-		version = 'v.101'
+		version = ST.version
 	}
 	else {
 		ST = { 
@@ -2116,19 +2116,16 @@ function loadSettings() {
 			startTime: Date.now(),
 			totalRuns: 0,
 			theme: theme,
-			version: 'v.101'
+			version: '1.00'
 		}
 		saveSettings(true)
 	}
 	todayRuns = JSON.parse(load(account + '_day_' + new Date().toLocaleDateString()))
 	if (!todayRuns) todayRuns = { r: 0, sp: 0, ep: 0, c: 0}
-	console.log('SETTINGSLOADED')
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 function createButtons() {
-	console.log('CREATE BUTTONS')
-	console.log('Version: ' + ST.version)
 	let btns = ['Autoplay','Finish','Time','Sleep','Sound','Calc','Stats',
 	'Cost','Mega','Growth','Daily','Prod','Clan','Research',
 	'Settings','Backup', 'Theme',ST.version ,'Farm','Collect', 'Idle']
