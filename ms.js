@@ -2116,7 +2116,7 @@ function loadSettings() {
 			startTime: Date.now(),
 			totalRuns: 0,
 			theme: theme,
-			version = 'v.101'
+			version: 'v.101'
 		}
 		saveSettings(true)
 	}
