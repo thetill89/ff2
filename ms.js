@@ -4,6 +4,7 @@ let LZString=function(){var o=String.fromCharCode;var t={compress:function(e){re
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 let sLoaded = false
 let sVersion = 'v.1.02'
+let maxRuns = 80
 initScript()
 
 function initScript() {
@@ -717,7 +718,7 @@ function updateSummary() {
 	save(account + '_summary', compress(JSON.stringify(sum)))
 }
 
-let seperator = ('-').repeat(31), maxRuns = 140, allRuns
+let seperator = ('-').repeat(31), allRuns
 function statsSummary() {
 	if (!allRuns) allRuns = JSON.parse(decompress(load(account + '_summary')))
 	let runs, lvl, prod, ms, mst, avgSp, avgEp, msRun, data = ''
@@ -2093,7 +2094,6 @@ function loadSettings() {
 		autoMission = ST.autoMission	
 		highLevel = ST.highLevel		
 		theme = ST.theme
-		version = sVersion
 	}
 	else {
 		ST = { 
@@ -2117,7 +2117,6 @@ function loadSettings() {
 			startTime: Date.now(),
 			totalRuns: 0,
 			theme: theme,
-			version: sVersion
 		}
 		saveSettings(true)
 	}
@@ -2129,7 +2128,7 @@ function loadSettings() {
 function createButtons() {
 	let btns = ['Autoplay','Finish','Time','Sleep','Sound','Calc','Stats',
 	'Cost','Mega','Growth','Daily','Prod','Clan','Research',
-	'Settings','Backup', 'Theme',ST.version ,'Farm','Collect', 'Idle']
+	'Settings','Backup', 'Theme', sVersion ,'Farm','Collect', 'Idle']
 	let top = 638, right = 523
 	for (let i = 1; i <= btns.length; i++) {
 		addButton(i, btns[i-1], top, right)
