@@ -340,6 +340,9 @@ function displayStats() {
 		 div[0].innerText = 'total: ' + total[1].toLocaleString()
 		 div[1].innerText = 'factor: ' + factor.toFixed(2)
 	 } 
+	else if (isVisible('afkwin')) {
+		
+	}	
 	let mTime, fTime
 	mTime = missionLeft - (Date.now() - missionTimer)/1000
 	mTime = mTime >= 3600 ? '∞' : mTime >= 60 ? pl(Math.round(mTime/60),2) +  ' min': displayTime(mTime)	
@@ -1691,6 +1694,14 @@ function createStatsWin() {
 	statswin.d = 0
 }
 
+function createAFKwin() {
+	let textf = document.createElement("textarea");
+	textf.id = 'afkwin'
+	textf.spellcheck = false
+	textf.style.cssText = 'font-family: monospace; font-size: 20px; position: absolute; width: 1516px; height: 720px; top: 0px; left: 0x; padding-left: 15px; border-top: none;  border-image: initial; border-radius: 5px; background-color: black; color: ' + theme + '; caret-color: transparent; overflow: hidden; outline: none; resize: none; cursor: default; border-right: 1px dotted ' + theme + '; border-bottom: 1px dotted ' + theme + '; border-left: 1px dotted ' + theme + '; display: none;'
+	document.getElementById('maingame').appendChild(textf); 	
+}
+
 function createTimeInfo() {
 	let id = 'timeinfo'
 	let textf = document.createElement("textarea");
@@ -1815,6 +1826,7 @@ function createUI() {
 	createStatsWin()
 	createIdleInfo()
 	createTimeInfo()
+	createAFKwin()
 	log.onkeydown = function(e) { 
 			if (e.keyCode === 38) { log.scrollTop -= 105; event.preventDefault() }
 			else if (e.keyCode === 40) { log.scrollTop += 105; event.preventDefault() }
@@ -2236,8 +2248,8 @@ function createButtons() {
 	}	
 	btn17.onclick = changeTheme
 	btn18.onclick = function() {
-		//showPlayerUI()
-		//highlightBtn(btn18)
+		if (afkwin.style.display === 'none') afkwin.style.display = 'block'
+		else afkwin.style.display = 'none'
 	}
 	btn19.onclick = statsFarm
 	btn20.onclick = collectNow
