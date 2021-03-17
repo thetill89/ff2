@@ -3,6 +3,7 @@ let LZString=function(){var o=String.fromCharCode;var t={compress:function(e){re
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 sLoaded = false
+sVersion = '1.02'
 initScript()
 
 function initScript() {
@@ -2092,7 +2093,7 @@ function loadSettings() {
 		autoMission = ST.autoMission	
 		highLevel = ST.highLevel		
 		theme = ST.theme
-		version = ST.version
+		version = sVersion
 	}
 	else {
 		ST = { 
@@ -2116,7 +2117,7 @@ function loadSettings() {
 			startTime: Date.now(),
 			totalRuns: 0,
 			theme: theme,
-			version: '1.00'
+			version: sVersion
 		}
 		saveSettings(true)
 	}
