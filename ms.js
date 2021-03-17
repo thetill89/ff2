@@ -5,8 +5,8 @@ let LZString=function(){var o=String.fromCharCode;var t={compress:function(e){re
 let sLoaded = false
 let sVersion = 'v.1.02'
 let maxRuns = 80
-initScript()
 
+initScript()
 function initScript() {
 	if (typeof hundredbplus === 'object' && sLoaded) {
 		let now = Date.now()
@@ -1467,10 +1467,7 @@ function getBuyCost(manual = false) {
 }
 
 function getValue(str='1 aw') { 
-	str = str.toString()
-	let reg = str.match(/(\d+\.*\d*)\s*(\w*)/)
-	//if (!reg) return 1e99
-	//if (!reg[2]) return parseFloat(reg[1])
+	let reg = str.toString().match(/(\d+\.*\d*)\s*(\w*)/)
 	let val = parseFloat(reg[1])
 	let exp = reg[2]
 	if (exp === 'K') val *= 1e3
