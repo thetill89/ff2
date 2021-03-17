@@ -376,7 +376,7 @@ let autoMission = false, failTimeOut = 15
 
 function getMissionTime() {
 	$j.get('game/clanquests.php').done(function(r) {
-		missionLeft = (r.clanquestdauer || 1e9) + 1
+		missionLeft = (r.clanquestdauer + 1) || 1e9
 		missionTimer = Date.now()
 		getMissionStanding(r)
 		getClanChat()
