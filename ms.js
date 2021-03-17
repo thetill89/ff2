@@ -346,7 +346,7 @@ function displayStats() {
 	fTime = farmLeft/1000 - (Date.now() - farmTimer)/1000
 	fTime = fTime >= 9600 ? '∞' : fTime >= 60 ? pl(Math.round(fTime/60),2) +  ' min': displayTime(fTime)	
 	timeinfo.innerHTML = '\nMission: ' + mTime + '\nFarming: ' + fTime
-	$j('.gems').html(autoPlay ? 'AUTO PLAY' + '&nbsp'.repeat(19) + displayTime(getSessionTime()) : 'MANUAL MODE' + '&nbsp'.repeat(17) + new Date().toLocaleTimeString().slice(0,5))
+	$j('.gems').html(autoPlay ? 'AUTO ' + (idlemode ? 'IDLE' : 'BUY') + '&nbsp'.repeat(19) + displayTime(getSessionTime()) : 'MANUAL MODE' + '&nbsp'.repeat(17) + new Date().toLocaleTimeString().slice(0,5))
 	document.title =  displayTime(getSessionTime()) + ' - ' + getLevel() + ' - ' + account 
 }
 
