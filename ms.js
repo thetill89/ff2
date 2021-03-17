@@ -1698,8 +1698,9 @@ function createAFKwin() {
 	let textf = document.createElement("textarea");
 	textf.id = 'afkwin'
 	textf.spellcheck = false
-	textf.style.cssText = 'font-family: monospace; font-size: 20px; position: absolute; width: 1516px; height: 720px; top: 0px; left: 0x; padding-left: 15px; border-top: none;  border-image: initial; border-radius: 5px; background-color: black; color: ' + theme + '; caret-color: transparent; overflow: hidden; outline: none; resize: none; cursor: default; border-right: 1px dotted ' + theme + '; border-bottom: 1px dotted ' + theme + '; border-left: 1px dotted ' + theme + '; display: none;'
-	document.getElementById('maingame').appendChild(textf); 	
+	textf.style.cssText = 'font-family: monospace; font-size: 20px; position: absolute; width: 1516px; height: 720px; top: 0px; left: 0x; padding-left: 15px; border-top: none;  border-image: initial; border-radius: 5px; background-color: black; color: ' + theme + '; caret-color: transparent; overflow: hidden; outline: none; resize: none; cursor: default; border: 1px dotted black; display: none;'
+	document.getElementById('maingame').appendChild(textf); 
+	afkwin.onclick = () => afkwin.style.display = 'none'
 }
 
 function createTimeInfo() {
