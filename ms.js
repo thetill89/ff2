@@ -395,7 +395,6 @@ function doMission() {
 			var need = r.aktfullpoints
 			if (!r.uaktanz && typeof r.uaktanz !== 'undefined') {
 				$j.get('game/cqattack.php').done(function(r) {
-					$j.get('game/buynextclanb.php')
 					setTimeout(getMissionTime, 2000)	
 					addStatus('Mission done: ' + need)
 					$j('.clanbtn').html('Fastfood Clan')
@@ -421,6 +420,7 @@ function doTour() {
 			$j.get('game/clantourstart.php').done(function(r) {
 				getTourTime()
 				addStatus('Tour started')
+				setTimeout(() => $j.get('game/buynextclanb.php'), 2000)
 			}).fail(() => setTimeout(getTourTime, failTimeOut * 1000))	
 		}).fail(() => setTimeout(getTourTime, failTimeOut * 1000))		
 	}
