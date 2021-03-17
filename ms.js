@@ -543,7 +543,7 @@ function upgradeSkill() {
 
 function getMissionStanding(r) {
 	let info = [] 
-	let pct = r.aktclanquest ? pl(Math.floor(getValue(r.aktclanquest)/getValue(r.aktfullpoints)*100) + '%',4) : pl('0%',4)
+	let pct = r.aktclanquest ? pl(Math.floor(getValue(r.aktclanquest)/getValue(r.aktfullpoints)*100) + '%',4) + '&nbsp'.repeat(23) + r.aktfullpoints : pl('0%',4)
 	info.push('\ MISSION' + pct + '\n')
 	if (r.anz) {
 		let max = r.anz < 9 ? 3 : 9
