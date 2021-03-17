@@ -546,7 +546,7 @@ function getMissionStanding(r) {
 	let pct = r.aktclanquest ? pl(Math.floor(getValue(r.aktclanquest)/getValue(r.aktfullpoints)*100) + '%',4) : pl('0%',4)
 	info.push('\ MISSION' + pct + '\n')
 	if (r.anz) {
-		let max = r.anz < 9 ? r.anz : 9
+		let max = r.anz < 9 ? 3 : 9
 		for (let i = 1; i <= max; i++) {
 			let points = r.aktclandmg[i]
 			if (!points) continue
