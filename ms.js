@@ -389,11 +389,12 @@ function doMission() {
 	if (Date.now() - missionTimer > missionLeft * 1000) {
 		missionLeft = 1e9
 		$j.get('game/clanquests.php').done(function(r) {
+			var need = r.aktfullpoints
 			if (!r.uaktanz && typeof r.uaktanz !== 'undefined') {
 				$j.get('game/cqattack.php').done(function(r) {
 					$j.get('game/buynextclanb.php')
 					setTimeout(getMissionTime, 2000)	
-					addStatus('Mission done')
+					addStatus('Mission done: ' + need)
 					$j('.clanbtn').html('Fastfood Clan')
 				}).fail(() => setTimeout(getMissionTime, failTimeOut * 1000))
 			}
