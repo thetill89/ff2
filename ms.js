@@ -58,7 +58,7 @@ function startLoop() {
 			idleRoutine()
 			resetRoutine()
 		}
-	}, 50)
+	}, 20)
 }
 
 
