@@ -1599,11 +1599,11 @@ function pr(str, nbr) {
 	return str
 }
 
-function displayTime(time, hours = falsle) {
+function displayTime(time, hours = false) {
 	 if (time > 86400000) return '∞'
 	 else if (time > 172800) return (time/86400).toFixed(2) + ' days'
 	 else if (time < 0) time = 0
-	 return (hours ? timeFormat(Math.floor((time) / 3600)) + ':' : '') + timeFormat(Math.floor((time % 3600) / 60)) + ':' + timeFormat(Math.floor(time % 60)) 
+	 return (hours ? timeFormat(Math.floor(time / 3600) + ':' : '') + timeFormat(Math.floor((time % 3600) / 60)) + ':' + timeFormat(Math.floor(time % 60)) 
 }
 
 function timeFormat(nbr) {
