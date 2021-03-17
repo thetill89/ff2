@@ -297,7 +297,7 @@ function finishRun() {
 
 function displayStats() {
     let total = getBuildingCount()
-	if (isVisible('idlemode')) {
+	if (isVisible('idlemode') || isVisible('afkwin')) {
 		 let i1 = [], i2 = []
 		 let status =  ' CURRENT RUN ' + (autoPlay ? buyStep + '/' + (buyMax.length+1) : '')
 		 i1.push(status + '\n')
@@ -314,7 +314,8 @@ function displayStats() {
 			let nextCost = autoPlay && buyStep <= buyMax.length ? getBuyCost() : getValue(bcost[mainBuild*4-1])
 			let time = (nextCost-getGold())/getValue(incomeoffline)
 			time = time < 3600 ? displayTime(time) : displayTime(time,true)
-			i2.push(' IDLE MODE\n')
+			let info = !isVisible('afkwin') ? ' IDLE MODE\n' : ' IDLE MODE                      ' + displayTime(getSessionTime()) + ' \n'
+			i2.push(info)
 			i2.push(' ' + pr('Time',s) + '  |   ' +  pr('Need',s) + ' |   End')
 			i2.push(' ' + pr(displayTime(getIdleTime()),s) + '  |   ' +  pr(time,s) + ' |   ' + (idleStats[0] || '00:00'))     
 			i2.push(' ' + ('-').repeat(37))
@@ -323,7 +324,8 @@ function displayStats() {
 		}
 		else {
 			let s = 7
-			i2.push(' BUYING\n')
+			let info = !isVisible('afkwin') ? ' BUYING\n' : ' BUYING                      ' + displayTime(getSessionTime()) + ' \n'
+			i2.push(info)
 			i2.push(' ' + pr('Fries',s) + ' | ' + pr('Pizza',s)  + ' | ' + pr('Hotdog',s) + ' |  Hamb')
 			i2.push(' ' + pr(total[0][0],s) + ' | ' + pr(total[0][1],s) + ' | ' + pr(total[0][2],s) + ' |  ' + total[0][3])
 			i2.push(' ' + ('-').repeat(37))
@@ -331,6 +333,7 @@ function displayStats() {
 			i2.push(' ' + pr(total[0][4],s) + ' | ' + pr(total[0][5],s) + ' | ' + pr(total[0][6],s) + ' |  ' + total[0][7]) 
 		}	 
 		 $j('#ii2').val(i2.join('\n'))	
+		 afkwin.value = i2.join('\n')
 		 if (autoPlay && !idlemode)	ii2.style.outline = '1.5px solid ' + theme
 		 else ii2.style.outline = 'none'
 	}
@@ -1698,7 +1701,7 @@ function createAFKwin() {
 	let textf = document.createElement("textarea");
 	textf.id = 'afkwin'
 	textf.spellcheck = false
-	textf.style.cssText = 'font-family: monospace; font-size: 20px; position: absolute; width: 1516px; height: 720px; top: 0px; left: 0x; padding-left: 15px; border-top: none;  border-image: initial; border-radius: 5px; background-color: black; color: ' + theme + '; caret-color: transparent; overflow: hidden; outline: none; resize: none; cursor: default; border: 1px dotted black; display: none;'
+	textf.style.cssText = 'font-family: monospace; font-size: 50px; position: absolute; width: 1516px; height: 1382px; top: 0px; left: 0x; padding-left: 150px; border-top: none;  border-image: initial; border-radius: 5px; background-color: black; color: ' + theme + '; caret-color: transparent; overflow: hidden; outline: none; resize: none; cursor: default; border: 1px dotted black; display: none;'
 	document.getElementById('maingame').appendChild(textf); 
 	afkwin.onclick = () => afkwin.style.display = 'none'
 }
