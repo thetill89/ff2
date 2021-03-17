@@ -2116,7 +2116,7 @@ function loadSettings() {
 			autoMission: false,
 			startTime: Date.now(),
 			totalRuns: 0,
-			theme: theme,
+			theme: theme
 		}
 		saveSettings(true)
 	}
