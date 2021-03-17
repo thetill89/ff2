@@ -566,7 +566,7 @@ function getClanChat() {
 		let info = []
 		info.push(' ONLINE\n')
 		if (r.anz) {
-			let max = r.anz < maxEntry ? r.anz : maxEntry
+			let max = r.anz < 3 ? r.anz : 3
 			for (let i = 1; i <= max; i++) {
 				let nbr =  pl(i,2) + ' | '
 				let level = pl(r.maxlevelarr[i], 5) + '  |'
