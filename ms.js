@@ -3,7 +3,7 @@ let LZString=function(){var o=String.fromCharCode;var t={compress:function(e){re
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 let sLoaded = false
-let sVersion = 'v.1.02'
+let sVersion = 'v.1.03'
 let maxRuns = 80
 
 initScript()
