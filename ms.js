@@ -33,7 +33,7 @@ function initScript() {
 		addStatus2('Loaded in: 0.' + (Date.now()-now) + ' sec')
 		if (ST.idle) startIdleMode() 		
 	}
-	else setTimeout(initScript, 50)
+	else setTimeout(initScript, 100)
 }
 
 let mainLoop, autoPlay = false
