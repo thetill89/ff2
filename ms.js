@@ -8,7 +8,7 @@ let maxRuns = 80
 
 initScript()
 function initScript() {
-	if (typeof hundredbplus === 'object' && sLoaded) {
+	if (document.getElementsByClassName('eventbtn').length && sLoaded) {
 		let now = Date.now()
 		loadSettings()
 		createButtons()
@@ -33,7 +33,7 @@ function initScript() {
 		addStatus2('Loaded in: 0.' + (Date.now()-now) + ' sec')
 		if (ST.idle) startIdleMode() 		
 	}
-	else setTimeout(initScript, 100)
+	else setTimeout(initScript, 50)
 }
 
 let mainLoop, autoPlay = false
