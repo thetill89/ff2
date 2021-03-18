@@ -399,7 +399,7 @@ function doMission() {
 			if (!r.uaktanz && typeof r.uaktanz !== 'undefined') {
 				$j.get('game/cqattack.php').done(function(r) {
 					setTimeout(getMissionTime, 2000)	
-					addStatus('Mission done: ' + need)
+					addStatus('Mission: ' + need)
 					$j('.clanbtn').html('Fastfood Clan')
 				}).fail(() => setTimeout(getMissionTime, failTimeOut * 1000))
 			}
