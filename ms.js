@@ -339,7 +339,7 @@ function displayStats() {
 				i2.push('\n')
 				 for (let i = runData.length-1; i >= 0; i--) {
 					max++
-					if (max === 6) break
+					if (max === 5) break
 					let cur = runData[i]
 					i2.push(cur[5] + ' | ' + cur[6] + ' | ' + cur[0] + ' | ' + cur[2] + ' | ' +  cur[4])
 				 }
