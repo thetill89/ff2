@@ -61,8 +61,8 @@ function initScript() {
 		console.log(i + ' - '  + (document.getElementsByClassName('eventbtn').length || 'MISSING'))
 		i++
 		startLoop()
-		i++
 		console.log(i + ' - '  + (document.getElementsByClassName('eventbtn').length || 'MISSING'))
+		i++
 		addStatus2(seperator)
 		addStatus2('Loaded in: 0.' + (Date.now()-now) + ' sec')
 		if (ST.idle) startIdleMode() 		
@@ -403,8 +403,11 @@ function displayStats() {
 function statusInfo() {
 	let s = 11
 	info2.value = ''
-	if (runData.length) addStatus2(pr('Last:',s) + runData[runData.length-1][0] + ', ' + Math.floor(runData[runData.length-1][1]) + '%')
-	if (todayRuns.c) addStatus2(pr('Ø SP:',s) + (todayRuns.sp/todayRuns.c).toFixed(2) + ', ' + (todayRuns.ep/todayRuns.c).toFixed(2))
+	if (runData.length) addStatus2(pr('Last:',s) + runData[runData.length-1][0] + ', ' + Math.floor(runData[runData.length-1][1]) + '%') 
+	if (todayRuns.c) {
+		addStatus2(pr('Ø SP:',s) + (todayRuns.sp/todayRuns.c).toFixed(2) + ', ' + (todayRuns.ep/todayRuns.c).toFixed(2))
+		addStatus2(pr('Today: ',s) + todayRuns.r)
+	}
 	addStatus2(seperator)
 	let data = getFarmData()
 	let time = (Date.now()-ST.startTime)/1000
