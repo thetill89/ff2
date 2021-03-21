@@ -104,7 +104,7 @@ function idleRoutine() {
 				idlemode = 0
 				idleStep = 0
 				homeanz()
-			}).fail(function(r) {
+			}).fail(function() {
 					setIdleTime(5)
 					if (idleStep === 2) setSessionTime(5)		
 					idleStep = 0							
@@ -194,10 +194,7 @@ function resetRoutine() {
 	if (getSessionTime() < sessionTime + 1 || idlemode || resetStep) return
 	resetStep = 1
 	$j.get('game/megaanz.php').done(function(r) {
-		runData.push([getLevel(), parseFloat(document.getElementsByClassName('epbari')[0].style.width),
-		incomeoffline.slice(2,12), r.nextreset, r.maxrelikte, new Date().toLocaleTimeString().slice(0,5), (todayRuns.r+1)])		
-		let dollarTotal = convertValue(getValue(r.nextreset) + getValue(r.relikte))
-		$j('.button').eq(4).html('&nbsp&nbsp&nbspMS: ' + dollarTotal)
+		setRunData(r)
 		adjustProd()
 		$j.get('game/resetmd.php?rscode=0').done(function(r) {
 			if (r.erfolg === 1) finishRun()
@@ -219,9 +216,15 @@ function resetRoutine() {
 		})				
 }
 
+function setRunData(r) {
+	runData.push([getLevel(), parseFloat(document.getElementsByClassName('epbari')[0].style.width),	incomeoffline.slice(2,12), r.nextreset, r.maxrelikte, new Date().toLocaleTimeString().slice(0,5), (todayRuns.r+1)])		
+	let dollarTotal = convertValue(getValue(r.nextreset) + getValue(r.relikte))
+	$j('.button').eq(4).html('&nbsp&nbsp&nbspMS: ' + dollarTotal)
+}
+
 function adjustProd() {
 	let factor, level = runData[runData.length-1][0] 
-	if ((Date.now()- autoPlay)/1000 > sessionTime) {
+	if ((Date.now() - autoPlay)/1000 > sessionTime) {
 		if (level < maxLevel && prodExeeded) factor = 1.01
 	 	else if (level > maxLevel || (level === maxLevel && runData[runData.length-1][1] > 70)) factor = 0.99
 		if (factor) {
