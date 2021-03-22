@@ -761,16 +761,16 @@ function statsSummary() {
 		if (ct===21) data += '\n'
 		ct++
 	}
+	data = '  TIME   | RUN  | LEVEL |    PROD    |  MS TOTAL  |     MS     |   EP  |   SP \n' + sep + data
 	let total = 'Runs: ' + ST.totalRuns.toLocaleString() +  ' | '
 	let time = 'Time: ' + ((Date.now()-ST.startTime)/(1000*3600*24)).toFixed(2) + ' days | '
 	msRun = 'MS: ' + convertValue(msRun) + ' - ' 	
 	let farm = getFarmData()
 	farm = farm[1] + ' | FP:' + farm[2] + '\n'
-	data =  'AVERAGE DAILY STATS\n' + total  + time + msRun + farm + sep + data
+	data =  'DAILY STATS\n' + total  + time + msRun + farm + sep + data
 	statswin.value = data
 	statswin.style.display = 'block'
 }
-
 function statsGrowth() {
 	if (!allRuns) allRuns = JSON.parse(decompress(load(account + '_summary')))
 	let runs, lvl, prod, ms, mst, avgSp, avgEp, tSp = tEp = 0, data = ''
@@ -802,6 +802,7 @@ function statsGrowth() {
 		if ((i+1)%7 === 0) data += sep	
 		if (i===20) data += '\n'
 	}
+	data = '  TIME   | RUN  | LEVEL |    PROD    |  MS TOTAL  |     MS     |   EP  |   SP \n' + sep + data
 	let total = 'Runs: ' + ST.totalRuns.toLocaleString() +  ' | '
 	let time = 'Time: ' + ((Date.now()-ST.startTime)/(1000*3600*24)).toFixed(2) + ' days | '
 	tSp = 'SP: ' + (tSp/(res.length-1)).toFixed(2) + ' | '
