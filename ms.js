@@ -574,7 +574,7 @@ function getMissionStanding(r) {
 		}
 	}
 	let left = '-' + convertValue(getValue(r.aktfullpoints) - getValue(r.aktclanquest)) 
-	info.push(pl(left, 40))
+	info.push(pl(left, 42))
 	$j('#ii4').val(info.join('\n')) 
 }
 
