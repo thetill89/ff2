@@ -2038,9 +2038,9 @@ function loadSettings() {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 function createButtons() {
-	let btns = ['Autoplay','Finish','Time','Sleep','Sound','Idle','Settings',
-	'Cost','Mega','Growth','Daily','Prod','Clan','Research',
-	'Stats','Calc', 'Theme', sVersion ,'Farm','Collect', 'Backup']
+	let btns = ['Autoplay','Finish','Set time','Sleep','Sound','Idle mode','Settings',
+	'Cost UI','MS Upgrade','Growth','Daily','Production','Clan stats','Research',
+	'Statistics','Calculator', 'Theme', sVersion ,'Farm','Collect', 'Backup']
 	let top = 638, right = 523
 	for (let i = 1; i <= btns.length; i++) {
 		addButton(i, btns[i-1], top, right)
