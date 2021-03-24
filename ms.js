@@ -24,7 +24,7 @@ function initScript() {
 		getTourTime()
 		getResearchTime()
 		checkReward(true)
-		//getCalcData()
+		getCalcData()
 		statusInfo()
 		initLoop()
 		addStatus2(seperator)
@@ -1307,7 +1307,6 @@ function getCalcData() {
 
 function showCalcUI() {
 	for (let i = 0; i < calc['ui'].length; i++) calc['ui'][i].toggleVisibility()
-	if (typeof calc['mission'] === 'undefined') getCalcData()
 	highlightBtn(btn21)
 }
 
@@ -2163,7 +2162,7 @@ function createButtons() {
 	btn18.onclick = function() {
 		$j('#afkwin').fadeToggle(1000)
 		setTimeout(function() {
-			if (!afkwin.style.display) afk.win.style.display = 'block'
+			if (!afkwin.style.display) afkwin.style.display = 'block'
 		}, 1000)
 		displayStats()
 	}
