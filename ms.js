@@ -366,10 +366,13 @@ function displayStats() {
 function statusInfo() {
 	let s = 11
 	info2.value = ''
-	if (runData.length) addStatus2(pr('Last:',s) + runData[runData.length-1][0] + ', ' + Math.floor(runData[runData.length-1][1]) + '%') 
+	if (runData.length) { 
+		addStatus2(pr('Next RP:',s) + displayTime((500-getPoints('event')) / (todayRuns.ep/todayRuns.c) * 600))
+		addStatus2(pr('Level:',s) + runData[runData.length-1][0] + ', ' + Math.floor(runData[runData.length-1][1]) + '%') 
+	}
 	if (todayRuns.c) {
 		addStatus2(pr('Ø SP:',s) + (todayRuns.sp/todayRuns.c).toFixed(2) + ', ' + (todayRuns.ep/todayRuns.c).toFixed(2))
-		addStatus2(pr('Today: ',s) + todayRuns.r)
+		addStatus2(pr('Today: ',s) + todayRuns.r + ' runs')
 	}
 	addStatus2(seperator + '--')
 	let data = getFarmData()
