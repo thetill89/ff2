@@ -556,8 +556,8 @@ function getMissionStanding(r) {
 	let info = [], pct = r.aktclanquest ? pl(Math.floor(getValue(r.aktclanquest)/getValue(r.aktfullpoints)*100) + '%', 5) + pl(r.aktfullpoints, 29) : ''
 	info.push('\ MISSION' + pct + '\n')
 	if (r.anz) {
-		let maxEntry = r.anz < 9 ? r.anz : 9
-		for (let i = 1; i <= maxEntry; i++) {
+		let max = r.anz < 9 ? r.anz : 9
+		for (let i = 1; i <= max; i++) {
 			let points = r.aktclandmg[i]
 			if (!points) continue
 			let level = ' ' + pl(r.maxlevelarr[i], 4) + ' | '
@@ -572,13 +572,12 @@ function getMissionStanding(r) {
 }
 
 function getClanChat() {
-	let maxEntry = 5
-	$j.get('game/sortonline.php').done(function(r) {	
+	$j.get('game/sortonline.php').done(function(r) {
 		let info = []
 		info.push(' ONLINE\n')
 		if (r.anz) {
-			maxEntry = r.anz < maxEntry ? r.anz : maxEntry
-			for (let i = 1; i <= maxEntry; i++) {
+			let max = r.anz < 9 ? r.anz : 5
+			for (let i = 1; i <= max; i++) {
 				let nbr =  pl(i,2) + ' | '
 				let level = pl(r.maxlevelarr[i], 5) + '  |'
 				let name = pr(r.namearray[i].match(/\/>\s(\w+)/)[1].slice(0,16), 16) + ' | '
@@ -590,13 +589,12 @@ function getClanChat() {
 		}
 		$j('#ii3').val(info.join('\n')) 
 	})
-	maxEntry = 9
 	$j.get('game/clanchat.php').done(function(r) {	
 		let info = []
 		info.push(' CHAT\n')
 		if (r.postanz) {
-			maxEntry = r.postanz < maxEntry ? r.postanz : maxEntry
-			for (let i = 1; i <= maxEntry; i++) {
+			let max = r.postanz < 9 ? r.postanz : 9
+			for (let i = 1; i <= max ; i++) {
 				let time = ' ' + r.gchatdate[i].slice(-5)  + ' | '
 				let name = pr(r.gchatfrom[i].slice(0,7), 7) + ' |  '
 				let txt = r.gchatpost[i].replace(/<\/?span[^>]*>/g,'').slice(0,23)
@@ -613,8 +611,8 @@ function getClanChat() {
 		let info = []
 		info.push(r.turniertxt.includes('Last') ? ' LAST TOURNAMENT\n' :  ' TOURNAMENT\n')
 		if (r.playeranz) {
-			maxEntry = r.playeranz < maxEntry ? r.playeranz : maxEntry 
-			for (let i = 1; i <= maxEntry; i++) {
+			let max = r.playeranz < 9 ? r.playeranz : 9
+			for (let i = 1; i <= max; i++) {
 				let rank = pl(r.turnierrank[i],2) + ' | '
 				let name = pr(r.playername[i].slice(0,13), 13) + ' |  '
 				let level = pl(r.playermaxlvl[i], 4) + '  | '
