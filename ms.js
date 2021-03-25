@@ -371,15 +371,15 @@ function statusInfo() {
 		addStatus2(pr('Ø SP:',s) + (todayRuns.sp/todayRuns.c).toFixed(2) + ', ' + (todayRuns.ep/todayRuns.c).toFixed(2))
 		addStatus2(pr('Today: ',s) + todayRuns.r)
 	}
-	addStatus2(seperator + '-')
+	addStatus2(seperator + '--')
 	let data = getFarmData()
 	let time = (Date.now()-ST.startTime)/1000
 	let runMS = getValue(getLogData()[1]) * todayRuns.r
 	addStatus2(pr('Points:',s-1) + data[2] + ' fp, ' + data[3] + ' sp, ' + data[4] + ' ep')
 	addStatus2(pr('MS Farm:',s) + data[1] + ', ' + (getValue(data[1]) / (runMS + getValue(data[1])) * 100).toFixed(2) + '%')
 	runMS = (runMS * todayRuns.r)
-	addStatus2(pr('MS Run:',s) +  convertValue(runMS))
-	addStatus2(seperator + '-')
+	addStatus2(pr('MS Run:',s) +  convertValue(runMS / todayRuns.r))
+	addStatus2(seperator + '--')
 	addStatus2(pr('Level:',s)+ highLevel)
 	addStatus2(pr('Resets:',s) + ST.totalRuns.toLocaleString())
 	addStatus2(pr('Playtime:',s) + displayTime(time, true))
