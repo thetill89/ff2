@@ -112,6 +112,7 @@ function idleRoutine() {
 	}
 }
 
+
 function startIdleMode() {
 	if (autoPlay) {
 		buyStep++
@@ -137,7 +138,10 @@ function startIdleMode() {
 			}
 		}
 		else addStatus2('Idle time: ' + idleStats[0])
-		if (buyStep > 1) getMissionTime()
+		if (buyStep > 1) { 	
+			getMissionTime()
+			if (idleTime > 240) setTimeout(getMissionTime, idleTime / 2 * 1000)
+		}
 	}
 	else {
 		closeall()
@@ -264,8 +268,9 @@ function finishRun() {
 	}
 	setTodayRuns()
 	updateSummary()	
-	addLog(pl(todayRuns.r, 3) + ' | ' + pl(runData[runData.length-1][0],5) + ' | ' + pl(runData[runData.length-1][2],9) + ' | '
-	+ pl(runData[runData.length-1][3],9) + ' | '  + pl(runData[runData.length-1][4],10) + ' | '
+	let cur = runData[runData.length-1]
+	addLog(pl(todayRuns.r, 3) + ' | ' + pl(cur[0],5) + ' | ' + pl(cur[2],9) + ' | '
+	+ pl(cur[3],9) + ' | '  + pl(cur[4],10) + ' | '
 	+ pl(sp,2) + ' sp | ' + pl(ep,3) + ' ep')
 	sessionTimer = sessionTimer2 = Date.now()
 	idleTimer = Date.now()
@@ -306,7 +311,6 @@ function displayStats() {
 			' ' + displayTime(getSessionTime()) + '   |   ' + pr(building[mainBuild],5) + '   |   ' + incomeoffline.slice(2,12)
 		 i1.push(status)
 		 $j('#ii1').val(i1.join('\n')) 
-		  //--------------------------------------  
 		if (idlemode) {
 			let s = 10
 			let nextBuilding = autoPlay && buyStep <= buyMax.length ? buyGoal[buyStep-1] : building[mainBuild] + 100
@@ -351,7 +355,7 @@ function displayStats() {
 	 } 
 	let mTime, fTime
 	mTime = missionLeft - (Date.now() - missionTimer)/1000
-	mTime = (mTime >= 3600 || mTime < 0) ? '∞' : mTime >= 60 ? pl(Math.round(mTime/60),2) +  ' min': displayTime(mTime)	
+	mTime = (mTime >= 3600 || mTime < 0) ? '∞' : mTime >= 60 ? pl(Math.round(mTime/60),2) +  ' min' : displayTime(mTime)	
 	fTime = farmLeft/1000 - (Date.now() - farmTimer)/1000
 	fTime = fTime >= 9600 ? '∞' : fTime >= 60 ? pl(Math.round(fTime/60),2) +  ' min': displayTime(fTime)	
 	timeinfo.innerHTML = '\nMission: ' + mTime + '\nFarming: ' + fTime
@@ -370,10 +374,10 @@ function statusInfo() {
 	addStatus2(seperator)
 	let data = getFarmData()
 	let time = (Date.now()-ST.startTime)/1000
-	addStatus2(pr('Points:',s-1) + data[2] + ' | ' + data[3] + ' | ' + data[4])
-	addStatus2(pr('Farm:',s) + data[1])
+	addStatus2(pr('Points:',s-1) + data[2] + 'fp, ' + data[3] + 'sp, ' + data[4] + 'ep')
+	addStatus2(pr('MS Farm:',s) + data[1])
 	let runMS = convertValue(getValue(getLogData()[1]) * todayRuns.r)
-	addStatus2(pr('Dollar:',s) +  runMS)
+	addStatus2(pr('MS Run:',s) +  runMS)
 	addStatus2(seperator)
 	addStatus2(pr('Level:',s)+ highLevel)
 	addStatus2(pr('Resets:',s) + ST.totalRuns.toLocaleString())
