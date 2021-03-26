@@ -2384,9 +2384,9 @@ function setTheme() {
 	div[4].innerHTML = '&nbsp&nbsp&nbspMS'
 	div[5].innerHTML = '&nbsp&nbsp&nbspFarm'
 	div = document.getElementsByClassName('researchbtn')[0]
-	div.style.cssText = 'font-size: 14px; font-family: monospace;'
+	if (div) div.style.cssText = 'font-size: 14px; font-family: monospace;'
 	div = document.getElementsByClassName('eventbtn')[0]
-	div.style.cssText = 'font-size: 14px; font-family: monospace; margin-left: -5px'	
+	if (div) div.style.cssText = 'font-size: 14px; font-family: monospace; margin-left: -5px'	
 	document.getElementsByClassName('clanbtn')[0].style.marginLeft = '-25px'
 	div = document.getElementsByClassName('buttonk')[0]
 	div.style.cssText = 'color: ' + theme + '; background: transparent; text-align: left; font-weight: 200; font-family: monospace; font-size: 14px; text-shadow: none; width: 156px;  border: 1px dotted ' + theme 
