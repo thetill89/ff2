@@ -2062,8 +2062,10 @@ function createButtons() {
 		else if (e.which === 3) toggleAutoPlay(false)	
 	}
 	btn2.onclick = function() {
-	    finishNext = !finishNext
-		highlightBtn(btn2)
+		if (!autoPlay) {
+			finishNext = !finishNext
+			highlightBtn(btn2)
+		}
 	}
 	btn3.onclick  = function() { 
 		sessionTimer = sessionTimer2 = Date.now()
