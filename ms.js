@@ -2062,7 +2062,7 @@ function createButtons() {
 		else if (e.which === 3) toggleAutoPlay(false)	
 	}
 	btn2.onclick = function() {
-		if (!autoPlay) {
+		if (autoPlay) {
 			finishNext = !finishNext
 			highlightBtn(btn2)
 		}
