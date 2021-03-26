@@ -322,7 +322,7 @@ function displayStats() {
 			i2.push(' ' + pr('Time',s) + '  |   ' +  pr('Need',s) + ' |   End')
 			i2.push(' ' + pr(displayTime(getIdleTime()),s) + '  |   ' +  pr(time,s) + ' |   ' + (idleStats[0] || '00:00'))     
 			i2.push(' ' + ('-').repeat(37))
-			i2.push(' ' + pr('Cost',s) + '  |   ' +  pr('Need',s) + ' |   Next')
+			i2.push(' ' + pr('Income',s) + '  |   ' +  pr('Cost',s) + ' |   Next')
 			i2.push(' ' + pr(convertValue(getGold() + getIdleIncome()),s) + '  |   ' +  pr(convertValue(nextCost),s) + ' |   ' + nextBuilding + ' \n\n')  	  
 		}
 		else {
