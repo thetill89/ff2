@@ -401,7 +401,6 @@ function getMissionTime() {
 		missionTimer = Date.now()
 		getMissionStanding(r)
 		getClanChat()
-		if (autoPlay) setTimeout(getMissionTime, 120000)
 		if (!autoPlay && autoMission) setTimeout(getMissionTime, 600000)
 	}).fail(() => setTimeout(getMissionTime, failTimeOut * 1000))	
 }
@@ -2604,6 +2603,7 @@ function buildingbuy(nbr, amount=0) {
 			lastBought[nbr-1] = true
 			buyStepTimer = Date.now()
 			document.getElementsByClassName('gold')[0].innerText = convertValue(canBuy)
+			//console.log(getSessionTime().toFixed(2) + ' | ' + nbr + ' | ' + building[nbr] + ' | ' + (amount === 4 ? 'Max' : 100))
 			$j.get('game/buildingbuy.php?b=' + nbr + '&s=' + amount, function(e) {
 				if (e.erfolg == 1) {
 					building = []
