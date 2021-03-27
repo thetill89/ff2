@@ -651,18 +651,18 @@ function getClanRanking() {
 
 
 function showClanRanking() {	
-		let data = decompress(load(account + '_clans')) 
-		if (!data) return
-		info2.value = ''
-		data = JSON.parse(data)
-		for (date in data) {
-			let cur = data[date]
-			let time = Object.keys(cur)
-			let points = cur[time[time.length-1]].toString().replaceAll(',','|')
-			addStatus2(date + ' | ' + points)
-		}
-		addStatus2(('-').repeat(34))
-		addStatus2('Clan rankings')
+	let data = decompress(load(account + '_clans')) 
+	if (!data) return
+	info2.value = ''
+	data = JSON.parse(data)
+	for (date in data) {
+		let cur = data[date]
+		let time = Object.keys(cur)
+		let points = cur[time[time.length-1]].toString().replaceAll(',','|')
+		addStatus2(date + ' | ' + points)
+	}
+	addStatus2(('-').repeat(34))
+	addStatus2('Clan rankings')
 }
 
 
@@ -801,7 +801,7 @@ function statsSummary() {
 	msRun = 'MS: ' + convertValue(msRun) + ' - ' 	
 	let farm = getFarmData()
 	farm = farm[1] + ' | FP:' + farm[2] + '\n'
-	data =  'DAILY RUN STATS\n' + total  + time + msRun + farm + sep + data
+	data =  'DAILY RUN STATS\n' + total  + time + msRun + farm + '\n' + sep + data
 	statswin.value = data
 	statswin.style.display = 'block'
 }
@@ -842,7 +842,7 @@ function statsGrowth() {
 	let time = 'Time: ' + ((Date.now()-ST.startTime)/(1000*3600*24)).toFixed(2) + ' days | '
 	tSp = 'SP: ' + (tSp/(res.length-1)).toFixed(2) + ' | '
 	tEp = 'EP: ' + (tEp/(res.length-1)).toFixed(2) + '\n'
-	data =  'DAILY RUN AVERAGE\n' + total + time + tSp + tEp + sep + data
+	data =  'DAILY RUN AVERAGE\n' + total + time + tSp + tEp + '\n' + sep + data
 	statswin.value = data
 	statswin.style.display = 'block'
 }
