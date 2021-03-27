@@ -959,7 +959,7 @@ function missionDaily() {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 function msUpgrade() {
 	let dollarRun = getLogData()[1], f = arguments.callee.name
-	if (typeof f.cache !== 'undefined') info2.value =  f.cache
+	if (window[f].cache) info2.value = window[f].cache
 	$j.get('game/researchanz.php').done(function(r) {
 		let rsLevel = r.rsupgrade2
 		let rsCost = rsLevel+1
@@ -1007,7 +1007,7 @@ function msUpgrade() {
 
 function msGrowth() {
 	let f = arguments.callee.name
-	if (typeof f.cache !== 'undefined') info2.value =  f.cache
+	if (window[f].cache) info2.value = window[f].cache
 	$j.get('game/megaidleanz.php').done(function(r) {
 		let farmNow = getValue(r.megaidleprominute) * 10
 		let farmCollect = farmMax * farmNow / 10
@@ -1049,7 +1049,7 @@ function msGrowth() {
 
 function dailyGrowth() {
 	let f = arguments.callee.name
-	if (typeof f.cache !== 'undefined') info2.value =  f.cache
+	if (window[f].cache) info2.value = window[f].cache
 	$j.get('game/megaidleanz.php').done(function(r) {
 		let farm = getValue(r.megaidleprominute) * 60 * 24
 		let spChance = Math.ceil(24*6*r.megaidleu3/100)
@@ -1082,7 +1082,7 @@ function dailyGrowth() {
 
 function prodUpgrade() {
 	let f = arguments.callee.name
-	if (typeof f.cache !== 'undefined') info2.value =  f.cache
+	if (window[f].cache) info2.value = window[f].cache
 	$j.get('game/researchanz.php').done(function(r) {
 		info2.value = ''
 		let cost = 0
@@ -1179,6 +1179,8 @@ function createCalcUI() {
 	for (let i = 0; i < calc['ui'].length; i++) {
 		calc['ui'][i].hideAllTitles()
 		calc['ui'][i].hide()
+		calc['ui'][i]._titleBar.onclick = getCalcData
+		
 	}
 }
 
@@ -2044,6 +2046,12 @@ function loadSettings() {
 	if (!todayRuns) todayRuns = { r: 0, sp: 0, ep: 0, c: 0}
 }
 
+function showSettings() {
+	for (let i = 0; i < UI.length; i++) UI[i].toggleVisibility()
+	if (UI[0]._hidden) saveSettings()
+	highlightBtn(btn7)
+}
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 function createButtons() {
 	let btns = ['Auto play','Finish run','Set time','Sleep','Sound','Idle mode','Settings',
@@ -2092,11 +2100,7 @@ function createButtons() {
 		saveSettings(true)
 	}
 	btn7.onmousedown = function(e) {
-		if (e.which === 1) {
-			for (let i = 0; i < UI.length; i++) UI[i].toggleVisibility()
-			if (UI[0]._hidden) saveSettings()
-			highlightBtn(btn7)
-		}
+		if (e.which === 1) showSettings()
 		else if (e.which === 3) { 
 			statusInfo()
 			hideStatsWin()
@@ -2113,22 +2117,18 @@ function createButtons() {
 	btn9.onclick  = function() {
 		hideStatsWin()
 		msUpgrade()
-		highlightBtn(btn9,true)
 	}
 	btn10.onclick = function() {
 		hideStatsWin()
 		msGrowth()	
-		highlightBtn(btn10,true) 
 	}
 	btn11.onclick = function() {
 		hideStatsWin()
 		dailyGrowth()	
-		highlightBtn(btn11,true) 
 	}
 	btn12.onclick  = function() {
 		hideStatsWin()
 		prodUpgrade()
-		highlightBtn(btn12,true)
 	}
 	btn13.onmousedown = function(e) {
 		hideStatsWin()
@@ -2144,9 +2144,7 @@ function createButtons() {
 	btn14.onclick  = function() {
 		hideStatsWin()
 		showResearch()
-		highlightBtn(btn14,true)
 	}
-	
 	btn15.onmousedown = function(e) {
 		if (e.which === 1) { 
 			statswin.d++ 
@@ -2165,7 +2163,7 @@ function createButtons() {
 		$j('#afkwin').fadeToggle(1000)
 		setTimeout(function() {
 			if (!afkwin.style.display) afkwin.style.display = 'block'
-		}, 1000)
+		}, 500)
 		displayStats()
 	}
 	btn19.onclick = function() {
@@ -2211,6 +2209,8 @@ document.onkeydown = function(e) {
 	if (e.keyCode === 27) {                               //esc
 		statusInfo()
 		hideStatsWin()
+		if (!UI[0]._hidden) showSettings()
+		if (!calc['ui'][0]._hidden) showCalcUI()
 		if (isVisible('afkwin')) $j('#afkwin').fadeToggle(1000)
 	}
 }
@@ -2597,9 +2597,8 @@ function homeanz() {
 }
 
 let lastBought = Array(8).fill(0)
-function buildingbuy(nbr, amount=0) {
-	  if (!amount) amount = aktbuystufe
-	  let canBuy = getGold()-getValue(bcost[(nbr*4)-(4-amount)])	
+function buildingbuy(nbr, amount=aktbuystufe) {
+	  let canBuy = getGold() - getValue(bcost[(nbr*4)-(4-amount)])
 	  if (Date.now() - buyStepTimer > 10000 && autoPlay) startIdleMode()
 	  else if (canBuy > 0 && !lastBought[nbr-1]) {
 			lastBought[nbr-1] = true
@@ -2635,9 +2634,9 @@ function buildingbuy(nbr, amount=0) {
 					$j('.building' + nbr).css({ display: 'block' })
 					if (bauto[nbr] >= 1 && nbr === 1) buildstart(nbr)
 					buildingcostanz()
+					displayStats()
 				}
 				lastBought[nbr-1] = false
-				displayStats()
 			})	
 	  }
 }
