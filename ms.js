@@ -331,9 +331,9 @@ function displayStats() {
 			i2.push(' ' + pr(total[0][0],s) + ' | ' + pr(total[0][1],s) + ' | ' + pr(total[0][2],s) + ' |  ' + total[0][3])
 			i2.push(' ' + ('-').repeat(37))
 			i2.push(' ' + pr('Bike',s) + ' | ' + pr('Scooter',s)  + ' | ' + pr('Van',s) + ' |  Truck')
-			i2.push(' ' + pr(total[0][4],s) + ' | ' + pr(total[0][5],s) + ' | ' + pr(total[0][6],s) + ' |  ' + total[0][7] + ' \n') 	 
-			$j('#ii2').val(i2.join('\n'))
+			i2.push(' ' + pr(total[0][4],s) + ' | ' + pr(total[0][5],s) + ' | ' + pr(total[0][6],s) + ' |  ' + total[0][7] + ' \n') 	
 		}
+		$j('#ii2').val(i2.join('\n'))
 	}
 	else if (isVisible('afkwin')) {
 		let i2 = ['\n', (idlemode ? pr('\IDLE MODE: ', 11) : pr('BUYING: ', 11)) + displayTime(getSessionTime()) + '            Level: ' + getLevel() + ' \n']   
