@@ -2198,7 +2198,7 @@ function createButtons() {
 		else if (e.which === 3) getCalcData()		
 	}
 	btn17.onclick = changeTheme
-	btn18.onmousedown = function() {
+	btn18.onmousedown = function(e) {
 		if (e.which === 1) { 
 			$j('#afkwin').fadeToggle(1000)
 			setTimeout(function() {
