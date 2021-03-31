@@ -2116,7 +2116,6 @@ function createButtons() {
 	btn3.onclick  = function() { 
 		sessionTimer = sessionTimer2 = Date.now()
 		setSessionTime(nextrstimediv-600)
-		addStatus2('Sessiontime set')
 	}
 	btn4.onclick  = function() {
 		sleepOn = !sleepOn
@@ -2131,9 +2130,11 @@ function createButtons() {
 	}
 	btn6.onclick = function() {
 		ST.idle = !ST.idle
-		closeall()
-		if (ST.idle) $j('#idlemode').toggle()
-		else $j("#home").toggle()
+		if (!autoPlay) {
+			closeall()
+			if (ST.idle) $j('#idlemode').toggle()
+			else $j("#home").toggle()
+		}
 		highlightBtn(btn6)
 		saveSettings(true)
 	}
@@ -2195,13 +2196,15 @@ function createButtons() {
 	btn17.onmousedown = function(e) {
 		if (e.which === 1) changeTheme()
 		else if (e.which === 3) { 
-			$j('#afkwin').fadeToggle(1000)
+			setTimeout(function() {
+				$j('#afkwin').fadeToggle(1000)
+			}, 150)
 			setTimeout(function() {
 				if (!afkwin.style.display) afkwin.style.display = 'block'
-			}, 500)
+			}, 550)
 			displayStats()
 		}
-	}
+	}		
 	btn18.onclick  = function() {
 		hideStatsWin()
 		showResearch()
