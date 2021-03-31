@@ -2127,7 +2127,7 @@ function createButtons() {
 	}
 	btn6.onclick = function() {
 		ST.idle = !ST.idle
-		if (!autoPlay) {
+		if (!autoPlay || !idlemode) {
 			closeall()
 			if (ST.idle) $j('#idlemode').toggle()
 			else $j("#home").toggle()
