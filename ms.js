@@ -792,7 +792,7 @@ function statsSummary() {
 		if (ct===30) data += '\n'
 		ct++
 	}
-	data = '  TIME   | RUN  | LEVEL |    PROD    |  MS TOTAL  |   MS RUN   |   SP  |   EP \n' + sep + data
+	data = '  DAY    | RUN  | LEVEL |    PROD    |  MS TOTAL  |   MS RUN   |   SP  |   EP \n' + sep + data
 	let time = (Date.now()-ST.startTime)/(1000*3600*24)
 	let runsDay = 'Runs: ' + ST.totalRuns.toLocaleString() +  ' | Ø ' + (ST.totalRuns/time).toFixed(2)
 	time = ' | Time: ' + time.toFixed(2) + ' days \n\n'
@@ -832,7 +832,7 @@ function statsGrowth() {
 		if ((i+1)%7 === 0) data += sep	
 		if (i===30) data += '\n'
 	}
-	data = '  TIME   | RUN  | LEVEL |    PROD    |  MS TOTAL  |   MS RUN   |   SP  |   EP \n' + sep + data
+	data = '  DAY    | RUN  | LEVEL |    PROD    |  MS TOTAL  |   MS RUN   |   SP  |   EP \n' + sep + data
 	let time = (Date.now()-ST.startTime)/(1000*3600*24)
 	let runsDay = 'Runs: ' + ST.totalRuns.toLocaleString() +  ' | Ø ' + (ST.totalRuns/time).toFixed(2)
 	time = ' | Time: ' + time.toFixed(2) + ' days | '
@@ -957,7 +957,7 @@ function missionUpgrade() {
 	let rp = getPoints('research')
 	let rpBuy = rpLevel = 0
 	let rpCost = Math.ceil((calc['rsclan']+1)/10)	
-	while (rp > rpCost) {
+	while (rp >= rpCost) {
 		rp -= Math.ceil((calc['rsclan']+1)/10)	
 		rpBuy++
 	}
