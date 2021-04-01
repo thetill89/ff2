@@ -120,7 +120,7 @@ function startIdleMode() {
 		let time = getSessionTime()
 		if (idleTime < 30) idleTime = 30
 		if (idleTime + time > idleMax) idleTime = sessionTime - time - 1
-		let diff = getValue(maxProd)/getValue(incomeoffline)
+		let diff = getValue(maxProd) / getValue(incomeoffline)
 		if (diff < 1) { 
 			idleTime =  sessionTime * diff - time
 			prodExeeded = true
@@ -128,15 +128,18 @@ function startIdleMode() {
 		idleStats[0] = [displayTime(idleTime + time)]
 		idleStats[1] = [idleTime]	
 		idleStats[2].push(' ' + displayTime(time) + '   |   ' + building[mainBuild] + '    |   ' + incomeoffline.slice(2,12))
-		if (idleTime >= 30 && getLevel() <= highLevel - 10) {
-			idlemode = 1
-			if (isVisible('home')) {
-				$j('#home').toggle()
-				$j('#idlemode').toggle()	
+		if (idleTime >= 30) {
+			if (getLevel() <= highLevel - 10) {
+				idlemode = 1
+				if (isVisible('home')) {
+					$j('#home').toggle()
+					$j('#idlemode').toggle()	
+				}
 			}
+			else addStatus2('Level too high')
 		}
-		else addStatus2('Idle time: ' + idleStats[0])
-		if (buyStep > 2) { 	
+		else addStatus2('Idle max')
+		if (buyStep > 1) { 	
 			getMissionTime()
 			for (let i = 1; i <= Math.floor(idleTime/120); i++) setTimeout(getMissionTime, i * 120 * 1000)
 		}
