@@ -958,11 +958,12 @@ function missionUpgrade() {
 	let rpBuy = rpLevel = 0
 	let rpCost = Math.ceil((calc['rsclan']+1)/10)	
 	while (rp >= rpCost) {
-		rp -= Math.ceil((calc['rsclan']+1)/10)	
 		rpBuy++
+		rp -= Math.ceil((calc['rsclan'] + rpBuy)/10)	
+	
 	}
 	rpLevel = calc['rsclan'] + rpBuy
-	addStatus2('RP Level: ' + rpLevel)
+	addStatus2('RP Level: ' + rpLevel + ' (+' + rpBuy + ')')
 	let dollar = getDollar(true) 
 	let msLevel = 0
 	let msCost = calc['msclanCost'] * 100	
@@ -971,7 +972,7 @@ function missionUpgrade() {
 		msLevel += 100
 		dollar -= msCost
 	}
-	addStatus2('MS Level: ' + (calc['msclan'] + msLevel))
+	addStatus2('MS Level: ' + (calc['msclan'] + msLevel).toLocaleString() + ' (+' + msLevel.toLocaleString() + ')')
 	let missionNew = calc['mission'] * ((rpLevel+1)/(calc['rsclan']+1)) *((calc['msclan'] + msLevel)/ calc['msclan'])
 	addStatus2('Mission:  ' + convertValue(missionNew))
 	addStatus2(seperator)
