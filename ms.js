@@ -959,8 +959,8 @@ function missionUpgrade() {
 	let rpCost = Math.ceil((calc['rsclan']+1)/10)	
 	while (rp >= rpCost) {
 		rpBuy++
-		rp -= Math.ceil((calc['rsclan'] + rpBuy)/10)	
-	
+		rp -= rpCost
+		rpCost = Math.ceil((calc['rsclan'] + rpBuy + 1)/10)	
 	}
 	rpLevel = calc['rsclan'] + rpBuy
 	addStatus2('RP Level: ' + rpLevel + ' (+' + rpBuy + ')')
