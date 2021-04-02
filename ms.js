@@ -2151,21 +2151,25 @@ function createButtons() {
 		for (let i = 0; i < 3;i++) costUI[i].toggleVisibility()
 		highlightBtn(btn8)
 	}
-	btn9.onclick  = function() {
+	btn9.onmousedown = function(e) {
 		hideStatsWin()
-		msUpgrade()
+		if (e.which === 1) msUpgrade()
+		else if (e.which === 3) statusInfo()
 	}
-	btn10.onclick = function() {
+	btn10.onmousedown = function(e) {
 		hideStatsWin()
-		msGrowth()	
+		if (e.which === 1) msGrowth()
+		else if (e.which === 3) statusInfo()
 	}
-	btn11.onclick = function() {
+	btn11.onmousedown = function(e) {
 		hideStatsWin()
-		dailyGrowth()	
+		if (e.which === 1) dailyGrowth()
+		else if (e.which === 3) statusInfo()
 	}
-	btn12.onclick  = function() {
+	btn12.onmousedown = function(e) {
 		hideStatsWin()
-		prodUpgrade()
+		if (e.which === 1) prodUpgrade()
+		else if (e.which === 3) statusInfo()
 	}
 	btn13.onmousedown = function(e) {
 		hideStatsWin()
@@ -2174,10 +2178,15 @@ function createButtons() {
 			missionUI[0].toggleVisibility()
 			missionUI[1].toggleVisibility()
 			if (!missionUI[0]._hidden) missionDaily()	
+			else statusInfo()
 			highlightBtn(btn13)
 		}		
 	}
-	btn14.onclick = showClanRanking	
+	btn14.onmousedown = function(e) {
+		hideStatsWin()
+		if (e.which === 1) showClanRanking()
+		else if (e.which === 3) statusInfo()
+	}	
 	btn15.onmousedown = function(e) {
 		if (e.which === 1) { 
 			statswin.d++ 
@@ -2199,23 +2208,26 @@ function createButtons() {
 			}, 150)
 			setTimeout(function() {
 				if (!afkwin.style.display) afkwin.style.display = 'block'
-			}, 550)
+			}, 500)
 			displayStats()
 		}
-	}		
-	btn18.onclick  = function() {
+	}	
+	btn18.onmousedown = function(e) {
 		hideStatsWin()
-		showResearch()
-	}
-	btn19.onclick = function() {
+		if (e.which === 1) showResearch()
+		else if (e.which === 3) statusInfo()
+	}	
+	btn19.onmousedown = function(e) {
 		hideStatsWin()
-		statsFarm()
-	}
+		if (e.which === 1) statsFarm()
+		else if (e.which === 3) statusInfo()
+	}	
 	btn20.onclick = collectNow
 	btn21.onmousedown = function(e) {
 		if (e.which === 1) confirmBackup()
 		else if (e.which === 3) {
 			let l = info1.value
+			info1.value = ''
 			l = [l.length/1024,l.split('\n').length]
 			addStatus2(seperator)
 			addStatus2('Info: ' + l[1].toLocaleString() + ' entries, ' + Math.round(l[0]) + ' kb')
@@ -2239,7 +2251,7 @@ document.onkeydown = function(e) {
 			else if (e.keyCode === 80) prodUpgrade()   //p
 			else if (e.keyCode === 81) changeTheme()   //q
 			else if (e.keyCode === 82) showResearch()  //r
-			else if (e.keyCode === 83) {                //s
+			else if (e.keyCode === 83) {               //s
 				statswin.d++ 
 				if (statswin.d === 1) statsSummary()
 				else if (statswin.d === 2) statsGrowth()
