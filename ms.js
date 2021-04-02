@@ -44,11 +44,7 @@ function initLoop() {
 			doTour()
 			doResearch()
 			displayStats()
-		    if (!autoPlay && sleepOn && now.getHours() === sleepTime[0] && now.getMinutes() >= sleepTime[1]) { 
-				clearInterval(mainLoop)
-				location.href = '1.php'
-		   }
-		   updateTimer = now
+		    updateTimer = now
 		}		
 		if (autoPlay) {
 			buyRoutine()
@@ -283,8 +279,9 @@ function finishRun() {
 	resetStep = 0
 	homeanz()
 	if (sleepOn && new Date().getHours() === sleepTime[0] && new Date().getMinutes() >= sleepTime[1]) {
+		gemsbar.style.border = '1px dotted ' + theme
 		autoPlay = false
-		location.href = '1.php'
+		highlightBtn(btn1)
 	}
 	else if (finishNext) {
 		if (ST.audio) finishAudio.play()
