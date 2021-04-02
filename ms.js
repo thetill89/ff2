@@ -68,7 +68,7 @@ function buyRoutine() {
 		sp = getPoints('skill')
 	}
 	if (buyStep > buyMax.length || idlemode || resetStep || prodExeeded || getLevel() >= highLevel - 10) return
-	if (buyTimeOut > Date.now() - buyTimer || getSessionTime() > idleMax + 10 || getIdleTime() < idleTime) return
+	if (buyTimeOut > Date.now() - buyTimer || getSessionTime() > idleMax || getIdleTime() < idleTime) return
 	if (building[1] < minFries) {
 		for (let i = 1; i <= 8; i++) if (maxbplus[i] > 100) buildingbuy(i, 4)
 	}
@@ -91,7 +91,7 @@ function idleRoutine() {
 	if (getIdleTime() > idleTime) idleStep = 1
 	if (getSessionTime() > sessionTime) idleStep = 2
 	if (idleStep) {		
-		$j.get('game/offlineearning.php').done(function(r) { 
+		$j.get('game/offlineearning.php').done(function() { 
 				buyStepTimer = Date.now()
 				idleTimer = Date.now()
 				idleTime = -1
@@ -190,12 +190,12 @@ function toggleAutoPlay(adjust=true) {
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-let resetStep = ep = sp = 0, runData = []
+let resetStep = ep = sp = 0, runStats = []
 function resetRoutine() {
 	if (getSessionTime() < sessionTime + 1 || idlemode || resetStep) return
 	resetStep = 1
 	$j.get('game/megaanz.php').done(function(r) {
-		setRunData(r)
+		setRunStats(r)
 		adjustProd()
 		$j.get('game/resetmd.php?rscode=0').done(function(r) {
 			if (r.erfolg === 1) finishRun()
@@ -217,17 +217,17 @@ function resetRoutine() {
 		})				
 }
 
-function setRunData(r) {
-	runData.push([getLevel(), parseFloat(document.getElementsByClassName('epbari')[0].style.width),	incomeoffline.slice(2,12), r.nextreset, r.maxrelikte, new Date().toLocaleTimeString().slice(0,5), (todayRuns.r+1)])		
+function setRunStats(r) {
+	runStats.push([getLevel(), parseFloat(document.getElementsByClassName('epbari')[0].style.width),	incomeoffline.slice(2,12), r.nextreset, r.maxrelikte, new Date().toLocaleTimeString().slice(0,5), (todayRuns.r+1)])		
 	let dollarTotal = convertValue(getValue(r.nextreset) + getValue(r.relikte))
 	$j('.button').eq(4).html('&nbsp&nbsp&nbspMS: ' + dollarTotal)
 }
 
 function adjustProd() {
-	let factor, level = runData[runData.length-1][0] 
+	let factor, level = runStats[runStats.length-1][0] 
 	if ((Date.now() - autoPlay)/1000 > sessionTime) {
 		if (level < maxLevel && prodExeeded) factor = 1.01
-	 	else if (level > maxLevel || (level === maxLevel && runData[runData.length-1][1] > 70)) factor = 0.99
+	 	else if (level > maxLevel || (level === maxLevel && runStats[runStats.length-1][1] > 70)) factor = 0.99
 		if (factor) {
 			maxProd = prodExeeded ? convertValue(getValue(maxProd) * factor) : convertValue(getValue(incomeoffline) * factor)
 			UI[2].setValue('maxProd', maxProd)
@@ -265,7 +265,7 @@ function finishRun() {
 	}
 	setTodayRuns()
 	updateSummary()	
-	let cur = runData[runData.length-1]
+	let cur = runStats[runStats.length-1]
 	addLog(pl(todayRuns.r, 3) + ' | ' + pl(cur[0],5) + ' | ' + pl(cur[2],9) + ' | '
 	+ pl(cur[3],9) + ' | '  + pl(cur[4],10) + ' | '
 	+ pl(sp,2) + ' sp | ' + pl(ep,3) + ' ep')
@@ -302,11 +302,11 @@ function displayStats() {
     let total = getBuildingCount()
 	if (isVisible('idlemode') && !isVisible('afkwin')) {
 		let i1 = [], i2 = []
-		let status =  ' CURRENT RUN ' + (autoPlay ? buyStep + '/' + (buyMax.length+1) : '')
-		i1.push(status + '\n')
+		let status =  
+		i1.push(' CURRENT RUN \n')
 		i1.push(' Time    |   Count   |   Prod  ')
 		i1.push(' ' + ('-').repeat(35))
-		status = autoPlay && idleStats[2].length ? [...idleStats[2]].reverse().join('\n') : 
+		let status = autoPlay && idleStats[2].length ? [...idleStats[2]].reverse().join('\n') : 
 		' ' + displayTime(getSessionTime()) + '   |   ' + pr(building[mainBuild],5) + '   |   ' + incomeoffline.slice(2,12)
 		i1.push(status)
 		$j('#ii1').val(i1.join('\n')) 
@@ -336,9 +336,9 @@ function displayStats() {
 	}
 	else if (isVisible('afkwin')) {
 		let i2 = ['\n', (idlemode ? pr('\IDLE MODE: ', 11) : pr('BUYING: ', 11)) + displayTime(getSessionTime()) + '            Level: ' + getLevel() + ' \n']   
-		if (runData.length) {
-			 for (let i = runData.length-1; i >= runData.length-6; i--) {
-				let cur = runData[i]
+		if (runStats.length) {
+			 for (let i = runStats.length-1; i >= runStats.length-6; i--) {
+				let cur = runStats[i]
 				if (cur) i2.push(cur[5] + ' | ' + cur[6] + ' | ' + cur[0] + ' | ' + cur[2] + ' | ' +  cur[4])
 			 } 
 		}
@@ -365,11 +365,11 @@ function displayStats() {
 function statusInfo() {
 	let s = 11
 	info2.value = ''
-	if (runData.length) { 
+	if (runStats.length) { 
 		let d = new Date(new Date().setSeconds((500-getPoints('event')) / (todayRuns.ep/todayRuns.c) * 600))
 		addStatus2(pr('Next RP:',s) + d.toLocaleTimeString().slice(0,5))
 		addStatus2(seperator + '--')
-		addStatus2(pr('Level:',s) + runData[runData.length-1][0] + ', ' + Math.floor(runData[runData.length-1][1]) + '%') 
+		addStatus2(pr('Level:',s) + runStats[runStats.length-1][0] + ', ' + Math.floor(runStats[runStats.length-1][1]) + '%') 
 	}
 	if (todayRuns.r) {
 		addStatus2(pr('Ø SP:',s) + (todayRuns.sp/todayRuns.r).toFixed(2) + ', ' + (todayRuns.ep/todayRuns.r).toFixed(2))
@@ -739,9 +739,9 @@ function updateSummary() {
 	let d = timeFormat(n.getDate()) + '.' + timeFormat(n.getMonth()+1) + '.' + n.getFullYear()
 	let sum = decompress(load(account + '_summary'))
 	sum = sum ? JSON.parse(sum) : {}
-	let l = runData[runData.length-1][0]
-	let p = getValue(runData[runData.length-1][2])
-	let m = getValue(runData[runData.length-1][3]), t = getValue(runData[runData.length-1][4])
+	let l = runStats[runStats.length-1][0]
+	let p = getValue(runStats[runStats.length-1][2])
+	let m = getValue(runStats[runStats.length-1][3]), t = getValue(runStats[runStats.length-1][4])
 	let s = sp, e = ep, c = 1
 	if (!sum[d]) { 
 		let sorted = {}
@@ -844,7 +844,7 @@ function statsGrowth() {
 }
 
 function getLogData() {
-	if (runData.length) return [runData[runData.length-1][2], runData[runData.length-1][3], runData[runData.length-1][4]]
+	if (runStats.length) return [runStats[runStats.length-1][2], runStats[runStats.length-1][3], runStats[runStats.length-1][4]]
 	let data = log.value.match(/^([^\|]*)\|([^\|]*)\|([^\|]*)\|([^\|]*)\|([^\|]*)\|([^\|]*)\|([^\|]*)\|([^\|]*)\|(.*)/)
 	if (!data) return [0,0,0]
 	return [data[5].trim(), data[6].trim(), data[7].trim()]
