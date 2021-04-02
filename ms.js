@@ -365,7 +365,7 @@ function statusInfo() {
 	let s = 11
 	info2.value = ''
 	if (runStats.length) { 
-		let d = new Date(new Date().setSeconds((500-getPoints('event')) / (todayRuns.ep/todayRuns.c) * 600))
+		let d = new Date(new Date().setSeconds((500-getPoints('event')) / (todayRuns.ep/todayRuns.r) * 600))
 		addStatus2(pr('Next RP:',s) + d.toLocaleTimeString().slice(0,5))
 		addStatus2(seperator + '--')
 		addStatus2(pr('Level:',s) + runStats[runStats.length-1][0] + ', ' + Math.floor(runStats[runStats.length-1][1]) + '%') 
