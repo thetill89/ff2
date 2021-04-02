@@ -561,21 +561,23 @@ function upgradeSkill() {
 }
 
 function getMissionStanding(r) {
-	let info = [], pct = r.aktclanquest ? pl(Math.floor(getValue(r.aktclanquest)/getValue(r.aktfullpoints)*100) + '%', 5) + pl(r.aktfullpoints, 29) : ''
-	info.push('\ MISSION' + pct + '\n')
-	if (r.anz) {
-		let max = r.anz < 9 ? r.anz : 9
-		for (let i = 1; i <= max; i++) {
-			let points = r.aktclandmg[i]
-			if (!points) continue
-			let level = ' ' + pl(r.maxlevelarr[i], 4) + ' | '
-			let name = pr(r.namearray[i].split('> ')[1].slice(0,16), 16) + ' | '
-			points = pl(convertValue(points), 15)
-			info.push(level + name + points)
+	let info = []
+	if (r.aktclanquest) {
+		info.push('\ MISSION' + pl(Math.floor(getValue(r.aktclanquest)/getValue(r.aktfullpoints)*100) + '%', 5) + pl(r.aktfullpoints, 29) + '\n')
+		if (r.anz) {
+			let max = r.anz < 9 ? r.anz : 9
+			for (let i = 1; i <= max; i++) {
+				let points = r.aktclandmg[i]
+				if (!points) continue
+				let level = ' ' + pl(r.maxlevelarr[i], 4) + ' | '
+				let name = pr(r.namearray[i].split('> ')[1].slice(0,16), 16) + ' | '
+				points = pl(convertValue(points), 15)
+				info.push(level + name + points)
+			}
 		}
+		info.push(pl('-' + convertValue(getValue(r.aktfullpoints) - getValue(r.aktclanquest)) , 42))
 	}
-	let left = '-' + convertValue(getValue(r.aktfullpoints) - getValue(r.aktclanquest)) 
-	info.push(pl(left, 42))
+	else info.push('\ MISSION\n')
 	$j('#ii4').val(info.join('\n')) 
 }
 
@@ -2225,14 +2227,14 @@ function createButtons() {
 	btn21.onmousedown = function(e) {
 		if (e.which === 1) confirmBackup()
 		else if (e.which === 3) {
-			let l = info1.value
 			info2.value = ''
+			let l = info1.value
 			l = [l.length/1024,l.split('\n').length]
 			addStatus2(seperator)
-			addStatus2('Info: ' + l[1].toLocaleString() + ' entries, ' + Math.round(l[0]) + ' kb')
+			addStatus2('Log:  ' + l[1].toLocaleString() + ' entries, ' + Math.round(l[0]) + ' kb')
 			l = log.value
 			l = [l.length/1024,l.split('\n').length]
-			addStatus2('Log:  ' + l[1].toLocaleString() + ' entries, ' + Math.round(l[0]) + ' kb')
+			addStatus2('Runs: ' + l[1].toLocaleString() + ' entries, ' + Math.round(l[0]) + ' kb')
 		}
 	}
 }
