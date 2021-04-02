@@ -2227,7 +2227,7 @@ function createButtons() {
 		if (e.which === 1) confirmBackup()
 		else if (e.which === 3) {
 			let l = info1.value
-			info1.value = ''
+			info2.value = ''
 			l = [l.length/1024,l.split('\n').length]
 			addStatus2(seperator)
 			addStatus2('Info: ' + l[1].toLocaleString() + ' entries, ' + Math.round(l[0]) + ' kb')
