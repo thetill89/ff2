@@ -302,7 +302,6 @@ function displayStats() {
     let total = getBuildingCount()
 	if (isVisible('idlemode') && !isVisible('afkwin')) {
 		let i1 = [], i2 = []
-		let status =  
 		i1.push(' CURRENT RUN \n')
 		i1.push(' Time    |   Count   |   Prod  ')
 		i1.push(' ' + ('-').repeat(35))
