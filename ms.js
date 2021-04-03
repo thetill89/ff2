@@ -2949,8 +2949,13 @@ function megaanz() {
 			$j('.allmegau').html(allmegatxt);
 			for (i = 1; i < 11; i++) {
 				$j('.megalvl' + i).html('Lv. ' + megabonus[i] + ' (next: +' + megabonusnext[i] + ')');
-				let cost100 = convertValue(getValue(megacost[i])* 1.005 * 100)
-				$j('.megatxt' + i).html('Bonus: +' + megabonus[i] + megabonustxt[i] + '<br>Upgrade: ' + megacost[i] + ' / ' + cost100);
+				let cost100 = cost1000 = 0
+				for (let j = 1; j <= 10; j++) {
+					cost1000 += getValue(megacost[i])* Math.pow(1.005, i)* 100
+					if (j === 1) cost100 = convertValue(cost1000)
+				}
+				cost1000 = convertValue(cost1000)
+				$j('.megatxt' + i).html('Bonus: +' + megabonus[i] + megabonustxt[i] + '<br>Upgrade: ' + megacost[i] + ' / ' + cost100 + ' / ' + cost1000);
 			}
 			closeall();
 			$j('#megadollar').css({ display: 'block' });
