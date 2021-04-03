@@ -438,7 +438,7 @@ function doTour() {
 			$j.get('game/clantourstart.php').done(function() {
 				getTourTime()
 				setTimeout(getClanRanking, 2000)
-				addStatus('Tour started')
+				addStatus('Clan Tour')
 				setTimeout(() => $j.get('game/buynextclanb.php'), 2000)
 			}).fail(() => setTimeout(getTourTime, failTimeOut * 1000))	
 		}).fail(() => setTimeout(getTourTime, failTimeOut * 1000))		
@@ -727,7 +727,6 @@ function setTodayRuns() {
 	}
 	todayRuns.sp += sp
 	todayRuns.ep += ep
-	todayRuns.c++
 	todayRuns.r++
 	save(todayLog, JSON.stringify(todayRuns))
 	ST.totalRuns++
@@ -746,7 +745,7 @@ function updateSummary() {
 	let s = sp, e = ep, c = 1
 	if (!sum[d]) { 
 		let sorted = {}
-		sum[d] = { r: 1, l: l, p: p, m: m, t: t, s: s, e: e, c: c }	
+		sum[d] = { r: 1, l: l, p: p, m: m, t: t, s: s, e: e, c: 1 }	
 		Object.keys(sum).sort(function(a, b) {
 			a = a.split('.')
 			a = new Date(a[2],a[1]-1,a[0])
@@ -758,9 +757,9 @@ function updateSummary() {
 	}
 	else {
 		 sum[d].r++
+		 sum[d].cüü
 		 sum[d].s += s
 		 sum[d].e += e
-		 sum[d].c += c
 		 if (p > sum[d].p) sum[d].p = p	
 		 if (l > sum[d].l) sum[d].l = l 
 		 if (m > sum[d].m) sum[d].m = m
@@ -904,7 +903,7 @@ function createMissionUI() {
 	.hide()
 	.setSize(90,72)
 	let p = missionUI[0].getPosition()
-	let rp = todayRuns.c ? Math.round((720 + todayRuns.ep/todayRuns.c * maxRuns) / 500) : Math.round((720 + 50 * maxRuns) / 500) 
+	let rp = todayRuns.r ? Math.round((720 + todayRuns.ep/todayRuns.r * maxRuns) / 500) : Math.round((720 + 50 * maxRuns) / 500) 
 	missionUI[1] = qs.create(p[0]+p[1],p[2], 'RP')
 	.addNumber('rp', 0, 20, rp, 1, missionDaily)
 	.hideAllTitles()
@@ -1048,7 +1047,7 @@ function msGrowth() {
 				info2.value = ''
 				skillLvl = [r.skill[9], r.skill[10]]
 				let avgSP = 3
-				if (todayRuns.c) avgSP = todayRuns.sp/todayRuns.c
+				if (todayRuns.r) avgSP = todayRuns.sp/todayRuns.r
 				let spUpgrades = Math.round((avgSP * maxRuns+spFarm)/10)
 				let newSkill = (spUpgrades+skillLvl[1])/skillLvl[1]*100-100	
 				let data = getLogData()
@@ -1090,7 +1089,7 @@ function dailyGrowth() {
 				let now = new Date()
 				let ms = getValue(getLogData()[1]) * maxRuns + farm
 				let avgSP = 3
-				if (todayRuns.c) avgSP = todayRuns.sp/todayRuns.c
+				if (todayRuns.r) avgSP = todayRuns.sp/todayRuns.r
 				let dailySKill = Math.round((avgSP*maxRuns+spChance)/10)
 				for (let i = 1; i <= 22; i++) {
 					now.setDate(now.getDate()+1)
