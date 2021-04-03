@@ -2947,7 +2947,8 @@ function megaanz() {
 			$j('.allmegau').html(allmegatxt);
 			for (i = 1; i < 11; i++) {
 				$j('.megalvl' + i).html('Lv. ' + megabonus[i] + ' (next: +' + megabonusnext[i] + ')');
-				$j('.megatxt' + i).html('Bonus:<br>+' + megabonus[i] + megabonustxt[i] + '<br>Upgrade for ' + megacost[i] + ' MegaDollar');
+				let cost100 = convertValue(getValue(megacost[i])* 1.005 * 100)
+				$j('.megatxt' + i).html('Bonus: +' + megabonus[i] + megabonustxt[i] + '<br>Upgrade: ' + megacost[i] + ' / ' + cost100);
 			}
 			closeall();
 			$j('#megadollar').css({ display: 'block' });
@@ -3213,17 +3214,17 @@ function skillanz() {
 			skillnext = e.skillnext;
 			for (i = 1; i < 11; i++) {
 				if (i < 9) {
-					$j('.skilllvl' + i).html('Lv.' + skill[i] + ' (next: x' + skillnext[i] + ' Bonus)');
-					$j('.skilltxt' + i).html('Bonus:<br>x' + spbonus[i] + spbonustxt[i] + '<br>Upgrade for ' + spcost[i]);
+					$j('.skilllvl' + i).html('Lv.' + skill[i] + ' (next: x' + skillnext[i] + ')');
+					$j('.skilltxt' + i).html('Bonus: x' + spbonus[i] + spbonustxt[i]);
 				}
 				else if (i == 9) {
-					$j('.skilllvl' + i).html('Lv.' + skill[i] + ' (next: x' + skillnext[i] + ' Bonus)');
-					$j('.skilltxt' + i).html('Bonus: x' + spbonus[i] + spbonustxt[i] + '<br>Upgrade for ' + spcost[i]);
+					$j('.skilllvl' + i).html('Lv.' + skill[i] + ' (next: x' + skillnext[i] + ')');
+					$j('.skilltxt' + i).html('Bonus: x' + spbonus[i] + spbonustxt[i]);
 				}
 				else if (i == 10) {
 					skillnext2 = spbonus[i] + 10;
 					$j('.skilllvl' + i).html('Lv.' + skill[i] + ' (next: +' + skillnext2 + '%)');
-					$j('.skilltxt' + i).html('Bonus: gain ' + spbonus[i] + spbonustxt[i] + '<br>Upgrade for ' + spcost[i]);
+					$j('.skilltxt' + i).html('Bonus: gain ' + spbonus[i] + spbonustxt[i]);
 				}
 			}
 			for (let i = 2; i <= 7; i++) {
