@@ -742,7 +742,7 @@ function updateSummary() {
 	let l = runStats[runStats.length-1][0]
 	let p = getValue(runStats[runStats.length-1][2])
 	let m = getValue(runStats[runStats.length-1][3]), t = getValue(runStats[runStats.length-1][4])
-	let s = sp, e = ep, c = 1
+	let s = sp, e = ep
 	if (!sum[d]) { 
 		let sorted = {}
 		sum[d] = { r: 1, l: l, p: p, m: m, t: t, s: s, e: e, c: 1 }	
@@ -757,7 +757,7 @@ function updateSummary() {
 	}
 	else {
 		 sum[d].r++
-		 sum[d].cüü
+		 sum[d].c++
 		 sum[d].s += s
 		 sum[d].e += e
 		 if (p > sum[d].p) sum[d].p = p	
