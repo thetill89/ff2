@@ -2095,14 +2095,14 @@ function showSettings() {
 function createButtons() {
 	let btns = ['Auto play','Finish run','Set time','Sleep','Sound','Idle mode','Settings',
 	'Cost UI','MS Upgrade','MS Growth','Daily','Production','Clan','Ranking',
-	'Statistics','Calculator', 'Set theme', 'Research' ,'Farm stats','Collect', 'Backup']
-	let top = 638, right = 523
+	'Statistics','Calculator', 'Theme', 'Research' ,'Farm stats','Collect', 'Backup']
+	let top = 638, right = 525
 	for (let i = 1; i <= btns.length; i++) {
 		addButton(i, btns[i-1], top, right)
 		window['btn' + i].oncontextmenu = function(e) { return false }
 		right -= 87
-		if (right < 0) right = 523
-		if (i%7 === 0) top += 20
+		if (right < 0) right = 525
+		if (i%7 === 0) top += 24
 	}	
 	btn1.onmousedown  = function(e) {
 		if (e.which === 1) toggleAutoPlay()
@@ -2278,7 +2278,7 @@ document.onclick = function() {
 	}	
 }
 
-function addButton(id, name, top = 0, right = 0, height = 20, width = 87) {
+function addButton(id, name, top = 0, right = 0, height = 20, width = 83) {
 	let btn = document.createElement('button')
 	btn.id = 'btn' + id
 	btn.innerText = name
@@ -2286,7 +2286,6 @@ function addButton(id, name, top = 0, right = 0, height = 20, width = 87) {
 	btn.style.fontFamily = 'monospace'
 	btn.style.backgroundColor = 'black'
 	btn.style.border = '1px dotted ' + theme
-	btn.style.borderRadius = '5px'
 	btn.style.color = theme
 	btn.style.position = 'fixed'
 	btn.style.width =  width + 'px'
