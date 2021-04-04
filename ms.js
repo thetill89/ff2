@@ -731,7 +731,7 @@ function setTodayRuns() {
 	let todayLog = account + '_day_' + new Date().toLocaleDateString()
 	todayRuns = JSON.parse(load(todayLog))
 	if (!todayRuns) {
-		todayRuns = { r: 0, sp: 0, ep: 0, c: 0}
+		todayRuns = { r: 0, sp: 0, ep: 0 }
 		for (key in localStorage) { if (key.match(/.*day_\d+.\d+.\d+/)) localStorage.removeItem(key) }
 	}
 	todayRuns.sp += sp
