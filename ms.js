@@ -2093,9 +2093,9 @@ function showSettings() {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 function createButtons() {
-	let btns = ['Auto play','Finish run','Set time','Sleep','Sound','Idle mode','Settings',
+	let btns = ['Auto play','Finish','Time','Sleep','Sound','Idle','Settings',
 	'Cost UI','MS Upgrade','MS Growth','Daily','Production','Clan','Ranking',
-	'Statistics','Calculator', 'Theme', 'Research' ,'Farm stats','Collect', 'Backup']
+	'Stats','Calc', 'Theme', 'Research' ,'Farm','Collect', 'Backup']
 	let top = 638, right = 525
 	for (let i = 1; i <= btns.length; i++) {
 		addButton(i, btns[i-1], top, right)
