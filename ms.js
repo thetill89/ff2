@@ -676,7 +676,7 @@ function showClanRanking() {
 
 let autoReward
 function checkReward(forced=false) {
-	if(autoReward && (!new Date().getHours() || forced)) {
+	if (autoReward && (!new Date().getHours() || forced)) {
 		$j.get('game/eventanz.php').done(function(r) { 
 			if (!r.noreward) {
 				addStatus('Reward Day ' + r.nextreward)
@@ -1850,7 +1850,7 @@ function saveStatus() {
 	let data = info1.value
 	if (!data) return
 	data = data.split('\n')
-	for (let i = data.length-1; i >= 6400; i--) { data.splice(i,1) }	
+	for (let i = data.length-1; i >= 18000; i--) { data.splice(i,1) }	
 	data = data.join('\n')
 	save(account + '_status', compress(data))
 	info1.value = data
@@ -1989,7 +1989,6 @@ function getPos(id,pos) {
 
 function saveSettings(quick=false) {
 	if (!quick) {
-		let tmpMax = [...buyMax], tmpGoal = [...buyGoal]
 		buyMax = [], buyGoal = []
 		for (let i = 0; i < 4; i++) {
 			let m = UI[0].getValue('m' + i) 
@@ -2006,10 +2005,6 @@ function saveSettings(quick=false) {
 		let reg = UI[2].getValue('maxProd').match(/(\d+\.*\d*)\s*(\w*)/)
 		maxProd = reg ? reg[1] + ' ' + reg[2] : maxProd	
 		UI[2].setValue('maxProd', maxProd)		
-		if ((tmpMax.length !== buyMax.length || tmpGoal.length !== buyGoal.length) && autoPlay) {
-			//toggleAutoPlay()
-			//addStatus2('New settings - Auto: off')
-		}
 		let t = UI[8].getValue('sessionTime').split(':').map(Number)
 		sessionTime = t[0]*60 + t[1] >= 600 ? t[0]*60 + t[1] : 600
 		t = timeFormat(Math.floor(sessionTime/60)) + ':' + timeFormat(sessionTime%60)
@@ -2068,8 +2063,8 @@ function loadSettings() {
 			buyGoal: [2500, 3000],
 			minFries: [2000],
 			useMaxBuy: [1500],
-			otherPct: 7.2,
-			buyTimeOut: 100,
+			otherPct: 7.3,
+			buyTimeOut: 60,
 			maxProd: '1.00 aq',
 			maxLevel: 6498,
 			sessionTime: 600,
