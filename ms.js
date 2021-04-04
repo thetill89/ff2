@@ -2099,8 +2099,8 @@ function showSettings() {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 function createButtons() {
-	let btns = ['Auto play','Finish','Time','Sleep','Sound','Idle','Settings',
-	'Cost UI','MS Upgrade','MS Growth','Daily','Production','Clan','Ranking',
+	let btns = ['Autoplay','Finish','Time','Sleep','Sound','Idle','Settings',
+	'Cost','MS Upgrade','MS Growth','Daily','Production','Clan','Ranking',
 	'Stats','Calc', 'Theme', 'Research' ,'Farm','Collect', 'Backup']
 	let top = 638, right = 525
 	for (let i = 1; i <= btns.length; i++) {
