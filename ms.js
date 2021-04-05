@@ -924,7 +924,6 @@ function missionDaily() {
 	ms = missionUI[0].getValue('ms')
 	rp = missionUI[1].getValue('rp')
 	if (isNaN(ms) || ms < 1 || ms > 100 || isNaN(rp) || rp < 0 || rp > 20) return
-	info2.value = ''
 	let missionPower = calc['mission'] 
 	let msDaily1 = msDaily2 = ((calc['msrun'] * maxRuns) + (calc['farmnow'] * 1440))* ms/100
 	let msCost1 = calc['msclanCost'] * 100
@@ -934,6 +933,7 @@ function missionDaily() {
 	let rpLevel1 = rpLevel2 = calc['rsclan']
 	let msTotal = rpTotal = missionNew = 0, now = new Date()
 	let ts = ' ' + now.toLocaleTimeString().slice(0,5)  + ' | '
+	let info = []
 	for (let i = 1; i <= 22; i++) {			
 		while(msDaily2 > msCost1) {
 			msCost1 *= 1.005
@@ -954,11 +954,11 @@ function missionDaily() {
 		let mp = convertValue(missionPower * msLevel2/msLevel1 * rpLevel2/rpLevel1)
 		let rs = ' - ' + pl(rpLevel2,3)
 		let ms = ' - ' + pl((msLevel2/1000).toFixed(1))
-		let c = i === 1 ? '\n' : ''
-		addStatus2(now.toLocaleDateString().slice(0,4) + ':  ' + mp + rs + ms + c)		
+		info.push(now.toLocaleDateString().slice(0,4) + ':  ' + mp + rs + ms)		
 	}
-	addStatus2(seperator)
-	addStatus2('Clan upgrade')
+	info.unshift(seperator)
+	info.unshift('Clan upgrade')
+	info2.value = info.join('\n')
 }
 
 function missionUpgrade() {
@@ -1093,27 +1093,26 @@ function dailyGrowth() {
 		let farm = getValue(r.megaidleprominute) * 60 * 24
 		let spChance = Math.ceil(24*6*r.megaidleu3/100)
 			$j.get('game/skillanz.php').done(function(r) {	
-				info2.value = ''
 				skillLvl = [r.skill[9], r.skill[10]]
 				let now = new Date()
 				let ms = getValue(getLogData()[1]) * maxRuns + farm
-				let avgSP = 3
+				let avgSP = 3, info = []
 				if (todayRuns.r) avgSP = todayRuns.sp/todayRuns.r
 				let dailySKill = Math.round((avgSP*maxRuns+spChance)/10)
 				for (let i = 1; i <= 22; i++) {
 					now.setDate(now.getDate()+1)
 					let d = timeFormat(now.getDate()) + '.' + timeFormat(now.getMonth()+1) + ':  '			
-					let newSkill =  (skillLvl[1] + dailySKill * i)/skillLvl[1]
+					let newSkill =  (skillLvl[1] + dailySKill * i) / skillLvl[1]
 					let msNew = pl(convertValue(ms * newSkill),8)
 					let pct = pl((newSkill*100-100).toFixed(2) + ' %', 7)
-					let c = i === 1 ? '\n' : ''
-					addStatus2(d + msNew + ' -  ' + pct + c)	
+					info.push(d + msNew + ' -  ' + pct)
 				}
-				addStatus2(seperator)
+				info.unshift(seperator)
 				let newSkill = (skillLvl[1] + dailySKill)/skillLvl[1]
 				let pct = pl((newSkill*100-100).toFixed(2) + ' %', 7)
 				let msNew = pl(convertValue(ms * newSkill - ms),8)
-				addStatus2('Growth: ' + msNew + ' -  ' + pct)
+				info.unshift('Growth: ' + msNew + ' -  ' + pct)
+				info2.value = info.join('\n')
 				window[f].cache = info2.value 				
 			})
 	})
@@ -1123,8 +1122,7 @@ function prodUpgrade() {
 	let f = arguments.callee.name
 	if (window[f].cache) info2.value = window[f].cache
 	$j.get('game/researchanz.php').done(function(r) {
-		info2.value = ''
-		let cost = 0
+		let cost = 0, info = []
 		let sLevel =  r['rsupgrade' + (4+mainBuild)]
 		let sFactor = sLevel*(sLevel+1)/2+1
 		let cProd = getValue(getLogData()[0])
@@ -1134,11 +1132,11 @@ function prodUpgrade() {
 			let nFactor = sLevel*(sLevel+1)/2+1
 			let pct = (nFactor/sFactor)
 			let nProd = convertValue(cProd * pct)
-			let c = !i ? '\n' : ''
-			addStatus2(sLevel + ': ' + pl(nProd, 9) + ' - ' + pct.toFixed(2) + 'x - ' + pl(cost,3) + ' rp' + c) 				
+			info.push(sLevel + ': ' + pl(nProd, 9) + ' - ' + pct.toFixed(2) + 'x - ' + pl(cost,3) + ' rp') 				
 		}	
-		addStatus2(seperator)
-		addStatus2('Resarch prod')
+		info.unshift(seperator)
+		info.unshift('Resarch prod')
+		info2.value = info.join('\n')
 		window[f].cache = info2.value 
 	})
 }
