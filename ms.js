@@ -218,7 +218,7 @@ function resetRoutine() {
 }
 
 function setRunStats(r) {
-	runStats.push([getLevel(), parseFloat(document.getElementsByClassName('epbari')[0].style.width),	incomeoffline.slice(2,12), r.nextreset, r.maxrelikte, new Date().toLocaleTimeString().slice(0,5), (todayRuns.r+1)])		
+	runStats.push([getLevel(), parseFloat(document.getElementsByClassName('epbari')[0].style.width), incomeoffline.slice(2,12), r.nextreset, r.maxrelikte, new Date().toLocaleTimeString().slice(0,5), (todayRuns.r+1)])		
 	let dollarTotal = convertValue(getValue(r.nextreset) + getValue(r.relikte))
 	$j('.button').eq(4).html('&nbsp&nbsp&nbspMS: ' + dollarTotal)
 }
@@ -896,7 +896,7 @@ function getFarmData(all=false) {
 		if (entry) { 
 			let date = entry[1]
 			if (typeof res[date] === 'undefined') { 
-				if (Object.keys(res).length && !all) break	
+				if ((Object.keys(res).length && !all) || Object.keys(res).length === 21) break	
 				res[date] = [0,0,0,0]
 			}		
 			entry.forEach((v,i) => i > 2 ?  res[date][i-3] += getValue(v) : 0)
