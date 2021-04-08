@@ -872,18 +872,20 @@ function statsFarm() {
 	let data = getFarmData(true).reverse()
 	for (let i = 0; i < data.length; i++) {
 		let d = data[i][0].slice(0,5) + ' | '
-		let m = pl(data[i][1],9) + ' | '
-		let p = pl(data[i][2],4) + ' | '
-		let s = pl(data[i][3],3)
+		let m = pl(data[i][1], 9) + ' | '
+		let p = pl(data[i][2], 4) + ' | '
+		let s = pl(data[i][3], 3)
 		addStatus2(d + m + p + s)
-		avgM += getValue(data[i][1])
-		avgP += parseInt(data[i][2])
-		avgS += parseInt(data[i][3])	
+		if (i < data.length-1) {
+			avgM += getValue(data[i][1])
+			avgP += parseInt(data[i][2])
+			avgS += parseInt(data[i][3])
+		}
 	}
 	addStatus2(seperator)
-	avgM = pl(convertValue(avgM/data.length),9) + ' | '
-	avgP = pl(Math.round(avgP/data.length),4) + ' | '
-	avgS = pl(Math.round(avgS/data.length),3)
+	avgM = pl(convertValue(avgM/(data.length-1)), 9) + ' | '
+	avgP = pl(Math.round(avgP/(data.length-1)), 4) + ' | '
+	avgS = pl(Math.round(avgS/(data.length-1)), 3)
 	addStatus2('  Ø  ' + ' | ' + avgM + avgP + avgS)
 	addStatus2('Farm stats')
 }
