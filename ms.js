@@ -135,9 +135,9 @@ function startIdleMode() {
 			else addStatus2('Level too high')
 		}
 		else addStatus2('Idle max')
-		if (buyStep > 1) { 	
-			getMissionTime()
-			for (let i = 1; i <= Math.floor(idleTime/120); i++) setTimeout(getMissionTime, i * 120 * 1000)
+		if (buyStep > 1) getMissionTime()
+		if (buyStep > buyMax.length) {
+			for (let i = 1; i <= Math.floor((sessionTime-time) / 120); i++) setTimeout(getMissionTime, i * 120 * 1000)
 		}
 	}
 	else {
