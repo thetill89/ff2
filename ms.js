@@ -658,7 +658,7 @@ function getClanRanking() {
 		data = data ? JSON.parse(data) : {}
 		data[date] = {}
 		data[date][time] = []
-		for (let i = 1; i <= 5; i++) data[date][time].push(r.raidanzahl[i].toString().match(/\d+/).map(Number)[0])
+		for (let i = 1; i <= 4; i++) data[date][time].push(r.raidanzahl[i].toString().match(/\d+/).map(Number)[0])
 		save(account + '_clans', compress(JSON.stringify(data)))
 	})
 }
@@ -672,7 +672,8 @@ function showClanRanking() {
 	for (date in data) {
 		let cur = data[date]
 		let time = Object.keys(cur)
-		let points = cur[time[time.length-1]].toString().replaceAll(',','|')
+		let points = ''
+		for (let j = 0; j < 4; j++) points = points + cur[time[0]][j] + (j < 3 ? ' | ' : '')
 		addStatus2(date + ' | ' + points)
 	}
 	addStatus2(('-').repeat(34))
