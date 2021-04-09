@@ -82,8 +82,8 @@ function buyRoutine() {
 			if (nbr[2]) buildingbuy(nbr[0], amt)
 		}	
 		if (building[mainBuild] >= nextGoal && curBuild[1] >= maxBuild) {
-			if (getValue(bcost[curBuild[0]*4-1]) < getGold() * 0.98) buildingbuy(curBuild[0], 3)
-			else startIdleMode()
+			//if (getValue(bcost[curBuild[0]*4-1]) < getGold() * 0.98) buildingbuy(curBuild[0], 3)
+			startIdleMode()
 		}
 	}
 	buyTimer = Date.now()
