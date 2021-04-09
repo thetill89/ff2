@@ -81,10 +81,14 @@ function buyRoutine() {
 			let amt = maxbplus[nbr[0]] > 500 && nbr[1] < useMaxBuy && !buyStep ? 4 : 3
 			if (nbr[2]) buildingbuy(nbr[0], amt)
 		}	
-		if (building[mainBuild] >= nextGoal && curBuild[1] >= maxBuild) startIdleMode()
+		if (building[mainBuild] >= nextGoal && curBuild[1] >= maxBuild) {
+			if (getValue(bcost[curBuild[0]*4-1]) < getGold() * 0.98) buildingbuy(curBuild[0], 3)
+			else startIdleMode()
+		}
 	}
 	buyTimer = Date.now()
 }
+
 
 function idleRoutine() {
 	if (!idlemode || idleStep) return
