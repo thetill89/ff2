@@ -152,7 +152,7 @@ function toggleAutoPlay(adjust=true) {
 	if (!autoPlay) {
 		if (adjust) {
 			sessionTimer = sessionTimer2 = Date.now()
-			setSessionTime(nextrstimediv-600)
+			setSessionTime(nextrstimediv-sessionTime)
 		}
 		else sessionTimer = sessionTimer2 = Date.now()
 		idleStep = 0
@@ -366,18 +366,18 @@ function statusInfo() {
 	info2.value = ''
 	if (todayRuns.r) { 
 		if (!autoSkill && getPoints('skill') < 200) {
-			let sp2 = Math.ceil((200 - getPoints('skill')) / (todayRuns.sp / todayRuns.r)) * 600
+			let sp2 = Math.ceil((200 - getPoints('skill')) / (todayRuns.sp / todayRuns.r)) * sessionTime
 			sp2 = new Date(new Date().setSeconds(sp2))
 			addStatus2(pr('Next SP: ',s) + sp2.toLocaleTimeString().slice(0,5))
 		}	
 		let epRun = todayRuns.ep / todayRuns.r
-		let rp1 = Math.ceil((500 - getPoints('event')) / epRun) * 600, rp10
+		let rp1 = Math.ceil((500 - getPoints('event')) / epRun) * sessionTime, rp10
 		if (getPoints('research') < 9) { 
-			rp10 = (Math.ceil(500 / epRun) * (9 - getPoints('research')) * 600) + rp1
+			rp10 = (Math.ceil(500 / epRun) * (9 - getPoints('research')) * sessionTime) + rp1
 			rp10 = new Date(new Date().setSeconds(rp10))
 			addStatus2(pr('Ten  RP: ',s) + rp10.toLocaleTimeString().slice(0,5))
 		}
-		if (rp1 === 600) rp1 = sessionTime - getSessionTime()
+		if (rp1 === sessionTime) rp1 = sessionTime - getSessionTime()
 		rp1 = new Date(new Date().setSeconds(rp1))
 		addStatus2(pr('Next RP:',s) + rp1.toLocaleTimeString().slice(0,5))
 		addStatus2(seperator + '--')
@@ -2123,7 +2123,7 @@ function createButtons() {
 	}
 	btn3.onclick  = function() { 
 		sessionTimer = sessionTimer2 = Date.now()
-		setSessionTime(nextrstimediv-600)
+		setSessionTime(nextrstimediv-sessionTime)
 	}
 	btn4.onclick  = function() {
 		sleepOn = !sleepOn
