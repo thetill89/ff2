@@ -1249,7 +1249,7 @@ function updateCalc() {
 	skillNow = calc['mstruck']
 	skillNew = calc['ui'][4].getValue('mstruck')
 	prodNew = prodNew/Math.pow(skillNow,2)*Math.pow(skillNew,2)
-	let pct = '  - ' + pl(Math.round(prodNew/prodNow*100),4) + '%'
+	let pct = '  - ' + pl((prodNew/prodNow).toFixed(2), 6) + 'x'
 	info.push(' Prod:  ' + pl(convertValue(prodNew),9) + pct)
 	let msRun = calc['msrun']
 	let msNow = calc['skmega'] 
@@ -1258,7 +1258,7 @@ function updateCalc() {
 	msNow = calc['rsmega'] + 1
 	msNext = calc['ui'][3].getValue('rsmega') + 1
 	msRun = msRun/msNow*msNext
-	pct = '  - ' + pl(Math.round(msRun/calc['msrun']*100),4) + '%'
+	pct = '  - ' + pl((msRun/calc['msrun']).toFixed(2), 6) + 'x'
 	info.push(' Mega:  ' + pl(convertValue(msRun),9) + pct)
 	let farmDaily = calc['farmnow'] * farmMax
 	let farmNow = calc['skmega']
@@ -1268,7 +1268,7 @@ function updateCalc() {
 	farmNext = calc['ui'][3].getValue('rsmega') + 1
 	farmDaily = farmDaily/farmNow*farmNext
 	farmDaily = farmDaily/calc['farmlvl']*calc['ui'][6].getValue('rsfarm') 
-	pct = '  - ' + pl(Math.round((farmDaily/(calc['farmnow'] * farmMax))*100),4) + '%'
+	pct = '  - ' + pl((farmDaily/(calc['farmnow'] * farmMax)).toFixed(2), 6) + 'x'
 	info.push(' Farm:  ' + pl(convertValue(farmDaily),9) + pct)
 	let mission = calc['mission']
 	let missionNow = calc['rsclan'] + 1
@@ -1277,7 +1277,7 @@ function updateCalc() {
 	missionNow = calc['msclan']
 	missionNext = calc['ui'][5].getValue('msclan')
 	mission = mission/missionNow*missionNext
-	pct = '  - ' + pl(Math.round(mission/calc['mission']*100),4) + '%'
+	pct = '  - ' + pl((mission/calc['mission']).toFixed(2), 6) + 'x'
 	info.push(' Clan:  ' + pl(convertValue(mission),9) + pct)
 	let tc = calc['mstruckCost']
 	let f = Math.round((calc['ui'][4].getValue('mstruck')-calc['mstruck'])/100)
