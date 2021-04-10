@@ -3257,11 +3257,11 @@ function skillanz() {
 
 
 function skillupgradex100(e) {
-	confirmBox(function(){
-	   $j.get("game/skillupgradex100.php?" + e, function(e) {
+	//confirmBox(function(){
+	   $j.get('game/skillupgradex100.php?' + e, function(e) {
 			1 == e.erfolg && skillanz()
 		})
-	})
+	//})
 }
 
 function eventanz() {
