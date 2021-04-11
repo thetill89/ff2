@@ -1693,7 +1693,7 @@ function createHeader() {
 	textf.spellcheck = false
 	textf.style.cssText = "font-family: monospace; font-weight: 800; font-size: 13px; position: absolute; width: 285px; height: 34px; top: 10px; left: 1230px; padding-left: 15px; padding-top: 3px; border-top: 1px dotted "+ theme + "; border-right: 1px dotted "+ theme + "; border-bottom: none; border-left: 1px dotted "+ theme + "; border-image: initial; border-radius: 5px; background-color: black; color: "+ theme + "; overflow: hidden; resize: none; cursor: default; outline: none; caret-color: transparent"
 	document.getElementById('maingame').appendChild(textf); 
-	header2.value = 'SCRIPT LOG                      ' + sVersion
+	header2.value = 'SCRIPT LOG                        ' + sVersion
 	textf = document.createElement('textarea');
 	textf.id = 'header3'
 	textf.disabled = true
