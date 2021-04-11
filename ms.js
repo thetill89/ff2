@@ -821,27 +821,24 @@ function statsGrowth() {
 	let week = ['SO','MO','TU','WE','TH','FR','SA']
 	let res = Object.entries(allRuns)
 	for (let i = 0; i < res.length-1; i++) {
-		let now = res[i], next = res[i+1], pre = ''
+		let now = res[i], next = res[i+1]
 		let date = now[0].split('.').map(Number)
 		date = res[i][0].slice(0,5) + ' ' + week[new Date(date[2],date[1]-1,date[0]).getDay()]
 		runs = pl(now[1].r,4)
 		lvl = pl(now[1].l - next[1].l,5)
-		prod = now[1].p - next[1].p
-		if (prod < 0) {
-			prod = next[1].p - now[1].p
-			pre = '-'
-		}
-		prod = pl(pre + convertValue(prod),10)
-		mst = pl(convertValue(now[1].t - next[1].t),10)
-		ms = now[1].m > next[1].m ? pl(convertValue(now[1].m - next[1].m), 10) : pl (0, 10)
-		avgSp = now[1].c ? now[1].s/now[1].c : 0
-		avgEp = now[1].c ? now[1].e/now[1].c : 0
+		mst = pl(convertValue(now[1].t - next[1].t), 10)
+		prod =  now[1].p > next[1].p ? convertValue(now[1].p - next[1].p) : '-' + convertValue(next[1].p - now[1].p)
+		prod = pl(prod, 10)
+		ms = now[1].m > next[1].m ? convertValue(now[1].m - next[1].m) : '-' + convertValue(next[1].m - now[1].m)
+		ms = pl(ms, 10)
+		avgSp = now[1].c ? now[1].s / now[1].c : 0
+		avgEp = now[1].c ? now[1].e / now[1].c : 0
 		tSp += avgSp
 		tEp += avgEp
 		data += date + ' | ' +   runs + ' | ' + lvl 
 		data += ' | ' + prod + ' | ' + mst + ' | ' + ms
-		data += ' | ' + pl(avgSp.toFixed(2),5)
-		data += ' | ' + pl(avgEp.toFixed(2),5) + '\n'
+		data += ' | ' + pl(avgSp.toFixed(2), 5)
+		data += ' | ' + pl(avgEp.toFixed(2), 5) + '\n'
 		if ((i+1)%7 === 0) data += sep	
 		if (i===30) data += '\n'
 	}
