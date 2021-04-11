@@ -1310,7 +1310,6 @@ function updateCalc() {
 }
 
 function getCalcData() {
-	calc['ui'][8].setValue('data', ' Getting data')
 	$j.get('game/skillanz.php').done(function(r) {	
 		calc['sktruck'] = r.skill[9]
 		calc['skmega'] = r.skill[10]
@@ -1694,7 +1693,7 @@ function createHeader() {
 	textf.spellcheck = false
 	textf.style.cssText = "font-family: monospace; font-weight: 800; font-size: 13px; position: absolute; width: 285px; height: 34px; top: 10px; left: 1230px; padding-left: 15px; padding-top: 3px; border-top: 1px dotted "+ theme + "; border-right: 1px dotted "+ theme + "; border-bottom: none; border-left: 1px dotted "+ theme + "; border-image: initial; border-radius: 5px; background-color: black; color: "+ theme + "; overflow: hidden; resize: none; cursor: default; outline: none; caret-color: transparent"
 	document.getElementById('maingame').appendChild(textf); 
-	header2.value = 'SCRIPT LOG                      v.' + sVersion
+	header2.value = 'SCRIPT LOG                      ' + sVersion
 	textf = document.createElement('textarea');
 	textf.id = 'header3'
 	textf.disabled = true
@@ -2064,7 +2063,7 @@ function loadSettings() {
 			useMaxBuy: [1500],
 			otherPct: 7.3,
 			buyTimeOut: 60,
-			maxProd: '1.00 aq',
+			maxProd: '1.00 at',
 			maxLevel: 6498,
 			sessionTime: 600,
 			idleMax: 540,
