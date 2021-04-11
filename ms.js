@@ -166,7 +166,6 @@ function toggleAutoPlay(adjust=true) {
 		resetStep = 0
 		ep = getPoints('event')
 		sp = getPoints('skill')
-		gemsbar.style.border = '1.2px solid ' + theme
 		autoPlay = Date.now()
 		buyMax.forEach((v,i) => building[mainBuild] >= v ? buyStep = i : 0)
 		if (building[mainBuild] >= buyGoal[buyGoal.length-1]) buyStep++
@@ -182,7 +181,6 @@ function toggleAutoPlay(adjust=true) {
 	}
 	else {
 		if (idlemode) idlemodeend()
-		gemsbar.style.border = '1px dotted ' + theme
 		autoPlay = false
 	}
 	displayStats()
@@ -280,13 +278,11 @@ function finishRun() {
 	resetStep = 0
 	homeanz()
 	if (sleepOn && new Date().getHours() === sleepTime[0] && new Date().getMinutes() >= sleepTime[1]) {
-		gemsbar.style.border = '1px dotted ' + theme
 		autoPlay = false
 		highlightBtn(btn1)
 	}
 	else if (finishNext) {
 		if (ST.audio) finishAudio.play()
-		gemsbar.style.border = '1px dotted ' + theme
 		autoPlay = false
 		finishNext = false
 		highlightBtn(btn1)
