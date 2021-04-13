@@ -802,7 +802,6 @@ function statsSummary() {
 		data += ' | ' + prod + ' | ' + mst + ' | ' + ms
 		data += ' |  ' + avgSp + ' | ' + avgEp + '\n'
 		if (ct%7 === 0) data += sep
-		if (ct===30) data += '\n'
 		ct++
 	}
 	data = '  DAY    | RUN  | LEVEL |    PROD    |  MS TOTAL  |   MS RUN   |   SP  |   EP \n' + sep + data
@@ -840,7 +839,6 @@ function statsGrowth() {
 		data += ' | ' + pl(avgSp.toFixed(2), 5)
 		data += ' | ' + pl(avgEp.toFixed(2), 5) + '\n'
 		if ((i+1)%7 === 0) data += sep	
-		if (i===30) data += '\n'
 	}
 	data = '  DAY    | RUN  | LEVEL |    PROD    |  MS TOTAL  |   MS RUN   |   SP  |   EP \n' + sep + data
 	let time = (Date.now()-ST.startTime)/(1000*3600*24)
@@ -1158,8 +1156,8 @@ function calculateCost() {
 
 function createCostUI() {
 	 costUI[0] = qs.create(926,510, 'Building')
-	.addNumber('start', 0, 4700, buyMax[buyMax.length-1], 100)
-	.addNumber('end', 0, 4700, buyGoal[buyGoal.length-1], 100)
+	.addNumber('start', 0, 4900, buyMax[buyMax.length-1], 100)
+	.addNumber('end', 0, 4900, buyGoal[buyGoal.length-1], 100)
 	.hideAllTitles()
 	.hide()
 	.setSize(90,115)
