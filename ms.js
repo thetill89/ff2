@@ -363,8 +363,13 @@ function statusInfo() {
 	info2.value = ''
 	if (todayRuns.r) { 
 		if (!autoSkill && getPoints('skill') < 200) {
-			let sp2 = Math.ceil((200 - getPoints('skill')) / (todayRuns.sp / todayRuns.r)) * sessionTime
-			sp2 = new Date(new Date().setSeconds(sp2))
+			let sp2 = getPoints('skill'), count = 0			
+			while (sp2 < 200) {
+				count++
+				sp2 += todayRuns.sp / todayRuns.r
+				if (count%6 === 0) sp2 += 6
+			}
+			sp2 = new Date(new Date().setSeconds(count * sessionTime))
 			addStatus2(pr('Next SP: ',s) + sp2.toLocaleTimeString().slice(0,5))
 		}	
 		let epRun = todayRuns.ep / todayRuns.r
