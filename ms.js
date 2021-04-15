@@ -811,11 +811,11 @@ let seperator = ('-').repeat(31), allRuns
 function statsSummary() {
 	if (!allRuns) allRuns = JSON.parse(decompress(load(account + '_summary')))
 	let runs, lvl, prod, ms, mst, avgSp, avgEp, data = ''
-	let sep = ('-').repeat(79) + '\n'
+	let sep = ' ' + ('-').repeat(79) + '\n'
 	let week = ['SO','MO','TU','WE','TH','FR','SA'], ct = 1
 	for (key in allRuns) {
 		let date = key.split('.').map(Number)
-		date = key.slice(0,5) + ' ' + week[new Date(date[2],date[1]-1,date[0]).getDay()]
+		date = ' ' + key.slice(0,5) + ' ' + week[new Date(date[2],date[1]-1,date[0]).getDay()]
 		runs = pl(allRuns[key].r,4)
 		lvl = pl(allRuns[key].l,5)
 		prod = pl(convertValue(allRuns[key].p),10)
@@ -829,11 +829,11 @@ function statsSummary() {
 		if (ct%7 === 0) data += sep
 		ct++
 	}
-	data = '  DAY    | RUN  | LEVEL |    PROD    |  MS TOTAL  |   MS RUN   |   SP  |   EP \n' + sep + data
+	data = '   DAY    | RUN  | LEVEL |    PROD    |  MS TOTAL  |   MS RUN   |   SP  |   EP \n' + sep + data
 	let time = (Date.now()-ST.startTime)/(1000*3600*24)
-	let runsDay = 'Runs: ' + ST.totalRuns.toLocaleString() +  ' | Ø ' + (ST.totalRuns/time).toFixed(2)
+	let runsDay = ' Runs: ' + ST.totalRuns.toLocaleString() +  ' | Ø ' + (ST.totalRuns/time).toFixed(2)
 	time = ' | Time: ' + time.toFixed(2) + ' days \n\n'
-	data =  'DAILY RUN STATS\n' + runsDay  + time + sep + data
+	data = ' DAILY RUN STATS\n' + runsDay  + time + sep + data
 	statswin.value = data
 	statswin.style.display = 'block'
 }
@@ -841,13 +841,13 @@ function statsSummary() {
 function statsGrowth() {
 	if (!allRuns) allRuns = JSON.parse(decompress(load(account + '_summary')))
 	let runs, lvl, prod, ms, mst, avgSp, avgEp, tSp = tEp = 0, data = ''
-	let sep = ('-').repeat(79) + '\n'
+	let sep = ' ' + ('-').repeat(79) + '\n'
 	let week = ['SO','MO','TU','WE','TH','FR','SA']
 	let res = Object.entries(allRuns)
 	for (let i = 0; i < res.length-1; i++) {
 		let now = res[i], next = res[i+1]
 		let date = now[0].split('.').map(Number)
-		date = res[i][0].slice(0,5) + ' ' + week[new Date(date[2],date[1]-1,date[0]).getDay()]
+		date = ' ' + res[i][0].slice(0,5) + ' ' + week[new Date(date[2],date[1]-1,date[0]).getDay()]
 		runs = pl(now[1].r,4)
 		lvl = pl(now[1].l - next[1].l,5)
 		mst = pl(convertValue(now[1].t - next[1].t), 10)
@@ -865,13 +865,13 @@ function statsGrowth() {
 		data += ' | ' + pl(avgEp.toFixed(2), 5) + '\n'
 		if ((i+1)%7 === 0) data += sep	
 	}
-	data = '  DAY    | RUN  | LEVEL |    PROD    |  MS TOTAL  |   MS RUN   |   SP  |   EP \n' + sep + data
+	data = '   DAY    | RUN  | LEVEL |    PROD    |  MS TOTAL  |   MS RUN   |   SP  |   EP \n' + sep + data
 	let time = (Date.now()-ST.startTime)/(1000*3600*24)
 	let runsDay = 'Runs: ' + ST.totalRuns.toLocaleString() +  ' | Ø ' + (ST.totalRuns/time).toFixed(2)
 	time = ' | Time: ' + time.toFixed(2) + ' days | '
 	tSp = 'SP: ' + (tSp/(res.length-1)).toFixed(2) + ' | '
 	tEp = 'EP: ' + (tEp/(res.length-1)).toFixed(2) + '\n'
-	data =  'DAILY RUN AVERAGE\n' + runsDay + time + tSp + tEp + '\n' + sep + data
+	data =  ' DAILY RUN AVERAGE\n' + runsDay + time + tSp + tEp + '\n' + sep + data
 	statswin.value = data
 	statswin.style.display = 'block'
 }
