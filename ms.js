@@ -748,7 +748,8 @@ function shopUpgrade() {
 			}
 			info2.value = ''
 			addStatus2('Store points: ' + shopOld.toLocaleString())
-			addStatus2('Farm Level:   ' + farmNew + ' (+' + (farmNew-farmOld) + ')')
+			addStatus2('Farm gain:    ' + (farmNew / farmOld * 100 - 100).toFixed(2) + ' %')
+			addStatus2('Farm Level:   ' + farmNew + ' (' + farmOld + ')')
 		})
 	})
 }
@@ -2254,7 +2255,6 @@ function createButtons() {
 			info2.value = ''
 			let l = info1.value
 			l = [l.length/1024,l.split('\n').length]
-			addStatus2(seperator)
 			addStatus2('Log:  ' + l[1].toLocaleString() + ' entries, ' + Math.round(l[0]) + ' kb')
 			l = log.value
 			l = [l.length/1024,l.split('\n').length]
