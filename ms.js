@@ -867,7 +867,7 @@ function statsGrowth() {
 	}
 	data = '   DAY    | RUN  | LEVEL |    PROD    |  MS TOTAL  |   MS RUN   |   SP  |   EP \n' + sep + data
 	let time = (Date.now()-ST.startTime)/(1000*3600*24)
-	let runsDay = 'Runs: ' + ST.totalRuns.toLocaleString() +  ' | Ø ' + (ST.totalRuns/time).toFixed(2)
+	let runsDay = ' Runs: ' + ST.totalRuns.toLocaleString() +  ' | Ø ' + (ST.totalRuns/time).toFixed(2)
 	time = ' | Time: ' + time.toFixed(2) + ' days | '
 	tSp = 'SP: ' + (tSp/(res.length-1)).toFixed(2) + ' | '
 	tEp = 'EP: ' + (tEp/(res.length-1)).toFixed(2) + '\n'
