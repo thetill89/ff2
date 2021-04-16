@@ -533,7 +533,8 @@ function doResearch() {
 	if (Date.now() - researchTimer > researchLeft) {
 		researchLeft = 1e9
 		$j.get('game/researchfertig.php').done(function() {
-			$j.get('game/researchstart.php').done(function() {
+			$j.get('game/researchstart.php').done(function(r) {
+				console.log(r)
 				getResearchTime()
 				addStatus('Research started')
 			 }).fail(() => setTimeout(getResearchTime, failTimeOut * 1000))	
