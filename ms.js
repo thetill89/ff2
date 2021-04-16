@@ -490,9 +490,9 @@ function collectFarm() {
 		farmLeft = 1e9
 		$j.get('game/farmcollect.php').done(function(r) {
 			if (r.erfolg === 1) {
-				let fp = ' | ' + pl(r.megapointswin, 2) 
-				let fsp = ' | ' + pl(r.skillpointsplus, 2)
-				let fep = ' | ' + pl(r.eventpointsplus, 2)			
+				let fp = ', ' + pl(r.megapointswin, 2) 
+				let fsp = ', ' + pl(r.skillpointsplus, 2)
+				let fep = ', ' + pl(r.eventpointsplus, 2)			
 				sp += r.skillpointsplus
 				ep += r.eventpointsplus
 				addStatus(r.megadollarwin +  fp + fsp + fep)
@@ -546,7 +546,7 @@ let autoRP
 function buyResearchPoint() {
 	if (autoRP && getPoints('event') >= 500) {
 		$j.get('game/eventbuy.php?3').done(function(r) { 
-			addStatus('Buy RP ' + r.researchpoints + ' | ' + getLastBuy() + ' min')
+			addStatus('Buy RP ' + r.researchpoints + ', ' + getLastBuy() + ' min')
 			$j('.researchbtn').html('Research: ' + r.researchpoints)
 			$j('.eventbtn').html('Event: ' + r.eventpoints) 
 			statusInfo()
@@ -913,7 +913,7 @@ function getFarmData(all=false) {
 	let res = {}
 	let data = info1.value.split('\n')
 	for (let i = 0; i < data.length; i++) {
-		let entry = data[i].match(/(.*)\|(.*)\|(.*)\|(.*)\|(.*)\|(.*)/)
+		let entry = data[i].match(/(.*)\|(.*)\|(.*)\,(.*)\,(.*)\,(.*)/)
 		if (entry) { 
 			let date = entry[1]
 			if (typeof res[date] === 'undefined') { 
