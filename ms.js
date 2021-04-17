@@ -430,7 +430,7 @@ function doMission() {
 			if (!r.clanquestdauer) {
 				$j.get('game/cqattack.php').done(function() {
 					setTimeout(getMissionTime, 1000)	
-					addStatus('Mission: ' + need)
+					addStatus('Mission. ' + need)
 					$j('.clanbtn').html('Fastfood Clan')
 				}).fail(() => setTimeout(getMissionTime, failTimeOut * 1000))
 			}
@@ -518,25 +518,24 @@ function collectNow() {
 	}		
 }
 
-let researchNow
+let researchBuilding
 function getResearchTime() {
 	$j.get('game/researchanz.php').done(function(r) {
 		researchLeft = (r.researchdauernoch + 1) * 1000
 		researchTimer = Date.now()	
-		researchNow = r.nextresearch
+		researchBuilding = r.nextresearch
 		$j('.researchbtn').html('Research: ' + r.researchpoints)		
 	}).fail(() => setTimeout(getResearchTime, failTimeOut * 1000))		
 }
 
 function doResearch() {
-	if (resetStep || (buyStep && researchNow === mainBuild)) return
+	if (resetStep || (buyStep && researchBuilding === mainBuild)) return
 	if (Date.now() - researchTimer > researchLeft) {
 		researchLeft = 1e9
 		$j.get('game/researchfertig.php').done(function() {
-			$j.get('game/researchstart.php').done(function(r) {
-				console.log(r)
+			$j.get('game/researchstart.php').done(function() {
 				getResearchTime()
-				addStatus('Research started')
+				addStatus('Research ' + researchBuilding)
 			 }).fail(() => setTimeout(getResearchTime, failTimeOut * 1000))	
 		}).fail(() => setTimeout(getResearchTime, failTimeOut * 1000))	
 	}
