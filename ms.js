@@ -385,7 +385,10 @@ function statusInfo() {
 		addStatus2(seperator + '--')
 		
 	}
-	if (runStats.length) addStatus2(pr('Level:',s) + runStats[runStats.length-1][0] + ', ' + Math.floor(runStats[runStats.length-1][1]) + '%') 
+	if (runStats.length) { 
+		addStatus2(pr('Max:', s) + maxLevel + ', ' + maxProd)
+		addStatus2(pr('Level:',s) + runStats[runStats.length-1][0] + ', ' + Math.floor(runStats[runStats.length-1][1]) + '%')
+	}
 	if (todayRuns.r) {
 		addStatus2(pr('Ø SP:',s) + (todayRuns.sp/todayRuns.r).toFixed(2) + ', ' + (todayRuns.ep/todayRuns.r).toFixed(2))
 		addStatus2(pr('Today: ',s) + todayRuns.r + ' resets')
@@ -394,7 +397,6 @@ function statusInfo() {
 	let data = getFarmData()
 	let time = (Date.now()-ST.startTime)/1000
 	let runMS = getValue(getLogData()[1]) * todayRuns.r
-	//parseInt(getFarmData()[0]) + Datecheck für 0.00-1.00
 	addStatus2(pr('Points:',s-1) + data[2] + ' fp, ' + data[3] + ' sp, ' + data[4] + ' ep')
 	addStatus2(pr('MS Farm:',s) + data[1] + ', ' + (getValue(data[1]) / (runMS + getValue(data[1])) * 100).toFixed(2) + '%')
 	runMS = (runMS * todayRuns.r)
