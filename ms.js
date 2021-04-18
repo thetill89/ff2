@@ -751,7 +751,7 @@ function shopUpgrade() {
 			info2.value = ''
 			addStatus2('Store points: ' + shopOld.toLocaleString())
 			addStatus2('Farm gain:    ' + (farmNew / farmOld * 100 - 100).toFixed(2) + ' %')
-			addStatus2('Farm Level:   ' + farmNew + ' (' + farmOld + ')')
+			addStatus2('Farm level:   ' + farmNew + ' (' + farmOld + ')')
 		})
 	})
 }
@@ -924,7 +924,6 @@ function getFarmData(all=false) {
 			entry.forEach((v,i) => i > 2 ?  res[date][i-3] += getValue(v) : 0)
 		}
 	}
-	if (!Object.keys(res).length) return [0,0,0,0,0]
 	res = Object.keys(res).map(function(k) { return [k, convertValue(res[k][0]),pl(res[k][1],4),pl(res[k][2],3),pl(res[k][3],3)] })
 	if (!all) res = [res[0][0],res[0][1],res[0][2],res[0][3],res[0][4]]
 	return res
