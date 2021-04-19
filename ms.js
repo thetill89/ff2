@@ -812,7 +812,7 @@ function updateSummary() {
 let seperator = ('-').repeat(31), allRuns
 function statsSummary() {
 	if (!allRuns) allRuns = JSON.parse(decompress(load(account + '_summary')))
-	let runs, lvl, prod, ms, mst, avgSp, avgEp, data = ''
+	let runs, lvl, prod, ms, mst, avgSp, avgEp, tSp = tEp = 0, data = ''
 	let sep = ' ' + ('-').repeat(79) + '\n'
 	let week = ['SO','MO','TU','WE','TH','FR','SA'], ct = 1
 	for (key in allRuns) {
@@ -823,19 +823,23 @@ function statsSummary() {
 		prod = pl(convertValue(allRuns[key].p),10)
 		mst = pl(convertValue(allRuns[key].t),10)
 		ms = pl(convertValue(allRuns[key].m),10)
-		avgSp = allRuns[key].c ? (allRuns[key].s/allRuns[key].c).toFixed(2) : '0.00' 
-		avgEp = allRuns[key].c ? (allRuns[key].e/allRuns[key].c).toFixed(2) : '00.00' 
+		avgSp = allRuns[key].c ? allRuns[key].s/allRuns[key].c : 0 
+		avgEp = allRuns[key].c ? allRuns[key].e/allRuns[key].c : 0
+		tSp += avgSp
+		tEp += avgEp		
 		data += date + ' | ' +   runs + ' | ' + lvl
 		data += ' | ' + prod + ' | ' + mst + ' | ' + ms
-		data += ' |  ' + avgSp + ' | ' + avgEp + '\n'
+		data += ' |  ' + avgSp.toFixed(2) + ' | ' + avgEp.toFixed(2) + '\n'
 		if (ct%7 === 0) data += sep
 		ct++
 	}
 	data = '   DAY    | RUN  | LEVEL |    PROD    |  MS TOTAL  |   MS RUN   |   SP  |   EP \n' + sep + data
 	let time = (Date.now()-ST.startTime)/(1000*3600*24)
 	let runsDay = ' Runs: ' + ST.totalRuns.toLocaleString() +  ' | Ø ' + (ST.totalRuns/time).toFixed(2)
-	time = ' | Time: ' + time.toFixed(2) + ' days \n\n'
-	data = ' DAILY RUN STATS\n' + runsDay  + time + sep + data
+	tSp = 'SP: ' + (tSp/(res.length-1)).toFixed(2) + ' | '
+	tEp = 'EP: ' + (tEp/(res.length-1)).toFixed(2) + '\n\n'
+	time = ' | Time: ' + time.toFixed(2) + ' days | '
+	data = ' DAILY RUN STATS\n' + runsDay + time + tSp + tEp + sep + data
 	statswin.value = data
 	statswin.style.display = 'block'
 }
@@ -872,8 +876,8 @@ function statsGrowth() {
 	let runsDay = ' Runs: ' + ST.totalRuns.toLocaleString() +  ' | Ø ' + (ST.totalRuns/time).toFixed(2)
 	time = ' | Time: ' + time.toFixed(2) + ' days | '
 	tSp = 'SP: ' + (tSp/(res.length-1)).toFixed(2) + ' | '
-	tEp = 'EP: ' + (tEp/(res.length-1)).toFixed(2) + '\n'
-	data =  ' DAILY RUN AVERAGE\n' + runsDay + time + tSp + tEp + '\n' + sep + data
+	tEp = 'EP: ' + (tEp/(res.length-1)).toFixed(2) + '\n\n'
+	data =  ' DAILY RUN AVERAGE\n' + runsDay + time + tSp + tEp + sep + data
 	statswin.value = data
 	statswin.style.display = 'block'
 }
@@ -1672,7 +1676,7 @@ function createStatsWin() {
 	let textf = document.createElement("textarea");
 	textf.id = 'statswin'
 	textf.spellcheck = false
-	textf.style.cssText = "font-family: monospace; font-size: 13px; position: absolute; width: 590px; height: 604px; top: 10px; left: 926px; padding-left: 15px; border: 1px dotted "+ theme + "; border-radius: 3px; background-color: black; color: "+ theme + "; caret-color: transparent; overflow: hidden; outline: none; resize: none; cursor: default; display: none; z-index: 1;"
+	textf.style.cssText = "font-family: monospace; font-size: 13px; position: absolute; width: 590px; height: 414px; top: 10px; left: 926px; padding-left: 15px; border: 1px dotted "+ theme + "; border-radius: 3px; background-color: black; color: "+ theme + "; caret-color: transparent; overflow: hidden; outline: none; resize: none; cursor: default; display: none; z-index: 1;"
 	document.getElementById('maingame').appendChild(textf); 
 	statswin.d = 0
 }
