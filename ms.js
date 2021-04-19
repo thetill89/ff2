@@ -137,7 +137,7 @@ function startIdleMode() {
 		}
 		else addStatus2('Idle max')
 		if (buyStep > 1) getMissionTime()
-		if (buyStep > buyMax.length) {
+		if (buyStep >= buyMax.length) {
 			for (let i = 1; i <= Math.floor((sessionTime-time) / 120); i++) setTimeout(getMissionTime, i * 120 * 1000)
 		}
 	}
