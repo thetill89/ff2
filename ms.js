@@ -836,8 +836,8 @@ function statsSummary() {
 	data = '   DAY    | RUN  | LEVEL |    PROD    |  MS TOTAL  |   MS RUN   |   SP  |   EP \n' + sep + data
 	let time = (Date.now()-ST.startTime)/(1000*3600*24)
 	let runsDay = ' Runs: ' + ST.totalRuns.toLocaleString() +  ' | Ø ' + (ST.totalRuns/time).toFixed(2)
-	tSp = 'SP: ' + (tSp/ct).toFixed(2) + ' | '
-	tEp = 'EP: ' + (tEp/ct).toFixed(2) + '\n\n'
+	tSp = 'SP: ' + (tSp/(ct-1)).toFixed(2) + ' | '
+	tEp = 'EP: ' + (tEp/(ct-1)).toFixed(2) + '\n\n'
 	time = ' | Time: ' + time.toFixed(2) + ' days | '
 	data = ' DAILY RUN STATS\n' + runsDay + time + tSp + tEp + sep + data
 	statswin.value = data
@@ -865,18 +865,25 @@ function statsGrowth() {
 		avgEp = now[1].c ? now[1].e / now[1].c : 0
 		tSp += avgSp
 		tEp += avgEp
+		if (i === res.length-2) {
+			avgSp = next[1].c ? next[1].s / next[1].c : 0
+			avgEp = next[1].c ? next[1].e / next[1].c : 0
+			tSp += avgSp
+			tEp += avgEp
+		}
 		data += date + ' | ' +   runs + ' | ' + lvl 
 		data += ' | ' + prod + ' | ' + mst + ' | ' + ms
 		data += ' | ' + pl(avgSp.toFixed(2), 5)
 		data += ' | ' + pl(avgEp.toFixed(2), 5) + '\n'
 		if ((i+1)%7 === 0) data += sep	
 	}
+	console.log(res.length)
 	data = '   DAY    | RUN  | LEVEL |    PROD    |  MS TOTAL  |   MS RUN   |   SP  |   EP \n' + sep + data
 	let time = (Date.now()-ST.startTime)/(1000*3600*24)
 	let runsDay = ' Runs: ' + ST.totalRuns.toLocaleString() +  ' | Ø ' + (ST.totalRuns/time).toFixed(2)
 	time = ' | Time: ' + time.toFixed(2) + ' days | '
-	tSp = 'SP: ' + (tSp/(res.length-1)).toFixed(2) + ' | '
-	tEp = 'EP: ' + (tEp/(res.length-1)).toFixed(2) + '\n\n'
+	tSp = 'SP: ' + (tSp/(res.length)).toFixed(2) + ' | '
+	tEp = 'EP: ' + (tEp/(res.length)).toFixed(2) + '\n\n'
 	data =  ' DAILY RUN AVERAGE\n' + runsDay + time + tSp + tEp + sep + data
 	statswin.value = data
 	statswin.style.display = 'block'
