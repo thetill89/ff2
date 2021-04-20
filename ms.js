@@ -877,7 +877,6 @@ function statsGrowth() {
 		data += ' | ' + pl(avgEp.toFixed(2), 5) + '\n'
 		if ((i+1)%7 === 0) data += sep	
 	}
-	console.log(res.length)
 	data = '   DAY    | RUN  | LEVEL |    PROD    |  MS TOTAL  |   MS RUN   |   SP  |   EP \n' + sep + data
 	let time = (Date.now()-ST.startTime)/(1000*3600*24)
 	let runsDay = ' Runs: ' + ST.totalRuns.toLocaleString() +  ' | Ø ' + (ST.totalRuns/time).toFixed(2)
