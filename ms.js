@@ -359,7 +359,7 @@ function displayStats() {
 }
 
 function statusInfo() {
-	let s = 11, build =['Fries','Pizza','Hotdog','Hamburger','Bike','Scooter','Van','Truck']
+	let s = 11
 	info2.value = ''
 	if (todayRuns.r) { 
 		if (!autoSkill && getPoints('skill') < 200) {
@@ -387,7 +387,7 @@ function statusInfo() {
 	let data = getFarmData()
 	let time = (Date.now()-ST.startTime)/1000
 	let runMS = getValue(getLogData()[1]) * (todayRuns.r || 1)
-	addStatus2(pr('Points:',s-1) + data[2] + ' fp, ' + data[3] + ' sp, ' + data[4] + ' ep')
+	//addStatus2(pr('Points:',s-1) + data[2] + ' fp, ' + data[3] + ' sp, ' + data[4] + ' ep')
 	addStatus2(pr('MS Farm:',s) + data[1] + ', ' + (getValue(data[1]) / (runMS + getValue(data[1])) * 100).toFixed(2) + '%')
 	runMS = (runMS * todayRuns.r)
 	addStatus2(pr('MS Run:',s) +  convertValue(runMS / todayRuns.r))
@@ -405,6 +405,7 @@ function statusInfo() {
 		let finish = new Date()
 		finish.setSeconds(researchLeft/1000 - (Date.now() - researchTimer)/1000)
 		addStatus2(pr('Finish:', s) + finish.toLocaleTimeString())
+		let build =['Fries','Pizza','Hotdog','Hamburger','Bike','Scooter','Van','Truck']
 		addStatus2(pr('Research:', s) + build[researchBuilding-1])
 	}
 	addStatus2(seperator + '--')
