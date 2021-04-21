@@ -359,7 +359,7 @@ function displayStats() {
 }
 
 function statusInfo() {
-	let s = 11
+	let s = 11, build =['Fries','Pizza','Hotdog','Hamburger','Bike','Scooter','Van','Truck']
 	info2.value = ''
 	if (todayRuns.r) { 
 		if (!autoSkill && getPoints('skill') < 200) {
@@ -377,14 +377,21 @@ function statusInfo() {
 		if (getPoints('research') < 9) { 
 			rp10 = (Math.ceil(500 / epRun) * (9 - getPoints('research')) * sessionTime) + rp1
 			rp10 = new Date(new Date().setSeconds(rp10))
-			addStatus2(pr('Ten  RP: ',s) + rp10.toLocaleTimeString().slice(0,5))
+			addStatus2(pr('Ten  RP:',s) + rp10.toLocaleTimeString().slice(0,5))
 		}
 		if (rp1 === sessionTime) rp1 = sessionTime - getSessionTime()
 		rp1 = new Date(new Date().setSeconds(rp1))
 		addStatus2(pr('Next RP:',s) + rp1.toLocaleTimeString().slice(0,5))
-		addStatus2(seperator + '--')
-		
+		addStatus2(seperator + '--')		
 	}
+	let data = getFarmData()
+	let time = (Date.now()-ST.startTime)/1000
+	let runMS = getValue(getLogData()[1]) * (todayRuns.r || 1)
+	addStatus2(pr('Points:',s-1) + data[2] + ' fp, ' + data[3] + ' sp, ' + data[4] + ' ep')
+	addStatus2(pr('MS Farm:',s) + data[1] + ', ' + (getValue(data[1]) / (runMS + getValue(data[1])) * 100).toFixed(2) + '%')
+	runMS = (runMS * todayRuns.r)
+	addStatus2(pr('MS Run:',s) +  convertValue(runMS / todayRuns.r))
+	addStatus2(seperator + '--')
 	if (runStats.length) { 
 		addStatus2(pr('Max:', s) + maxLevel + ', ' + maxProd)
 		addStatus2(pr('Level:',s) + runStats[runStats.length-1][0] + ', ' + Math.floor(runStats[runStats.length-1][1]) + '%')
@@ -394,13 +401,10 @@ function statusInfo() {
 		addStatus2(pr('Today: ',s) + todayRuns.r + ' resets')
 	}
 	addStatus2(seperator + '--')
-	let data = getFarmData()
-	let time = (Date.now()-ST.startTime)/1000
-	let runMS = getValue(getLogData()[1]) * todayRuns.r
-	addStatus2(pr('Points:',s-1) + data[2] + ' fp, ' + data[3] + ' sp, ' + data[4] + ' ep')
-	addStatus2(pr('MS Farm:',s) + data[1] + ', ' + (getValue(data[1]) / (runMS + getValue(data[1])) * 100).toFixed(2) + '%')
-	runMS = (runMS * todayRuns.r)
-	addStatus2(pr('MS Run:',s) +  convertValue(runMS / todayRuns.r))
+	let finish = new Date()
+	finish.setSeconds(researchLeft/1000 - (Date.now() - researchTimer)/1000)
+	addStatus2(pr('Finish:', s) + finish.toLocaleTimeString())
+	addStatus2(pr('Research:', s) + build[researchBuilding-1])
 	addStatus2(seperator + '--')
 	addStatus2(pr('Level:',s)+ highLevel)
 	addStatus2(pr('Resets:',s) + ST.totalRuns.toLocaleString())
