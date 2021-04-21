@@ -400,11 +400,13 @@ function statusInfo() {
 		addStatus2(pr('Ø SP:',s) + (todayRuns.sp/todayRuns.r).toFixed(2) + ', ' + (todayRuns.ep/todayRuns.r).toFixed(2))
 		addStatus2(pr('Today: ',s) + todayRuns.r + ' resets')
 	}
-	addStatus2(seperator + '--')
-	let finish = new Date()
-	finish.setSeconds(researchLeft/1000 - (Date.now() - researchTimer)/1000)
-	addStatus2(pr('Finish:', s) + finish.toLocaleTimeString())
-	addStatus2(pr('Research:', s) + build[researchBuilding-1])
+	if (researchBuilding) {
+		addStatus2(seperator + '--')
+		let finish = new Date()
+		finish.setSeconds(researchLeft/1000 - (Date.now() - researchTimer)/1000)
+		addStatus2(pr('Finish:', s) + finish.toLocaleTimeString())
+		addStatus2(pr('Research:', s) + build[researchBuilding-1])
+	}
 	addStatus2(seperator + '--')
 	addStatus2(pr('Level:',s)+ highLevel)
 	addStatus2(pr('Resets:',s) + ST.totalRuns.toLocaleString())
