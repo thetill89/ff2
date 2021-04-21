@@ -404,7 +404,7 @@ function statusInfo() {
 		addStatus2(seperator + '--')
 		let finish = new Date()
 		finish.setSeconds(researchLeft/1000 - (Date.now() - researchTimer)/1000)
-		addStatus2(pr('Finish:', s) + finish.toLocaleTimeString())
+		addStatus2(pr('Finish:', s) + finish.toLocaleTimeString().slice(0,5))
 		let build =['Fries','Pizza','Hotdog','Hamburger','Bike','Scooter','Van','Truck']
 		addStatus2(pr('Research:', s) + build[researchBuilding-1])
 	}
