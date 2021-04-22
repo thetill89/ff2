@@ -347,12 +347,14 @@ function displayStats() {
 		 div[1].innerText = 'factor: ' + factor.toFixed(2)
 	} 
 	if (!isVisible('afkwin')) {
-		let mTime, fTime
+		let mTime, fTime, rTime
 		mTime = missionLeft - (Date.now() - missionTimer)/1000
-		mTime = (mTime >= 3600 || mTime < 0) ? '∞' : mTime >= 60 ? pl(Math.round(mTime/60),2) +  ' min' : displayTime(mTime)	
+		mTime = (mTime >= 3600 || mTime < 0) ? '∞' : mTime >= 60 ? pl(Math.round(mTime/60),3) +  ' min' : displayTime(mTime)	
 		fTime = farmLeft/1000 - (Date.now() - farmTimer)/1000
-		fTime = fTime >= 9600 ? '∞' : fTime >= 60 ? pl(Math.round(fTime/60),2) +  ' min': displayTime(fTime)	
-		timeinfo.innerHTML = '\nMission: ' + mTime + '\nFarming: ' + fTime
+		fTime = fTime >= 9600 ? '∞' : fTime >= 60 ? pl(Math.round(fTime/60),3) +  ' min': displayTime(fTime)
+		rTime = researchLeft/1000 - (Date.now() - researchTimer)/1000
+		rTime = rTime >= 3600 ? pl(Math.round(rTime/3600),3) + ' h' : displayTime(rTime)
+		timeinfo.innerHTML = '\Mission: ' + mTime + '\nFarming: ' + fTime + '\nResearch:' + rTime
 		$j('.gems').html(autoPlay ? 'AUTO ' + (idlemode ? 'IDLE' : 'BUY ') + '&nbsp'.repeat(19) + displayTime(getSessionTime()) : 'MANUAL MODE' + '&nbsp'.repeat(17) + new Date().toLocaleTimeString().slice(0,5))
 	}	
 	document.title = displayTime(getSessionTime()) + (autoPlay ? ' - ' + getLevel() + ' - ' + (todayRuns.r + 1) + ' - ' + account : ' - IDLE')
@@ -399,14 +401,6 @@ function statusInfo() {
 	if (todayRuns.r) {
 		addStatus2(pr('Ø SP:',s) + (todayRuns.sp/todayRuns.r).toFixed(2) + ', ' + (todayRuns.ep/todayRuns.r).toFixed(2))
 		addStatus2(pr('Today: ',s) + todayRuns.r + ' resets')
-	}
-	if (researchBuilding) {
-		addStatus2(seperator + '--')
-		let finish = new Date()
-		finish.setSeconds(researchLeft/1000 - (Date.now() - researchTimer)/1000)
-		addStatus2(pr('Finish:', s) + finish.toLocaleTimeString().slice(0,5))
-		let build =['Fries','Pizza','Hotdog','Hamburger','Bike','Scooter','Van','Truck']
-		addStatus2(pr('Research:', s) + build[researchBuilding-1])
 	}
 	addStatus2(seperator + '--')
 	addStatus2(pr('Level:',s)+ highLevel)
@@ -1714,7 +1708,7 @@ function createTimeInfo() {
 	let textf = document.createElement("textarea");
 	textf.id = id
 	textf.spellcheck = false
-	textf.style.cssText = "font-family: monospace; font-size: 14px; line-height: 18px; position: absolute; width: 134px; padding-left: 20px; height: 76px; top: 106px; left: 10px; border: 1px dotted "+ theme + "; border-radius: 5px; background-color: black; color: "+ theme + "; caret-color: transparent; outline: none; overflow: hidden; resize: none; cursor: default;"
+	textf.style.cssText = "font-family: monospace; font-size: 14px; line-height: 18px; position: absolute; width: 134px; padding-left: 20px; padding-top: 12px; height: 64px; top: 106px; left: 10px; border: 1px dotted "+ theme + "; border-radius: 5px; background-color: black; color: "+ theme + "; caret-color: transparent; outline: none; overflow: hidden; resize: none; cursor: default;"
 	document.getElementById('maingame').appendChild(textf); 
 }
 
