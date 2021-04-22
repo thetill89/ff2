@@ -743,9 +743,6 @@ function showResearch() {
 	})		
 }
 
-	
-
-
 function shopUpgrade() {	
 	$j.get('game/megaidleanz.php').done(function(r) {
 		let farmOld = farmNew = r.megaidleu1
@@ -757,6 +754,7 @@ function shopUpgrade() {
 			}
 			info2.value = ''
 			addStatus2('Store points: ' + shopOld.toLocaleString())
+			addStatus2('Farm dollar:  ' + convertValue(calc['farmnow']*farmMax*farmNew/farmOld))
 			addStatus2('Farm gain:    ' + (farmNew / farmOld * 100 - 100).toFixed(2) + ' %')
 			addStatus2('Farm level:   ' + farmNew + ' (' + farmOld + ')')
 		})
