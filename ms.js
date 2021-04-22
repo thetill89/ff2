@@ -350,16 +350,17 @@ function displayStats() {
 	if (!isVisible('afkwin')) {
 		let mTime, fTime, rTime
 		mTime = missionLeft - (Date.now() - missionTimer)/1000
-		mTime = (mTime >= 3600 || mTime < 0) ? '∞' : mTime >= 60 ? pl(Math.round(mTime/60), 3) +  ' min' : displayTime(mTime)	
+		mTime = (mTime >= 3600 || mTime < 0) ? '∞' : mTime >= 60 ? pl(Math.round(mTime/60), 2) +  ' min' : displayTime(mTime)	
 		fTime = farmLeft/1000 - (Date.now() - farmTimer)/1000
-		fTime = fTime >= 9600 ? '∞' : fTime >= 60 ? pl(Math.round(fTime/60), 3) +  ' min': displayTime(fTime)
+		fTime = fTime >= 9600 ? '∞' : fTime >= 60 ? pl(Math.round(fTime/60), 2) +  ' min': displayTime(fTime)
 		rTime = researchLeft/1000 - (Date.now() - researchTimer)/1000
-		rTime = rTime >= 60 ? pl(Math.ceil(rTime/3600), 3) + ' h' : displayTime(rTime)
-		timeinfo.innerHTML = '\Mission:  ' + mTime + '\nFarming:  ' + fTime + '\nResearch:' + rTime
+		rTime = rTime >= 60 ? pl(Math.ceil(rTime/3600), 2) + ' h' : displayTime(rTime)
+		timeinfo.innerHTML = '\Mission:  ' + mTime + '\nFarming:  ' + fTime + '\nResearch: ' + rTime
 		$j('.gems').html(autoPlay ? 'AUTO ' + (idlemode ? 'IDLE' : 'BUY ') + '&nbsp'.repeat(19) + displayTime(getSessionTime()) : 'MANUAL MODE' + '&nbsp'.repeat(17) + new Date().toLocaleTimeString().slice(0,5))
 	}	
 	document.title = displayTime(getSessionTime()) + (autoPlay ? ' - ' + getLevel() + ' - ' + (todayRuns.r + 1) + ' - ' + account : ' - IDLE')
 }
+
 function statusInfo() {
 	let s = 11
 	info2.value = ''
