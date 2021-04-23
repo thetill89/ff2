@@ -1709,7 +1709,7 @@ function createTimeInfo() {
 	let textf = document.createElement("textarea");
 	textf.id = id
 	textf.spellcheck = false
-	textf.style.cssText = "font-family: monospace; font-size: 14px; line-height: 18px; position: absolute; width: 144px; padding-left: 10px; padding-top: 12px; height: 64px; top: 106px; left: 10px; border: 1px dotted "+ theme + "; border-radius: 5px; background-color: black; color: "+ theme + "; caret-color: transparent; outline: none; overflow: hidden; resize: none; cursor: default;"
+	textf.style.cssText = "font-family: monospace; font-size: 13px; line-height: 18px; position: absolute; width: 134px; padding-left: 20px; padding-top: 12px; height: 64px; top: 106px; left: 10px; border: 1px dotted "+ theme + "; border-radius: 5px; background-color: black; color: "+ theme + "; caret-color: transparent; outline: none; overflow: hidden; resize: none; cursor: default;"
 	document.getElementById('maingame').appendChild(textf); 
 }
 
@@ -2465,7 +2465,7 @@ function setTheme() {
 	document.getElementsByClassName('itemimg4')[0].remove()
 	div = document.getElementsByClassName('button')
 	for (var i = 0; i < div.length; i++) { 
-		div[i].style.cssText = 'width: 156px; color: ' + theme + ';background: transparent; text-align: left; font-weight: 200; font-family: monospace; font-size: 14px; text-shadow: none; cursor: default; border: 1px dotted ' + theme 
+		div[i].style.cssText = 'width: 156px; color: ' + theme + ';background: transparent; text-align: left; font-weight: 200; font-family: monospace; font-size: 13px; text-shadow: none; cursor: default; border: 1px dotted ' + theme 
 		if (!i) div[i].style.marginTop = '93px'
 		allDivs.push(div[i])
 	}
@@ -2473,12 +2473,12 @@ function setTheme() {
 	div[4].innerHTML = '&nbsp&nbsp&nbspMS'
 	div[5].innerHTML = '&nbsp&nbsp&nbspFarm'
 	div = document.getElementsByClassName('researchbtn')[0]
-	div.style.cssText = 'font-size: 14px; font-family: monospace;'
+	div.style.cssText = 'font-size: 13px; font-family: monospace;'
 	div = document.getElementsByClassName('eventbtn')[0]
-	div.style.cssText = 'font-size: 14px; font-family: monospace; margin-left: -5px'	
+	div.style.cssText = 'font-size: 13px; font-family: monospace; margin-left: -5px'	
 	document.getElementsByClassName('clanbtn')[0].style.marginLeft = '-25px'
 	div = document.getElementsByClassName('buttonk')[0]
-	div.style.cssText = 'color: ' + theme + '; background: transparent; text-align: left; font-weight: 200; font-family: monospace; font-size: 14px; text-shadow: none; width: 156px;  border: 1px dotted ' + theme 
+	div.style.cssText = 'color: ' + theme + '; background: transparent; text-align: left; font-weight: 200; font-family: monospace; font-size: 13px; text-shadow: none; width: 156px;  border: 1px dotted ' + theme 
 	div.innerHTML = '&nbsp&nbsp&nbspStats'
 	allDivs.push(div)
 	document.getElementsByClassName('buttonk2')[0].remove()
