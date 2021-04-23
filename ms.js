@@ -354,7 +354,7 @@ function displayStats() {
 		fTime = farmLeft/1000 - (Date.now() - farmTimer)/1000
 		fTime = fTime >= 9600 ? '∞' : fTime >= 60 ? pl(Math.round(fTime/60), 2) +  ' min': displayTime(fTime)
 		rTime = researchLeft/1000 - (Date.now() - researchTimer)/1000
-		rTime = rTime >= 60 ? pl(Math.ceil(rTime/3600), 2) + ' h' : displayTime(rTime)
+		rTime = rTime >= 60 ? pl(Math.ceil(rTime/3600), 2) + ' hrs' : displayTime(rTime)
 		timeinfo.innerHTML = '\Mission:  ' + mTime + '\nFarming:  ' + fTime + '\nResearch: ' + rTime
 		$j('.gems').html(autoPlay ? 'AUTO ' + (idlemode ? 'IDLE' : 'BUY ') + '&nbsp'.repeat(19) + displayTime(getSessionTime()) : 'MANUAL MODE' + '&nbsp'.repeat(17) + new Date().toLocaleTimeString().slice(0,5))
 	}	
@@ -549,7 +549,7 @@ let autoRP
 function buyResearchPoint() {
 	if (autoRP && getPoints('event') >= 500) {
 		$j.get('game/eventbuy.php?3').done(function(r) { 
-			addStatus('Buy RP ' + r.researchpoints + ', ' + getLastBuy() + ' min')
+			addStatus('RP ' + r.researchpoints + ', ' + getLastBuy() + ' min')
 			$j('.researchbtn').html('Research: ' + r.researchpoints)
 			$j('.eventbtn').html('Event: ' + r.eventpoints) 
 			statusInfo()
