@@ -2373,7 +2373,7 @@ function setTheme() {
 	div.style.cssText = 'width: 156px; height: 89px; background-color: transparent; border: 1px dotted ' + theme 
 	allDivs.push(div)
 	div = document.getElementsByClassName('epbartxt')[0]
-	div.style.cssText = 'margin-left: 4px; color: ' +theme + '; font-weight: 200;'
+	div.style.cssText = 'margin-left: 4px; color: ' + theme + ';font-size: 14px; font-weight: 200;'
 	allDivs.push(div)	
 	div = document.getElementsByClassName('epbara')[0]
 	div.style.cssText = 'background-color: transparent; border-color: transparent; margin-top: 5px; margin-left: -4px;'
