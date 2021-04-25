@@ -501,6 +501,11 @@ function collectFarm() {
 				ep += r.eventpointsplus
 				addStatus(r.megadollarwin +  fp + fsp + fep)
 				addStatus('Farm collect')
+				if (new Date().getHours() === 23) {
+					$j.get('game/megaanz.php').done(function(r) {
+						log.value = log.value.replace(/(\S+\s+\S+\s+\S+\s+\S+\s+\S+\s+\S+\s+\S+\s+\S+\s+\S+\s+\S+\s+\S+\s+\S+\s+\S+\s+\S+)(\s+\d+.\d+\s+\w+)/,'$1' + pl(r.maxrelikte, 11))	
+					})		
+				}
 			} 
 			else if (r.erfolg === 2) addStatus2('Farm time <1 min')
 			getFarmTime()
