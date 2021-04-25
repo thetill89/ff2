@@ -27,7 +27,7 @@ function initScript() {
 		statusInfo()
 		initLoop()
 		addStatus2(seperator)
-		addStatus2('Loaded in: 0.' + (Date.now()-now) + ' sec')
+		addStatus2('Loaded in: 0.' + (Date.now() - now).toFixed(3) + ' sec')
 		if (ST.idle) startIdleMode() 		
 	}
 	else setTimeout(initScript, 50)
@@ -390,7 +390,6 @@ function statusInfo() {
 	let data = getFarmData()
 	let time = (Date.now()-ST.startTime)/1000
 	let runMS = getValue(getLogData()[1]) * (todayRuns.r || 1)
-	//addStatus2(pr('Points:',s-1) + data[2] + ' fp, ' + data[3] + ' sp, ' + data[4] + ' ep')
 	addStatus2(pr('MS Farm:',s) + data[1] + ', ' + (getValue(data[1]) / (runMS + getValue(data[1])) * 100).toFixed(2) + '%')
 	runMS = (runMS * todayRuns.r)
 	addStatus2(pr('MS Run:',s) +  convertValue(runMS / todayRuns.r))
@@ -501,11 +500,6 @@ function collectFarm() {
 				ep += r.eventpointsplus
 				addStatus(r.megadollarwin +  fp + fsp + fep)
 				addStatus('Farm collect')
-				if (new Date().getHours() === 23) {
-					$j.get('game/megaanz.php').done(function(r) {
-						log.value = log.value.replace(/(\S+\s+\S+\s+\S+\s+\S+\s+\S+\s+\S+\s+\S+\s+\S+\s+\S+\s+\S+\s+\S+\s+\S+\s+\S+\s+\S+)(\s+\d+.\d+\s+\w+)/,'$1' + pl(r.maxrelikte, 11))	
-					})		
-				}
 			} 
 			else if (r.erfolg === 2) addStatus2('Farm time <1 min')
 			getFarmTime()
