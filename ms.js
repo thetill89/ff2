@@ -27,7 +27,7 @@ function initScript() {
 		statusInfo()
 		initLoop()
 		addStatus2(seperator)
-		addStatus2('Loaded in: 0.' + (Date.now() - now).toFixed(3) + ' sec')
+		addStatus2('Loaded in: 0.' + (Date.now() - now) + ' sec')
 		if (ST.idle) startIdleMode() 		
 	}
 	else setTimeout(initScript, 50)
