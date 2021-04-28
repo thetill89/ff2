@@ -589,16 +589,23 @@ function getMissionStanding(r) {
 			for (let i = 1; i <= max; i++) {
 				let points = r.aktclandmg[i]
 				if (!points) continue
-				let level = ' ' + pl(r.maxlevelarr[i], 4) + ' | '
+				let level = pl(r.maxlevelarr[i], 5) + ' | '
 				let name = pr(r.namearray[i].split('> ')[1].slice(0,16), 16) + ' | '
-				points = pl((points/1e9).toFixed(2) + ' B', 15)
-				data.push(level + name + points)
+				data.push(level + name + pl(getClanPoints(points), 15))
 			}
 		}
-		data.push(pl('-' + convertValue(getValue(r.aktfullpoints) - getValue(r.aktclanquest)) , 42))
+		data.push(pl('-' + getClanPoints(getValue(r.aktfullpoints) - getValue(r.aktclanquest)), 42))
 	}
 	else data.push('\ MISSION\n')
 	$j('#ii4').val(data.join('\n')) 
+}
+
+function getClanPoints(nbr=1) {
+	if (nbr >= 1e12) nbr = (nbr/1e12).toFixed(3) + ' T'
+	else if (nbr >= 1e7) nbr = (nbr/1e9).toFixed(3) + ' B'
+	else if (nbr >= 1e6) nbr = (nbr/1e6).toFixed(3) + ' M'
+	else nbr = (nbr/1e3).toFixed(3) + ' K'
+	return nbr
 }
 
 function getClanChat() {
