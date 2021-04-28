@@ -15,7 +15,7 @@ function initScript() {
 		createCalcUI()
 		createCostUI()
 		createMissionUI()
-		loadLog()
+		loadRuns()
 		loadStatus() 
 		setTheme()
 		getFarmTime()
@@ -26,8 +26,8 @@ function initScript() {
 		getCalcData()
 		statusInfo()
 		initLoop()
-		addStatus2(seperator)
-		addStatus2('Loaded in: 0.' + (Date.now() - now) + ' sec')
+		addInfo(seperator)
+		addInfo('Loaded in: 0.' + (Date.now() - now) + ' sec')
 		if (ST.idle) startIdleMode() 		
 	}
 	else setTimeout(initScript, 50)
@@ -133,9 +133,9 @@ function startIdleMode() {
 					$j('#idlemode').toggle()	
 				}
 			}
-			else addStatus2('Level too high')
+			else addInfo('Level too high')
 		}
-		else addStatus2('Idle max')
+		else addInfo('Idle max')
 		if (buyStep > 1) getMissionTime()
 		if (buyStep >= buyMax.length) {
 			for (let i = 1; i <= Math.floor((sessionTime-time) / 120); i++) setTimeout(getMissionTime, i * 120 * 1000)
@@ -202,17 +202,17 @@ function resetRoutine() {
 			else if (r.erfolg === 2) {
 				setSessionTime(10)
 				resetStep = 0
-				addStatus2('Reset error: <10 Min')
+				addInfo('Reset error: <10 Min')
 			}
 		}).fail(function() {
 				setSessionTime(10)
 				resetStep = 0
-				addStatus2('Reset error: ResetMD')
+				addInfo('Reset error: ResetMD')
 			})
 	}).fail(function() {
 			setSessionTime(10)	
 			resetStep = 0
-			addStatus2('Reset error: Megaanz')
+			addInfo('Reset error: Megaanz')
 		})				
 }
 
@@ -249,7 +249,7 @@ function solveCaptcha(captcha) {
 	$j.get('game/resetmd.php?rscode=' + captcha).done(() =>	finishRun()).fail(function() {
 			setSessionTime(10)	
 			resetStep = 0
-			addStatus2('Reset error: Captcha solve')
+			addInfo('Reset error: Captcha solve')
     })
 }
 
@@ -265,7 +265,7 @@ function finishRun() {
 	setTodayRuns()
 	updateSummary()	
 	let cur = runStats[runStats.length-1]
-	addLog(pl(todayRuns.r, 3) + ' | ' + pl(cur[0],5) + ' | ' + pl(cur[2],9) + ' | '
+	updateRuns(pl(todayRuns.r, 3) + ' | ' + pl(cur[0],5) + ' | ' + pl(cur[2],9) + ' | '
 	+ pl(cur[3],9) + ' | '  + pl(cur[4],10) + ' | '
 	+ pl(sp,2) + ' sp | ' + pl(ep,3) + ' ep')
 	sessionTimer = sessionTimer2 = Date.now()
@@ -363,7 +363,7 @@ function displayStats() {
 
 function statusInfo() {
 	let s = 11
-	info2.value = ''
+	info.value = ''
 	if (todayRuns.r) { 
 		if (!autoSkill && getPoints('skill') < 200) {
 			let sp2 = getPoints('skill'), count = 0			
@@ -373,40 +373,40 @@ function statusInfo() {
 				if (count%6 === 0) sp2 += 6
 			}
 			sp2 = new Date(new Date().setSeconds(count * sessionTime))
-			addStatus2(pr('Next SP: ',s) + sp2.toLocaleTimeString().slice(0,5))
+			addInfo(pr('Next SP: ',s) + sp2.toLocaleTimeString().slice(0,5))
 		}	
 		let epRun = todayRuns.ep / todayRuns.r
 		let rp1 = Math.ceil((500 - getPoints('event')) / epRun) * sessionTime, rp10
 		if (getPoints('research') < 9) { 
 			rp10 = (Math.ceil(500 / epRun) * (9 - getPoints('research')) * sessionTime) + rp1
 			rp10 = new Date(new Date().setSeconds(rp10))
-			addStatus2(pr('Ten  RP:',s) + rp10.toLocaleTimeString().slice(0,5))
+			addInfo(pr('Ten  RP:',s) + rp10.toLocaleTimeString().slice(0,5))
 		}
 		if (rp1 === sessionTime) rp1 = sessionTime - getSessionTime()
 		rp1 = new Date(new Date().setSeconds(rp1))
-		addStatus2(pr('Next RP:',s) + rp1.toLocaleTimeString().slice(0,5))
-		addStatus2(seperator + '--')		
+		addInfo(pr('Next RP:',s) + rp1.toLocaleTimeString().slice(0,5))
+		addInfo(seperator + '--')		
 	}
 	let data = getFarmData()
 	let time = (Date.now()-ST.startTime)/1000
 	let runMS = getValue(getLogData()[1]) * (todayRuns.r || 1)
-	addStatus2(pr('MS Farm:',s) + data[1] + ', ' + (getValue(data[1]) / (runMS + getValue(data[1])) * 100).toFixed(2) + '%')
+	addInfo(pr('MS Farm:',s) + data[1] + ', ' + (getValue(data[1]) / (runMS + getValue(data[1])) * 100).toFixed(2) + '%')
 	runMS = (runMS * todayRuns.r)
-	addStatus2(pr('MS Run:',s) +  convertValue(runMS / todayRuns.r))
-	addStatus2(seperator + '--')
+	addInfo(pr('MS Run:',s) +  convertValue(runMS / todayRuns.r))
+	addInfo(seperator + '--')
 	if (runStats.length) { 
-		addStatus2(pr('Max:', s) + maxLevel + ', ' + maxProd)
-		addStatus2(pr('Level:',s) + runStats[runStats.length-1][0] + ', ' + Math.floor(runStats[runStats.length-1][1]) + '%')
+		addInfo(pr('Max:', s) + maxLevel + ', ' + maxProd)
+		addInfo(pr('Level:',s) + runStats[runStats.length-1][0] + ', ' + Math.floor(runStats[runStats.length-1][1]) + '%')
 	}
 	if (todayRuns.r) {
-		addStatus2(pr('Ø SP:',s) + (todayRuns.sp/todayRuns.r).toFixed(2) + ', ' + (todayRuns.ep/todayRuns.r).toFixed(2))
-		addStatus2(pr('Today: ',s) + todayRuns.r + ' resets')
+		addInfo(pr('Ø SP:',s) + (todayRuns.sp/todayRuns.r).toFixed(2) + ', ' + (todayRuns.ep/todayRuns.r).toFixed(2))
+		addInfo(pr('Today: ',s) + todayRuns.r + ' resets')
 	}
-	addStatus2(seperator + '--')
-	addStatus2(pr('Level:',s)+ highLevel)
-	addStatus2(pr('Resets:',s) + ST.totalRuns.toLocaleString())
-	addStatus2(pr('Playtime:',s) + displayTime(time, true))
-	addStatus2(pr('Account:',s) + account)
+	addInfo(seperator + '--')
+	addInfo(pr('Level:',s)+ highLevel)
+	addInfo(pr('Resets:',s) + ST.totalRuns.toLocaleString())
+	addInfo(pr('Playtime:',s) + displayTime(time, true))
+	addInfo(pr('Account:',s) + account)
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -433,7 +433,7 @@ function doMission() {
 			if (!r.clanquestdauer) {
 				$j.get('game/cqattack.php').done(function() {
 					setTimeout(getMissionTime, 1000)	
-					addStatus('Mission. ' + need)
+					updateStatus('Mission. ' + need)
 					$j('.clanbtn').html('Fastfood Clan')
 				}).fail(() => setTimeout(getMissionTime, failTimeOut * 1000))
 			}
@@ -459,7 +459,7 @@ function doTour() {
 				getTourTime()
 				setTimeout(getClanRanking, 2000)
 				setTimeout(() => $j.get('game/buynextclanb.php'), 2000)
-				addStatus('Clan Tour')
+				updateStatus('Clan Tour')
 			}).fail(() => setTimeout(getTourTime, failTimeOut * 1000))	
 		}).fail(() => setTimeout(getTourTime, failTimeOut * 1000))		
 	}
@@ -479,7 +479,7 @@ function getFarmTime() {
 		if (r.megaidlepoints >= r.costs2) {
 				r.megaidlepoints -= r.costs2
 				$j.get('game/megaidleup.php?2')
-				addStatus('Farm upgrade ' + (r.costs2+1))
+				updateStatus('Farm upgrade ' + (r.costs2+1))
 				$j('.button').eq(5).html('&nbsp&nbsp&nbspFarm: ' + r.megaidlepoints)
 		}
 			
@@ -498,10 +498,10 @@ function collectFarm() {
 				let fep = ', ' + pl(r.eventpointsplus, 2)			
 				sp += r.skillpointsplus
 				ep += r.eventpointsplus
-				addStatus(r.megadollarwin +  fp + fsp + fep)
-				addStatus('Farm collect')
+				updateStatus(r.megadollarwin +  fp + fsp + fep)
+				updateStatus('Farm collect')
 			} 
-			else if (r.erfolg === 2) addStatus2('Farm time <1 min')
+			else if (r.erfolg === 2) addInfo('Farm time <1 min')
 			getFarmTime()
 		 }).fail(() => setTimeout(getFarmTime, failTimeOut * 1000))				
 	}
@@ -538,7 +538,7 @@ function doResearch() {
 		$j.get('game/researchfertig.php').done(function() {
 			$j.get('game/researchstart.php').done(function() {
 				getResearchTime()
-				addStatus('Research ' + researchBuilding)
+				updateStatus('Research ' + researchBuilding)
 			 }).fail(() => setTimeout(getResearchTime, failTimeOut * 1000))	
 		}).fail(() => setTimeout(getResearchTime, failTimeOut * 1000))	
 	}
@@ -548,7 +548,7 @@ let autoRP
 function buyResearchPoint() {
 	if (autoRP && getPoints('event') >= 500) {
 		$j.get('game/eventbuy.php?3').done(function(r) { 
-			addStatus('RP ' + r.researchpoints + ', ' + getLastBuy() + ' min')
+			updateStatus('RP ' + r.researchpoints + ', ' + getLastBuy() + ' min')
 			$j('.researchbtn').html('Research: ' + r.researchpoints)
 			$j('.eventbtn').html('Event: ' + r.eventpoints) 
 			statusInfo()
@@ -557,7 +557,7 @@ function buyResearchPoint() {
 }
 
 function getLastBuy() {
-	let data = info1.value.split('\n')
+	let data = log.value.split('\n')
 	for (let i = 0; i < data.length; i++) {
 		let e = data[i].match(/(\d+).(\d+)...(\d+).(\d+).*RP/)
 		if (e) { 
@@ -581,9 +581,9 @@ function upgradeSkill() {
 }
 
 function getMissionStanding(r) {
-	let info = []
+	let data = []
 	if (r.aktclanquest) {
-		info.push('\ MISSION' + pl(Math.floor(getValue(r.aktclanquest)/getValue(r.aktfullpoints)*100) + '%', 5) + pl(r.aktfullpoints, 29) + '\n')
+		data.push('\ MISSION' + pl(Math.floor(getValue(r.aktclanquest)/getValue(r.aktfullpoints)*100) + '%', 5) + pl(r.aktfullpoints, 29) + '\n')
 		if (r.anz) {
 			let max = r.anz < 9 ? r.anz : 9
 			for (let i = 1; i <= max; i++) {
@@ -592,19 +592,19 @@ function getMissionStanding(r) {
 				let level = ' ' + pl(r.maxlevelarr[i], 4) + ' | '
 				let name = pr(r.namearray[i].split('> ')[1].slice(0,16), 16) + ' | '
 				points = pl((points/1e9).toFixed(2) + ' B', 15)
-				info.push(level + name + points)
+				data.push(level + name + points)
 			}
 		}
-		info.push(pl('-' + convertValue(getValue(r.aktfullpoints) - getValue(r.aktclanquest)) , 42))
+		data.push(pl('-' + convertValue(getValue(r.aktfullpoints) - getValue(r.aktclanquest)) , 42))
 	}
-	else info.push('\ MISSION\n')
-	$j('#ii4').val(info.join('\n')) 
+	else data.push('\ MISSION\n')
+	$j('#ii4').val(data.join('\n')) 
 }
 
 function getClanChat() {
 	$j.get('game/sortonline.php').done(function(r) {
-		let info = []
-		info.push(' ONLINE\n')
+		let data = []
+		data.push(' ONLINE\n')
 		if (r.anz) {
 			let max = r.anz < 9 ? r.anz : 5
 			for (let i = 1; i <= max; i++) {
@@ -614,14 +614,14 @@ function getClanChat() {
 				let status = r.clanrangarr[i].match(/title\="([^"]*)/)[1]
 				if (status.includes('Last')) status = ' ' + status.substr(status.length-5)
 				status = '    ' + status
-				info.push(nbr + name + level + status)
+				data.push(nbr + name + level + status)
 			}
 		}
-		$j('#ii3').val(info.join('\n')) 
+		$j('#ii3').val(data.join('\n')) 
 	})
 	$j.get('game/clanchat.php').done(function(r) {	
-		let info = []
-		info.push(' CHAT\n')
+		let data = []
+		data.push(' CHAT\n')
 		if (r.postanz) {
 			let max = r.postanz < 9 ? r.postanz : 9
 			for (let i = 1; i <= max ; i++) {
@@ -630,16 +630,16 @@ function getClanChat() {
 				let txt = r.gchatpost[i].replace(/<\/?span[^>]*>/g,'').slice(0,23)
 				if (txt.includes('Clan-Mission')) txt = 'Clan mission'
 				else if (txt.includes('Clan-Bonus')) txt = 'Clan bonus'
-				info.push(time + name + txt)
+				data.push(time + name + txt)
 				
 			}	
 		}
-		$j('#ii5').val(info.join('\n')) 
+		$j('#ii5').val(data.join('\n')) 
 		$j('.clanbtn').html('Fastfood Clan')
 	})
 	$j.get('game/turnieranz.php').done(function(r) {		
-		let info = []
-		info.push(r.turniertxt.includes('Last') ? ' LAST TOURNAMENT\n' :  ' TOURNAMENT\n')
+		let data = []
+		data.push(r.turniertxt.includes('Last') ? ' LAST TOURNAMENT\n' :  ' TOURNAMENT\n')
 		if (r.playeranz) {
 			let max = r.playeranz < 9 ? r.playeranz : 9
 			for (let i = 1; i <= max; i++) {
@@ -647,10 +647,10 @@ function getClanChat() {
 				let name = pr(r.playername[i].slice(0,13), 13) + ' |  '
 				let level = pl(r.playermaxlvl[i], 4) + '  | '
 				let prize = pl(r.turnierprizes[i].slice(0,10), 12)
-				info.push(rank + name + level + prize)
+				data.push(rank + name + level + prize)
 			}	
 		}
-		$j('#ii6').val(info.join('\n')) 
+		$j('#ii6').val(data.join('\n')) 
 	})	
 }
 
@@ -672,17 +672,17 @@ function getClanRanking() {
 function showClanRanking() {	
 	let data = decompress(load(account + '_clans')) 
 	if (!data) return
-	info2.value = ''
+	info.value = ''
 	data = JSON.parse(data)
 	for (date in data) {
 		let cur = data[date]
 		let time = Object.keys(cur)
 		let points = ''
 		for (let j = 0; j < 3; j++) points = points + cur[time[0]][j] + (j < 2 ? '  |  ' : '')
-		addStatus2(date + ' |  ' + points)
+		addInfo(date + ' |  ' + points)
 	}
-	addStatus2(('-').repeat(34))
-	addStatus2('Clan rankings')
+	addInfo(('-').repeat(34))
+	addInfo('Clan rankings')
 }
 
 
@@ -691,7 +691,7 @@ function checkReward(forced=false) {
 	if (autoReward && (!new Date().getHours() || forced)) {
 		$j.get('game/eventanz.php').done(function(r) { 
 			if (!r.noreward) {
-				addStatus('Reward Day ' + r.nextreward)
+				updateStatus('Reward Day ' + r.nextreward)
 				$j.get('game/claimreward.php').done(() => homeanz())	
 			}
 		})	
@@ -704,15 +704,15 @@ function showResearch() {
 		$j.get('game/researchanz.php').done(function(r) { 
 			let week = ['SO','MO','TU','WE','TH','FR','SA']
 			let rewards = ['1h profit','2h profit','2 golbars','400 points','4h profit','3 goldbars','10 golbars']
-			info2.value = ''
+			info.value = ''
 			for (let i = 1; i <= 7; i++) {
 				let next = reward-1-i
 				if (next < 0) next += 7
 				let now = new Date()
 				now.setDate(now.getDate()+8-i)
-				addStatus2(week[now.getDay()] + ': ' + rewards[next])
+				addInfo(week[now.getDay()] + ': ' + rewards[next])
 			}
-			addStatus2(seperator)
+			addInfo(seperator)
 			let res = r.nextresearch
 			let bonus = r.researchboni[res]
 			let finish = new Date()
@@ -721,18 +721,18 @@ function showResearch() {
 			if (res === mainBuild) {
 				let prod = getValue(getLogData()[0])
 				prod = convertValue(prod/bonus*(bonus+3))
-				addStatus2('New prod: ' + prod)
+				addInfo('New prod: ' + prod)
 			}
 			else {
 				let timeLeft = r.researchdauernoch
 				for (let i = res + 1; i <= 8; i++) timeLeft += 43200
 				let next = new Date()
 				next.setSeconds(timeLeft)
-				addStatus2('Truck:    ' + week[next.getDay()] + ' ' + next.toLocaleTimeString())		
+				addInfo('Truck:    ' + week[next.getDay()] + ' ' + next.toLocaleTimeString())		
 			}		
-			addStatus2('Bonus:    ' + (bonus+3) + 'x')
-			addStatus2('Finish:   ' + finish.toLocaleTimeString())
-			addStatus2('Research: ' + build[r.nextresearch-1] + ' ' + r.nextresearch )
+			addInfo('Bonus:    ' + (bonus+3) + 'x')
+			addInfo('Finish:   ' + finish.toLocaleTimeString())
+			addInfo('Research: ' + build[r.nextresearch-1] + ' ' + r.nextresearch )
 		})
 	})		
 }
@@ -746,11 +746,11 @@ function shopUpgrade() {
 				shopNew -= farmNew
 				farmNew++
 			}
-			info2.value = ''
-			addStatus2('Store points: ' + shopOld.toLocaleString())
-			addStatus2('Farm dollar:  ' + convertValue(calc['farmnow']*farmMax*farmNew/farmOld))
-			addStatus2('Farm gain:    ' + (farmNew / farmOld * 100 - 100).toFixed(2) + ' %')
-			addStatus2('Farm level:   ' + farmNew + ' (' + farmOld + ')')
+			info.value = ''
+			addInfo('Store points: ' + shopOld.toLocaleString())
+			addInfo('Farm dollar:  ' + convertValue(calc['farmnow']*farmMax*farmNew/farmOld))
+			addInfo('Farm gain:    ' + (farmNew / farmOld * 100 - 100).toFixed(2) + ' %')
+			addInfo('Farm level:   ' + farmNew + ' (' + farmOld + ')')
 		})
 	})
 }
@@ -889,14 +889,14 @@ function statsGrowth() {
 
 function getLogData() {
 	if (runStats.length) return [runStats[runStats.length-1][2], runStats[runStats.length-1][3], runStats[runStats.length-1][4]]
-	let data = log.value.match(/^([^\|]*)\|([^\|]*)\|([^\|]*)\|([^\|]*)\|([^\|]*)\|([^\|]*)\|([^\|]*)\|([^\|]*)\|(.*)/)
+	let data = runs.value.match(/^([^\|]*)\|([^\|]*)\|([^\|]*)\|([^\|]*)\|([^\|]*)\|([^\|]*)\|([^\|]*)\|([^\|]*)\|(.*)/)
 	if (!data) return [0,0,0]
 	return [data[5].trim(), data[6].trim(), data[7].trim()]
 
 }
 
 function statsFarm() {
-	info2.value = ''
+	info.value = ''
 	let avgM = avgP = avgS = 0
 	let data = getFarmData(true).reverse()
 	for (let i = 0; i < data.length; i++) {
@@ -904,24 +904,24 @@ function statsFarm() {
 		let m = pl(data[i][1], 9) + ' | '
 		let p = pl(data[i][2], 4) + ' | '
 		let s = pl(data[i][3], 3)
-		addStatus2(d + m + p + s)
+		addInfo(d + m + p + s)
 		if (i < data.length-1) {
 			avgM += getValue(data[i][1])
 			avgP += parseInt(data[i][2])
 			avgS += parseInt(data[i][3])
 		}
 	}
-	addStatus2(seperator)
+	addInfo(seperator)
 	avgM = pl(convertValue(avgM/(data.length-1)), 9) + ' | '
 	avgP = pl(Math.round(avgP/(data.length-1)), 4) + ' | '
 	avgS = pl(Math.round(avgS/(data.length-1)), 3)
-	addStatus2('  Ø  ' + ' | ' + avgM + avgP + avgS)
-	addStatus2('Farm stats')
+	addInfo('  Ø  ' + ' | ' + avgM + avgP + avgS)
+	addInfo('Farm stats')
 }
 
 function getFarmData(all=false) {
 	let res = {}
-	let data = info1.value.split('\n')
+	let data = log.value.split('\n')
 	for (let i = 0; i < data.length; i++) {
 		let entry = data[i].match(/(.*)\|(.*)\|(.*)\,(.*)\,(.*)\,(.*)/)
 		if (entry) { 
@@ -969,7 +969,7 @@ function missionDaily() {
 	let rpLevel1 = rpLevel2 = calc['rsclan']
 	let msTotal = rpTotal = missionNew = 0, now = new Date()
 	let ts = ' ' + now.toLocaleTimeString().slice(0,5)  + ' | '
-	let info = []
+	let data = []
 	for (let i = 1; i <= 22; i++) {			
 		while(msDaily2 > msCost1) {
 			msCost1 *= 1.005
@@ -990,15 +990,15 @@ function missionDaily() {
 		let mp = convertValue(missionPower * msLevel2/msLevel1 * rpLevel2/rpLevel1)
 		let rs = ' - ' + pl(rpLevel2,3)
 		let ms = ' - ' + pl((msLevel2/1000).toFixed(1))
-		info.push(now.toLocaleDateString().slice(0,4) + ':  ' + mp + rs + ms)		
+		data.push(now.toLocaleDateString().slice(0,4) + ':  ' + mp + rs + ms)		
 	}
-	info.unshift(seperator)
-	info.unshift('Clan upgrade')
-	info2.value = info.join('\n')
+	data.unshift(seperator)
+	data.unshift('Clan upgrade')
+	info.value = data.join('\n')
 }
 
 function missionUpgrade() {
-	info2.value = ''
+	info.value = ''
 	let rp = getPoints('research')
 	let rpBuy = rpLevel = 0
 	let rpCost = Math.ceil((calc['rsclan']+1)/10)	
@@ -1008,7 +1008,7 @@ function missionUpgrade() {
 		rpCost = Math.ceil((calc['rsclan'] + rpBuy + 1)/10)	
 	}
 	rpLevel = calc['rsclan'] + rpBuy
-	addStatus2('RP Level: ' + rpLevel + ' (+' + rpBuy + ')')
+	addInfo('RP Level: ' + rpLevel + ' (+' + rpBuy + ')')
 	let dollar = getDollar(true) 
 	let msLevel = 0
 	let msCost = calc['msclanCost'] * 100	
@@ -1017,25 +1017,25 @@ function missionUpgrade() {
 		msLevel += 100
 		dollar -= msCost
 	}
-	addStatus2('MS Level: ' + (calc['msclan'] + msLevel).toLocaleString() + ' (+' + msLevel.toLocaleString() + ')')
+	addInfo('MS Level: ' + (calc['msclan'] + msLevel).toLocaleString() + ' (+' + msLevel.toLocaleString() + ')')
 	let missionNew = calc['mission'] * ((rpLevel+1)/(calc['rsclan']+1)) *((calc['msclan'] + msLevel)/ calc['msclan'])
-	addStatus2('Mission:  ' + convertValue(missionNew))
-	addStatus2(seperator)
-	addStatus2('Clan upgrade')
+	addInfo('Mission:  ' + convertValue(missionNew))
+	addInfo(seperator)
+	addInfo('Clan upgrade')
 }
 	
 		
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 function msUpgrade() {
 	let dollarRun = getLogData()[1], f = arguments.callee.name
-	if (window[f].cache) info2.value = window[f].cache
+	if (window[f].cache) info.value = window[f].cache
 	$j.get('game/researchanz.php').done(function(r) {
 		let rsLevel = r.rsupgrade2
 		let rsCost = rsLevel+1
 		let runNow = rsLevel+1
 		let runNext = rsLevel+2
 		$j.get('game/megaidleanz.php').done(function(r) {
-			info2.value = ''
+			info.value = ''
 			let farmLevel = r.megaidlelvl+1
 			let farmCost = farmLevel <= 10 ? farmLevel : 10
 			let farmNow = getValue(r.megaidleprominute)
@@ -1057,35 +1057,35 @@ function msUpgrade() {
 			let costRP = (newDiff/rsCost) + (diffFarm/rsCost)
 			let totalMs2 = convertValue((newDollar * maxRuns) + (newFarm*60*24))	
 			newDollar = convertValue(newDollar)
-			addStatus2('Upgrade ' + (farmRP >= costRP ? 'Farm' : 'Research') + ' next')
-			addStatus2('')
-			addStatus2('Cost: ' + convertValue(farmRP) + '/RP')
-			addStatus2('Day:  ' + totalMs1)
-			addStatus2('Farm: ' + pl(farm1h,8) + '  => ' + farm1hNext) 
-			addStatus2(seperator)
-			addStatus2('Farm Upgrade ' + farmLevel)		
-			addStatus2('')
-			addStatus2('Cost: ' + convertValue(costRP) + '/RP')
-			addStatus2('Day:  ' + totalMs2)
-			addStatus2('Farm: ' + pl(now1h,8) + '  => ' + new1h) 
-			addStatus2('Run:  ' + pl(dollarRun,8) + ' => ' + pl(newDollar,8)) 
-			addStatus2(seperator)
-			addStatus2('RS Upgrade ' + (rsLevel+1))	
-			window[f].cache = info2.value 
+			addInfo('Upgrade ' + (farmRP >= costRP ? 'Farm' : 'Research') + ' next')
+			addInfo('')
+			addInfo('Cost: ' + convertValue(farmRP) + '/RP')
+			addInfo('Day:  ' + totalMs1)
+			addInfo('Farm: ' + pl(farm1h,8) + '  => ' + farm1hNext) 
+			addInfo(seperator)
+			addInfo('Farm Upgrade ' + farmLevel)		
+			addInfo('')
+			addInfo('Cost: ' + convertValue(costRP) + '/RP')
+			addInfo('Day:  ' + totalMs2)
+			addInfo('Farm: ' + pl(now1h,8) + '  => ' + new1h) 
+			addInfo('Run:  ' + pl(dollarRun,8) + ' => ' + pl(newDollar,8)) 
+			addInfo(seperator)
+			addInfo('RS Upgrade ' + (rsLevel+1))	
+			window[f].cache = info.value 
 		})
 	})
 }
 
 function msGrowth() {
 	let f = arguments.callee.name
-	if (window[f].cache) info2.value = window[f].cache
+	if (window[f].cache) info.value = window[f].cache
 	$j.get('game/megaidleanz.php').done(function(r) {
 		let farmNow = getValue(r.megaidleprominute) * 10
 		let farmCollect = farmMax * farmNow / 10
 		let farm24 = farmNow/10 * 24 * 60
 		let spFarm = Math.ceil(24*6*r.megaidleu3/100)
 			$j.get('game/skillanz.php').done(function(r) {	
-				info2.value = ''
+				info.value = ''
 				skillLvl = [r.skill[9], r.skill[10]]
 				let avgSP = 3
 				if (todayRuns.r) avgSP = todayRuns.sp/todayRuns.r
@@ -1097,30 +1097,30 @@ function msGrowth() {
 				let doubleProd = (msTotal/(msRun*maxRuns+farm24)).toFixed(2) + ' days'
 				let ms24 = msRun * maxRuns	
 				let sumOld = ms24 + farm24
-				addStatus2('MS Farm: ' + pl(convertValue(farmCollect),8) + ' / ' + pl(convertValue(farm24),8))
+				addInfo('MS Farm: ' + pl(convertValue(farmCollect),8) + ' / ' + pl(convertValue(farm24),8))
 				farmCollect *= newSkill/100+1
 				farm24 *= newSkill/100+1
-				addStatus2('MS Farm: ' + pl(convertValue(farmCollect),8) + ' / ' + pl(convertValue(farm24),8))			
-				addStatus2(seperator)	
-				addStatus2('MS Run:  ' + pl(convertValue(msRun),8) + ' / ' + pl(convertValue(ms24),8))
+				addInfo('MS Farm: ' + pl(convertValue(farmCollect),8) + ' / ' + pl(convertValue(farm24),8))			
+				addInfo(seperator)	
+				addInfo('MS Run:  ' + pl(convertValue(msRun),8) + ' / ' + pl(convertValue(ms24),8))
 				msRun *= newSkill/100+1
 				ms24 *= newSkill/100+1
-				addStatus2('MS Run:  ' + pl(convertValue(msRun),8) + ' / ' + pl(convertValue(ms24),8))		
+				addInfo('MS Run:  ' + pl(convertValue(msRun),8) + ' / ' + pl(convertValue(ms24),8))		
 				let sumNew = ms24 + farm24
 				let newMS = sumNew - sumOld
-				addStatus2(seperator)	
-				addStatus2('Total:   ' + pl(convertValue(sumOld),8) + ' / ' + pl(convertValue(sumNew),8))				
-				addStatus2(seperator)	
-				addStatus2('Prod 2:  ' + doubleProd)
-				addStatus2('Growth:  ' + newSkill.toFixed(2) + ' % - ' + convertValue(newMS))
-				window[f].cache = info2.value 				
+				addInfo(seperator)	
+				addInfo('Total:   ' + pl(convertValue(sumOld),8) + ' / ' + pl(convertValue(sumNew),8))				
+				addInfo(seperator)	
+				addInfo('Prod 2:  ' + doubleProd)
+				addInfo('Growth:  ' + newSkill.toFixed(2) + ' % - ' + convertValue(newMS))
+				window[f].cache = info.value 				
 			})
 	})
 }
 
 function dailyGrowth() {
 	let f = arguments.callee.name
-	if (window[f].cache) info2.value = window[f].cache
+	if (window[f].cache) info.value = window[f].cache
 	$j.get('game/megaidleanz.php').done(function(r) {
 		let farm = getValue(r.megaidleprominute) * 60 * 24
 		let spChance = Math.ceil(24*6*r.megaidleu3/100)
@@ -1128,7 +1128,7 @@ function dailyGrowth() {
 				skillLvl = [r.skill[9], r.skill[10]]
 				let now = new Date()
 				let ms = getValue(getLogData()[1]) * maxRuns + farm
-				let avgSP = 3, info = []
+				let avgSP = 3, data = []
 				if (todayRuns.r) avgSP = todayRuns.sp/todayRuns.r
 				let dailySKill = Math.round((avgSP*maxRuns+spChance)/10)
 				for (let i = 1; i <= 22; i++) {
@@ -1137,24 +1137,24 @@ function dailyGrowth() {
 					let newSkill =  (skillLvl[1] + dailySKill * i) / skillLvl[1]
 					let msNew = pl(convertValue(ms * newSkill),8)
 					let pct = pl((newSkill*100-100).toFixed(2) + ' %', 7)
-					info.push(d + msNew + ' -  ' + pct)
+					data.push(d + msNew + ' -  ' + pct)
 				}
-				info.unshift(seperator)
+				data.unshift(seperator)
 				let newSkill = (skillLvl[1] + dailySKill)/skillLvl[1]
 				let pct = pl((newSkill*100-100).toFixed(2) + ' %', 7)
 				let msNew = pl(convertValue(ms * newSkill - ms),8)
-				info.unshift('Growth: ' + msNew + ' -  ' + pct)
-				info2.value = info.join('\n')
-				window[f].cache = info2.value 				
+				data.unshift('Growth: ' + msNew + ' -  ' + pct)
+				info.value = data.join('\n')
+				window[f].cache = info.value 				
 			})
 	})
 }
 
 function prodUpgrade() {
 	let f = arguments.callee.name
-	if (window[f].cache) info2.value = window[f].cache
+	if (window[f].cache) info.value = window[f].cache
 	$j.get('game/researchanz.php').done(function(r) {
-		let cost = 0, info = []
+		let cost = 0, data = []
 		let sLevel =  r['rsupgrade' + (4+mainBuild)]
 		let sFactor = sLevel*(sLevel+1)/2+1
 		let cProd = getValue(getLogData()[0])
@@ -1164,12 +1164,12 @@ function prodUpgrade() {
 			let nFactor = sLevel*(sLevel+1)/2+1
 			let pct = (nFactor/sFactor)
 			let nProd = convertValue(cProd * pct)
-			info.push(sLevel + ': ' + pl(nProd, 9) + ' - ' + pct.toFixed(2) + 'x - ' + pl(cost,3) + ' rp') 				
+			data.push(sLevel + ': ' + pl(nProd, 9) + ' - ' + pct.toFixed(2) + 'x - ' + pl(cost,3) + ' rp') 				
 		}	
-		info.unshift(seperator)
-		info.unshift('Resarch prod')
-		info2.value = info.join('\n')
-		window[f].cache = info2.value 
+		data.unshift(seperator)
+		data.unshift('Resarch prod')
+		info.value = data.join('\n')
+		window[f].cache = info.value 
 	})
 }
 
@@ -1255,7 +1255,7 @@ function createCalcUI() {
 
 function updateCalc() {
 	if (typeof calc['mission'] === 'undefined') return
-	let info = []
+	let data = []
 	let prodNow = calc['prod']
 	let skillNow = (calc['sktruck'] + 1)*(calc['sktruck'] + 2)/2
 	let skillNew = calc['ui'][0].getValue('sktruck')
@@ -1269,7 +1269,7 @@ function updateCalc() {
 	skillNew = calc['ui'][4].getValue('mstruck')
 	prodNew = prodNew/Math.pow(skillNow,2)*Math.pow(skillNew,2)
 	let pct = '  - ' + pl((prodNew/prodNow).toFixed(2), 6) + 'x'
-	info.push(' Prod:  ' + pl(convertValue(prodNew),9) + pct)
+	data.push(' Prod:  ' + pl(convertValue(prodNew),9) + pct)
 	let msRun = calc['msrun']
 	let msNow = calc['skmega'] 
 	let msNext = calc['ui'][1].getValue('skmega')
@@ -1278,7 +1278,7 @@ function updateCalc() {
 	msNext = calc['ui'][3].getValue('rsmega') + 1
 	msRun = msRun/msNow*msNext
 	pct = '  - ' + pl((msRun/calc['msrun']).toFixed(2), 6) + 'x'
-	info.push(' Mega:  ' + pl(convertValue(msRun),9) + pct)
+	data.push(' Mega:  ' + pl(convertValue(msRun),9) + pct)
 	let farmDaily = calc['farmnow'] * farmMax
 	let farmNow = calc['skmega']
 	let farmNext = calc['ui'][1].getValue('skmega')
@@ -1288,7 +1288,7 @@ function updateCalc() {
 	farmDaily = farmDaily/farmNow*farmNext
 	farmDaily = farmDaily/calc['farmlvl']*calc['ui'][6].getValue('rsfarm') 
 	pct = '  - ' + pl((farmDaily/(calc['farmnow'] * farmMax)).toFixed(2), 6) + 'x'
-	info.push(' Farm:  ' + pl(convertValue(farmDaily),9) + pct)
+	data.push(' Farm:  ' + pl(convertValue(farmDaily),9) + pct)
 	let mission = calc['mission']
 	let missionNow = calc['rsclan'] + 1
 	let missionNext = calc['ui'][7].getValue('rsclan') + 1
@@ -1297,7 +1297,7 @@ function updateCalc() {
 	missionNext = calc['ui'][5].getValue('msclan')
 	mission = mission/missionNow*missionNext
 	pct = '  - ' + pl((mission/calc['mission']).toFixed(2), 6) + 'x'
-	info.push(' Clan:  ' + pl(convertValue(mission),9) + pct)
+	data.push(' Clan:  ' + pl(convertValue(mission),9) + pct)
 	let tc = calc['mstruckCost']
 	let f = Math.round((calc['ui'][4].getValue('mstruck')-calc['mstruck'])/100)
 	for (let i = 1; i <= f; i++) {
@@ -1310,7 +1310,7 @@ function updateCalc() {
 		cc *= 1.005
 	}
 	cc = f > 0 ? cc * f * 100 : 0
-	if (tc+cc) info.push(' Cost:  ' + pl(convertValue(tc+cc),9))
+	if (tc+cc) data.push(' Cost:  ' + pl(convertValue(tc+cc),9))
 	tc = 0
 	f = calc['ui'][2].getValue('rstruck') - calc['rstruck']  
 	for (let i = 1; i <= f; i++) {
@@ -1329,13 +1329,13 @@ function updateCalc() {
 		if (calc['farmlvl'] + i <= 10) tc += calc['farmlvl'] + i
 		else tc += 10
 	}	
-	if (tc) info.push(' RP:     ' + tc)
+	if (tc) data.push(' RP:     ' + tc)
 	else {
 		let prod = calc['ui'][0].getValue('sktruck') * 2
 		let pct = (prod/(prod+calc['ui'][1].getValue('skmega'))*100).toFixed(2) + '%'
-		info.push(' P/MS:   ' + pct)	
+		data.push(' P/MS:   ' + pct)	
 	}	
-	calc['ui'][8].setValue('data', info.join('\n'))
+	calc['ui'][8].setValue('data', data.join('\n'))
 }
 
 function getCalcData() {
@@ -1611,9 +1611,9 @@ function convertDate(str) {
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-function createLog() {
+function createRuns() {
 	let textf = document.createElement("textarea");
-	textf.id = 'log'
+	textf.id = 'runs'
 	textf.spellcheck = false
 	textf.style.cssText = 'font-family: monospace; font-size: 13px; position: absolute; width: 590px; height: 118px; top: 497px; left: 926px; padding-left: 15px; border-top: none;  border-image: initial; border-radius: 5px; background-color: black; color: ' + theme + '; caret-color: transparent; overflow: hidden; outline: none; resize: none; cursor: default; border-right: 1px dotted ' + theme + '; border-bottom: 1px dotted ' + theme + '; border-left: 1px dotted ' + theme
 	document.getElementById('maingame').appendChild(textf); 
@@ -1622,9 +1622,9 @@ function createLog() {
 	document.getElementById('maingame').appendChild(textf); 	
 }
 
-function createStatus() {
+function createLog() {
 	let textf = document.createElement("textarea");
-	textf.id = 'info1'
+	textf.id = 'log'
 	textf.spellcheck = false
 	textf.style.cssText = "font-family: monospace; font-size: 13px; position: absolute; width: 285px; height: 380px; top: 44px; left: 1230px; padding-left: 15px; border-top: none; border-right: 1px dotted "+ theme + "; border-bottom: 1px dotted "+ theme + "; border-left: 1px dotted "+ theme + "; border-image: initial; border-radius: 5px; background-color: black; color: "+ theme + "; caret-color: transparent; overflow: hidden; outline: none; resize: none; cursor: default;"
 	document.getElementById('maingame').appendChild(textf); 
@@ -1633,9 +1633,9 @@ function createStatus() {
 	document.getElementById('maingame').appendChild(textf); 	
 }
 
-function createStatus2() {
+function createInfo() {
     let textf = document.createElement("textarea");
-    textf.id = 'info2'
+    textf.id = 'info'
 	textf.spellcheck = false
     textf.style.cssText = "font-family: monospace; font-size: 13px; position: absolute; width: 258px; height: 380px; top: 44px; left: 926px; padding-left: 15px; border-top: none; border-right: 1px dotted "+ theme + "; border-bottom: 1px dotted "+ theme + "; border-left: 1px dotted "+ theme + "; border-image: initial; border-radius: 5px; background-color: transparent; color: "+ theme + "; caret-color: transparent; overflow: hidden; outline: none; resize: none; cursor: default;"
     document.getElementById('maingame').appendChild(textf); 
@@ -1759,7 +1759,7 @@ function logBackup() {
 	let a = document.createElement("a"), data, file
 	document.body.appendChild(a)
 	for (let i = 0; i <= 1; i++) {
-		data = !i ? [log.value, '_log.txt'] : [info1.value, '_status.txt']
+		data = !i ? [runs.value, '_log.txt'] : [log.value, '_status.txt']
 		file = new Blob([data[0]], {type: 'text/plain'})
 		a.href = URL.createObjectURL(file)
 		a.download = account + data[1]
@@ -1779,7 +1779,7 @@ function logBackup() {
 	a.download = account + '_settings.txt'
 	a.click()
 	document.body.removeChild(a)
-	addStatus2('Backup created')
+	addInfo('Backup created')
 }
 
 function confirmBackup() {
@@ -1803,33 +1803,33 @@ function getCSS(id) {
 }
 
 function createUI() {
-	createLog()
-	createStatus() 
-	createStatus2()
+	createRuns()
+	createLog() 
+	createInfo()
 	createHeader()
 	createLines()
 	createStatsWin()
 	createIdleInfo()
 	createTimeInfo()
 	createAFKwin()
+	runs.onkeydown = function(e) { 
+		if (e.keyCode === 38) { runs.scrollTop -= 105; event.preventDefault() }
+		else if (e.keyCode === 40) { runs.scrollTop += 105; event.preventDefault() }
+	}
+	runs.oncontextmenu  = function(e) { return false }
 	log.onkeydown = function(e) { 
-		if (e.keyCode === 38) { log.scrollTop -= 105; event.preventDefault() }
-		else if (e.keyCode === 40) { log.scrollTop += 105; event.preventDefault() }
+		if (e.keyCode === 38) { log.scrollTop -= 378; event.preventDefault() }
+		else if (e.keyCode === 40) { log.scrollTop += 378; event.preventDefault() }
 	}
-	log.oncontextmenu  = function(e) { return false }
-	info1.onkeydown = function(e) { 
-		if (e.keyCode === 38) { info1.scrollTop -= 378; event.preventDefault() }
-		else if (e.keyCode === 40) { info1.scrollTop += 378; event.preventDefault() }
+	log.oncontextmenu  = function(e) { return false }	
+	info.onkeydown  = function(e) {
+		if (e.keyCode === 38) { info.scrollTop -= 378; event.preventDefault() }
+		else if (e.keyCode === 40) { info.scrollTop += 378; event.preventDefault() }
 	}
-	info1.oncontextmenu  = function(e) { return false }	
-	info2.onkeydown  = function(e) {
-		if (e.keyCode === 38) { info2.scrollTop -= 378; event.preventDefault() }
-		else if (e.keyCode === 40) { info2.scrollTop += 378; event.preventDefault() }
-	}
-	info2.onmousedown  = function(e) {
+	info.onmousedown  = function(e) {
 		if (e.which === 3) statusInfo()
 	}
-	info2.oncontextmenu  = function(e) { return false }	
+	info.oncontextmenu  = function(e) { return false }	
 	statswin.onkeydown  = function(e) {
 		if (e.keyCode === 38) { statswin.scrollTop -= 410; event.preventDefault() }
 		else if (e.keyCode === 40) { statswin.scrollTop += 410; event.preventDefault() }
@@ -1840,52 +1840,52 @@ function createUI() {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 let account = $j('.accname').text()
-function addLog(txt) {
+function updateRuns(txt) {
 	let now = new Date()
-	let val = log.value
+	let val = runs.value
 	let ts = timeFormat(now.getDate()) + '.' + timeFormat(now.getMonth()+1) + ' | ' + now.toLocaleTimeString().slice(0,5)
-    log.value = ts + ' | ' + txt + '\n' + val
-	saveLog()
+    runs.value = ts + ' | ' + txt + '\n' + val
+	saveRuns()
 }
 
-function loadLog() {
+function loadRuns() {
 	let data = decompress(load(account + '_log'))
-	if (data) log.value = data
+	if (data) runs.value = data
 }
 
-function saveLog() {
-	let data = log.value
+function saveRuns() {
+	let data = runs.value
 	if (!data) return
 	save(account + '_log', compress(data))
 }
 
 
-function addStatus(txt) {
+function updateStatus(txt) {
 	let now = new Date() 
-	let val =  info1.value
+	let val =  log.value
 	let ts = timeFormat(now.getDate()) + '.' + timeFormat(now.getMonth()+1) + ' | ' + now.toLocaleTimeString().slice(0,5)
-	info1.value = ts + ' | ' + txt + '\n' + val
+	log.value = ts + ' | ' + txt + '\n' + val
 	saveStatus()
 }
 
 function loadStatus() {
 	let data = decompress(load(account + '_status'))
-	if (data) info1.value = data
+	if (data) log.value = data
 }
 
 function saveStatus() {
-	let data = info1.value
+	let data = log.value
 	if (!data) return
 	data = data.split('\n')
-	for (let i = data.length-1; i >= 18000; i--) { data.splice(i,1) }	
+	for (let i = data.length-1; i >= 9000; i--) { data.splice(i,1) }	
 	data = data.join('\n')
 	save(account + '_status', compress(data))
-	info1.value = data
+	log.value = data
 }
 
-function addStatus2(txt) {
-	let val = info2.value
-    info2.value = txt + '\n' + val
+function addInfo(txt) {
+	let val = info.value
+    info.value = txt + '\n' + val
 }
 
 function load(id) {
@@ -2258,13 +2258,13 @@ function createButtons() {
 		hideStatsWin()
 		if (e.which === 1) confirmBackup()
 		else if (e.which === 3) {
-			info2.value = ''
-			let l = info1.value
+			info.value = ''
+			let l = log.value
 			l = [l.length/1024,l.split('\n').length]
-			addStatus2('Log:  ' + l[1].toLocaleString() + ' entries, ' + Math.round(l[0]) + ' kb')
-			l = log.value
+			addInfo('Log:  ' + l[1].toLocaleString() + ' entries, ' + Math.round(l[0]) + ' kb')
+			l = runs.value
 			l = [l.length/1024,l.split('\n').length]
-			addStatus2('Runs: ' + l[1].toLocaleString() + ' entries, ' + Math.round(l[0]) + ' kb')
+			addInfo('Runs: ' + l[1].toLocaleString() + ' entries, ' + Math.round(l[0]) + ' kb')
 		}
 	}
 }
@@ -2518,7 +2518,7 @@ function setTheme() {
 		}
 	}	
 	for (let i = 1; i <= 21; i++) allDivs.push(document.getElementById('btn' + i))
-	allDivs.push(log,info1,info2,statswin,timeinfo,afkwin)
+	allDivs.push(runs,log,info,statswin,timeinfo,afkwin)
 	allDivs.push(ii1,ii2,ii3,ii4,ii5,ii6,header1,header2,header3)	
 	allDivs.push(il1,il2,il3,il4,il5,il6,il7,il8,il9)
 	buildingcostanz(true)
