@@ -1699,7 +1699,7 @@ function createAFKwin() {
 	textf.style.cssText = 'font-family: monospace; font-size: 30px; line-height: 40px; position: absolute; width: 1192px; height: 720px; top: 0px; left: 0x; padding-left: 340px; border-top: none;  border-image: initial; border-radius: 5px; background-color: black; color: ' + theme + '; caret-color: transparent; overflow: hidden; outline: none; resize: none; cursor: default; border: 1px dotted black; display: none;'
 	document.getElementById('maingame').appendChild(textf); 
 	afkwin.onclick = function() {
-		$j('#afkwin').fadeToggle(1000)
+		afkwin.style.display = 'none'
 		displayStats()
 	}
 }
@@ -2239,12 +2239,8 @@ function createButtons() {
 	btn17.onmousedown = function(e) {
 		if (e.which === 1) changeTheme()
 		else if (e.which === 3) { 
-			setTimeout(function() {
-				$j('#afkwin').fadeToggle(1000)
-			}, 150)
-			setTimeout(function() {
-				if (!afkwin.style.display) afkwin.style.display = 'block'
-			}, 500)
+			if (afkwin.style.display === 'none') afkwin.style.display = 'block'
+			else afkwin.style.display = 'none'
 			displayStats()
 		}
 	}	
@@ -2300,7 +2296,7 @@ document.onkeydown = function(e) {
 		hideStatsWin()
 		if (!UI[0]._hidden) showSettings()
 		if (!calc['ui'][0]._hidden) showCalcUI()
-		if (isVisible('afkwin')) $j('#afkwin').fadeToggle(1000)
+		if (isVisible('afkwin')) afkwin.style.display = 'none'
 	}
 }
 
