@@ -906,17 +906,15 @@ function statsFarm() {
 	info.value = ''
 	let avgM = avgP = avgS = 0
 	let data = getFarmData(true).reverse()
-	for (let i = 0; i < data.length; i++) {
+	for (let i = 0; i < data.length-1; i++) {
 		let d = data[i][0].slice(0,5) + ' | '
 		let m = pl(data[i][1], 9) + ' | '
 		let p = pl(data[i][2], 4) + ' | '
 		let s = pl(data[i][3], 3)
 		addInfo(d + m + p + s)
-		if (i < data.length-1) {
-			avgM += getValue(data[i][1])
-			avgP += parseInt(data[i][2])
-			avgS += parseInt(data[i][3])
-		}
+		avgM += getValue(data[i][1])
+		avgP += parseInt(data[i][2])
+		avgS += parseInt(data[i][3])
 	}
 	addInfo(seperator)
 	avgM = pl(convertValue(avgM/(data.length-1)), 9) + ' | '
@@ -934,7 +932,7 @@ function getFarmData(all=false) {
 		if (entry) { 
 			let date = entry[1]
 			if (typeof res[date] === 'undefined') { 
-				if ((Object.keys(res).length && !all) || Object.keys(res).length === 21) break	
+				if ((Object.keys(res).length && !all) || Object.keys(res).length === 22) break	
 				res[date] = [0,0,0,0]
 			}		
 			entry.forEach((v,i) => i > 2 ?  res[date][i-3] += getValue(v) : 0)
