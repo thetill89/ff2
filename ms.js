@@ -441,6 +441,34 @@ function doMission() {
 	}
 }
 
+function getMissionStanding(r) {
+	let data = []
+	if (r.aktclanquest) {
+		data.push('\ MISSION' + pl(Math.floor(getValue(r.aktclanquest)/getValue(r.aktfullpoints)*100) + '%', 5) + pl(r.aktfullpoints, 29) + '\n')
+		if (r.anz) {
+			let max = r.anz < 9 ? r.anz : 9
+			for (let i = 1; i <= max; i++) {
+				let points = r.aktclandmg[i]
+				if (!points) continue
+				let level = pl(r.maxlevelarr[i], 5) + ' | '
+				let name = pr(r.namearray[i].split('> ')[1].slice(0,16), 16) + ' | '
+				data.push(level + name + pl(getMissionPoint(points), 15))
+			}
+		}
+		data.push(pl('-' + getMissionPoint(getValue(r.aktfullpoints) - getValue(r.aktclanquest)), 42))
+	}
+	else data.push('\ MISSION\n')
+	$j('#ii4').val(data.join('\n')) 
+}
+
+function getMissionPoint(nbr=1) {
+	if (nbr >= 1e12) nbr = (nbr/1e12).toFixed(3) + ' T'
+	else if (nbr >= 1e7) nbr = (nbr/1e9).toFixed(3) + ' B'
+	else if (nbr >= 1e6) nbr = (nbr/1e6).toFixed(3) + ' M'
+	else nbr = (nbr/1e3).toFixed(3) + ' K'
+	return nbr
+}
+
 
 function getTourTime() {
 	$j.get('game/guildanz.php').done(function(r) {
@@ -577,34 +605,6 @@ function upgradeSkill() {
 	if (autoSkill && spTmp >= 10) {
 		$j.get('game/skillupgrade.php?10').done(() => $j('.skillbtn').html('Skills: ' + (spTmp-10)))			
 	}
-}
-
-function getMissionStanding(r) {
-	let data = []
-	if (r.aktclanquest) {
-		data.push('\ MISSION' + pl(Math.floor(getValue(r.aktclanquest)/getValue(r.aktfullpoints)*100) + '%', 5) + pl(r.aktfullpoints, 29) + '\n')
-		if (r.anz) {
-			let max = r.anz < 9 ? r.anz : 9
-			for (let i = 1; i <= max; i++) {
-				let points = r.aktclandmg[i]
-				if (!points) continue
-				let level = pl(r.maxlevelarr[i], 5) + ' | '
-				let name = pr(r.namearray[i].split('> ')[1].slice(0,16), 16) + ' | '
-				data.push(level + name + pl(getClanPoints(points), 15))
-			}
-		}
-		data.push(pl('-' + getClanPoints(getValue(r.aktfullpoints) - getValue(r.aktclanquest)), 42))
-	}
-	else data.push('\ MISSION\n')
-	$j('#ii4').val(data.join('\n')) 
-}
-
-function getClanPoints(nbr=1) {
-	if (nbr >= 1e12) nbr = (nbr/1e12).toFixed(3) + ' T'
-	else if (nbr >= 1e7) nbr = (nbr/1e9).toFixed(3) + ' B'
-	else if (nbr >= 1e6) nbr = (nbr/1e6).toFixed(3) + ' M'
-	else nbr = (nbr/1e3).toFixed(3) + ' K'
-	return nbr
 }
 
 function getClanChat() {
@@ -1023,7 +1023,7 @@ function missionUpgrade() {
 	}
 	addInfo('MS Level: ' + (calc['msclan'] + msLevel).toLocaleString() + ' (+' + msLevel.toLocaleString() + ')')
 	let missionNew = calc['mission'] * ((rpLevel+1)/(calc['rsclan']+1)) *((calc['msclan'] + msLevel)/ calc['msclan'])
-	addInfo('Mission:  ' + convertValue(missionNew))
+	addInfo('Mission:  ' + getMissionPoint(missionNew))
 	addInfo(seperator)
 	addInfo('Clan upgrade')
 }
@@ -1301,7 +1301,7 @@ function updateCalc() {
 	missionNext = calc['ui'][5].getValue('msclan')
 	mission = mission/missionNow*missionNext
 	pct = '  - ' + pl((mission/calc['mission']).toFixed(2), 6) + 'x'
-	data.push(' Clan:  ' + pl(convertValue(mission),9) + pct)
+	data.push(' Clan:  ' + pl(getMissionPoint(mission) ,9) + pct)
 	let tc = calc['mstruckCost']
 	let f = Math.round((calc['ui'][4].getValue('mstruck')-calc['mstruck'])/100)
 	for (let i = 1; i <= f; i++) {
