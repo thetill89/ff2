@@ -107,7 +107,6 @@ function idleRoutine() {
 	}
 }
 
-
 function startIdleMode() {
 	if (autoPlay) {
 		buyStep++
@@ -137,7 +136,7 @@ function startIdleMode() {
 		}
 		else addInfo('Idle max')
 		if (buyStep > 1) getMissionTime()
-		if (buyStep >= buyMax.length) {
+		if (idleTime > 120) {
 			for (let i = 1; i <= Math.floor(idleTime / 120); i++) setTimeout(getMissionTime, i * 120 * 1000)
 		}
 	}
