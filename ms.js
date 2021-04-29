@@ -915,11 +915,12 @@ function statsFarm() {
 		avgP += parseInt(data[i][2])
 		avgS += parseInt(data[i][3])
 	}
-	addInfo(seperator)
 	avgM = pl(convertValue(avgM/(data.length-1)), 9) + ' | '
 	avgP = pl(Math.round(avgP/(data.length-1)), 4) + ' | '
 	avgS = pl(Math.round(avgS/(data.length-1)), 3)
+	addInfo(seperator)
 	addInfo('  Ø  ' + ' | ' + avgM + avgP + avgS)
+	addInfo(seperator)
 	addInfo('Farm stats')
 }
 
@@ -931,7 +932,7 @@ function getFarmData(all=false) {
 		if (entry) { 
 			let date = entry[1]
 			if (typeof res[date] === 'undefined') { 
-				if ((Object.keys(res).length && !all) || Object.keys(res).length === 22) break	
+				if ((Object.keys(res).length && !all) || Object.keys(res).length === 21) break	
 				res[date] = [0,0,0,0]
 			}		
 			entry.forEach((v,i) => i > 2 ?  res[date][i-3] += getValue(v) : 0)
@@ -1336,7 +1337,7 @@ function updateCalc() {
 	if (tc) data.push(' RP:     ' + tc)
 	else {
 		let prod = calc['ui'][0].getValue('sktruck') * 2
-		let pct = (prod/(prod+calc['ui'][1].getValue('skmega'))*100).toFixed(2) + '%'
+		let pct = (prod/(prod+calc['ui'][1].getValue('skmega'))*100).toFixed(2) + ' %'
 		data.push(' P/MS:   ' + pct)	
 	}	
 	calc['ui'][8].setValue('data', data.join('\n'))
