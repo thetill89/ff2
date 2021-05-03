@@ -390,8 +390,7 @@ function statusInfo() {
 	let time = (Date.now()-ST.startTime)/1000
 	let runMS = getValue(getLogData()[1]) * (todayRuns.r || 1)
 	addInfo(pr('MS Farm:',s) + data[1] + ', ' + (getValue(data[1]) / (runMS + getValue(data[1])) * 100).toFixed(2) + '%')
-	runMS = (runMS * todayRuns.r)
-	addInfo(pr('MS Run:',s) +  convertValue(runMS / todayRuns.r))
+	addInfo(pr('MS Run:',s) +  convertValue(runMS))
 	addInfo(seperator + '--')
 	if (runStats.length) { 
 		addInfo(pr('Max:', s) + maxLevel + ', ' + maxProd)
@@ -399,11 +398,10 @@ function statusInfo() {
 	}
 	if (todayRuns.r) {
 		addInfo(pr('Ø SP:',s) + (todayRuns.sp/todayRuns.r).toFixed(2) + ', ' + (todayRuns.ep/todayRuns.r).toFixed(2))
-		addInfo(pr('Today: ',s) + todayRuns.r + ' resets')
+		addInfo(pr('Today: ',s) + todayRuns.r + ' runs')
 	}
 	addInfo(seperator + '--')
-	addInfo(pr('Level:',s)+ highLevel)
-	addInfo(pr('Resets:',s) + ST.totalRuns.toLocaleString())
+	addInfo(pr('Runs:',s) + ST.totalRuns.toLocaleString())
 	addInfo(pr('Playtime:',s) + displayTime(time, true))
 	addInfo(pr('Account:',s) + account)
 }
