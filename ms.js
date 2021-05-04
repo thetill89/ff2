@@ -1561,8 +1561,14 @@ function checkConnection() {
 	}
 	else connStatus = 0 
 	if (ST.audio && autoPlay && errorAudio.paused) {
-		if ((Date.now()-sessionTimer2)/1000 > sessionTime + 30) errorAudio.play()
-		else if (getLevel() - 5 > highLevel) errorAudio.play()
+		let time = (Date.now() - sessionTimer2) / 1000
+		if (time > sessionTime + 30) errorAudio.play()
+		else if (time > sessionTime / 10 ){
+			let check = false
+			for (e in building) if (!building[e]) check = true
+			if (check) errorAudio.play()
+		}
+		if (getLevel() - 5 > highLevel) errorAudio.play()
 	}
 }
 
