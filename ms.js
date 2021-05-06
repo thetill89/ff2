@@ -1361,7 +1361,7 @@ function getCalcData() {
 				calc['msclan'] = r.mega[10]
 				calc['msclanCost'] = getValue(r.megacost[10])
 				calc['ui'][4].setValue('mstruck', calc['mstruck'])
-				calc['ui'][4].setNumberParameters('mstruck', calc['mstruck'], 1000000, 100)
+				calc['ui'][4].setNumberParameters('mstruck', calc['mstruck'], 1000000, 1000)
 				calc['ui'][5].setValue('msclan', calc['msclan'])
 				calc['ui'][5].setNumberParameters('msclan', calc['msclan'], 1000000, 100)
 				$j('.button').eq(4).html('&nbsp&nbsp&nbspMS: ' + r.relikte)
