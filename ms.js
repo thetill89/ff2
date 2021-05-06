@@ -1230,7 +1230,7 @@ function createCalcUI() {
 	.addNumber('rsmega', 1, 1000, 1, 1, updateCalc)
 	.setSize(w,h)
 	calc['ui'][4] = qs.create(x+2*w,y, 'Dollar')
-	.addNumber('mstruck', 100, 1000000, 1, 100, updateCalc)
+	.addNumber('mstruck', 100, 1000000, 1, 1000, updateCalc)
 	.setSize(w,h)
 	calc['ui'][5] = qs.create(x+2*w,y+h-1, 'Clan dollar')
 	.addNumber('msclan', 100, 1000000, 1, 100, updateCalc)
