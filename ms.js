@@ -860,7 +860,7 @@ function statsGrowth() {
 		runs = pl(now[1].r,4)
 		lvl = pl(now[1].l - next[1].l,5)
 		mst = pl(convertValue(now[1].t - next[1].t), 10)
-		prod =  now[1].p >= next[1].p ? convertValue(now[1].p - next[1].p) : '-' + convertValue(next[1].p - now[1].p)
+		prod =  now[1].p > next[1].p ? (now[1].p / next[1].p * 100 - 100).toFixed(2) + ' % ' : '0 %'
 		prod = pl(prod, 10)
 		ms = now[1].m >= next[1].m ? convertValue(now[1].m - next[1].m) : '-' + convertValue(next[1].m - now[1].m)
 		ms = pl(ms, 10)
