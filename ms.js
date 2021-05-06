@@ -1218,7 +1218,7 @@ function createCalcUI() {
 	let x = 925, y = 490, w = 90, h = 70
 	calc['ui'] = []
 	calc['ui'][0] = qs.create(x,y, 'Truck')
-	.addNumber('sktruck', 1, 1000000, 1, 10, updateCalc)
+	.addNumber('sktruck', 1, 1000000, 1, 1, updateCalc)
 	.setSize(w,h)
 	calc['ui'][1] = qs.create(x,y+h-1, 'Business')
 	.addNumber('skmega', 1, 1000000, 1, 1, updateCalc)
@@ -1230,10 +1230,10 @@ function createCalcUI() {
 	.addNumber('rsmega', 1, 1000, 1, 1, updateCalc)
 	.setSize(w,h)
 	calc['ui'][4] = qs.create(x+2*w,y, 'Dollar')
-	.addNumber('mstruck', 100, 10000000, 1, 1000, updateCalc)
+	.addNumber('mstruck', 100, 10000000, 1, 1, updateCalc)
 	.setSize(w,h)
 	calc['ui'][5] = qs.create(x+2*w,y+h-1, 'Clan dollar')
-	.addNumber('msclan', 100, 10000000, 1, 100, updateCalc)
+	.addNumber('msclan', 100, 10000000, 1, 1, updateCalc)
 	.setSize(w,h)
 	calc['ui'][6] = qs.create(x+3*w,y, 'Farm level')
 	.addNumber('rsfarm', 1, 1000, 1, 1, updateCalc)
@@ -1344,6 +1344,7 @@ function getCalcData() {
 		calc['sktruck'] = r.skill[9]
 		calc['skmega'] = r.skill[10]
 		calc['ui'][0].setValue('sktruck', calc['sktruck'])
+		calc['ui'][2].setNumberParameters('sktruck', calc['sktruck'], 1000, 10)
 		calc['ui'][1].setValue('skmega', calc['skmega'] )
 		$j.get('game/researchanz.php').done(function(r) {
 			calc['rstruck'] = r.rsupgrade12
