@@ -1344,7 +1344,7 @@ function getCalcData() {
 		calc['sktruck'] = r.skill[9]
 		calc['skmega'] = r.skill[10]
 		calc['ui'][0].setValue('sktruck', calc['sktruck'])
-		calc['ui'][0].setNumberParameters('sktruck', calc['sktruck'], 1000, 10)
+		calc['ui'][0].setNumberParameters('sktruck', calc['sktruck'], 1000000, 10)
 		calc['ui'][1].setValue('skmega', calc['skmega'] )
 		$j.get('game/researchanz.php').done(function(r) {
 			calc['rstruck'] = r.rsupgrade12
