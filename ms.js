@@ -524,7 +524,6 @@ function collectFarm() {
 				sp += r.skillpointsplus
 				ep += r.eventpointsplus
 				updateStatus(r.megadollarwin +  fp + fsp + fep)
-				updateStatus('Farm collect')
 				if (info.value.includes('Account')) statusInfo()
 			} 
 			else if (r.erfolg === 2) addInfo('Farm time <1 min')
