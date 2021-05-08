@@ -490,7 +490,7 @@ function doTour() {
 	}
 }
 
-let farmMax
+let farmMax = 60
 function getFarmTime() {
 	$j.get('game/megaidleanz.php').done(function(r) {
 		farmLeft = (farmMax * 60 - r.megaidletime + 1) * 1000
@@ -546,7 +546,7 @@ function collectNow() {
 	}		
 }
 
-let researchBuilding
+let researchBuilding = mainBuild
 function getResearchTime() {
 	$j.get('game/researchanz.php').done(function(r) {
 		researchLeft = (r.researchdauernoch + 1) * 1000
@@ -569,7 +569,7 @@ function doResearch() {
 	}
 }
 
-let autoRP
+let autoRP = false
 function buyResearchPoint() {
 	if (autoRP && getPoints('event') >= 500) {
 		$j.get('game/eventbuy.php?3').done(function(r) { 
@@ -597,7 +597,7 @@ function getLastBuy() {
 	return 0
 }
 
-let autoSkill
+let autoSkill = false
 function upgradeSkill() {
 	let spTmp = getPoints('skill')
 	if (autoSkill && spTmp >= 10) {
@@ -605,6 +605,7 @@ function upgradeSkill() {
 	}
 }
 
+let trackData = []
 function getClanChat() {
 	$j.get('game/sortonline.php').done(function(r) {
 		let data = []
@@ -642,6 +643,9 @@ function getClanChat() {
 		$j('.clanbtn').html('Fastfood Clan')
 	})
 	$j.get('game/turnieranz.php').done(function(r) {		
+		if (new Date().getDay() === 0 || new Date().getDay() === 3 || new Date().getDay() === 5) {
+			trackData.push([new Date().toLocaleString(), (r.playermaxlvl[1] || 0) + ' - ' + (r.playermaxlvl[2] || 0) ])
+		}
 		let data = []
 		data.push(r.turniertxt.includes('Last') ? ' LAST TOURNAMENT\n' :  ' TOURNAMENT\n')
 		if (r.playeranz) {
@@ -2966,8 +2970,8 @@ function megaanz() {
 										megatxt[aktmegaid] +
 									'</div>' +
 									'<div class="megabtn1" onclick="megaupgrade(' + aktmegaid + ')">Buy x1</div>' +
-									'<div class="megabtn2" onclick="megaupgrade2(' + aktmegaid + ')">Buy x10</div>' +
-									'<div class="megabtn3" onclick="megaupgrade3(' + aktmegaid + ')">Buy x100</div>' +
+									'<div class="megabtn2" onclick="megaupgrade3(' + aktmegaid + ')">Buy x100</div>' +
+									'<div class="megabtn3" onclick="mega1000(' + aktmegaid + ')">Buy x1000</div>' +
 								'</div>';
 			}
 			if (e.megaanz < 10) {
@@ -2994,6 +2998,12 @@ function megaanz() {
 			$j('.button').eq(4).html('&nbsp&nbsp&nbspMS: ' + e.relikte)
 		}
 	});
+}
+
+function mega1000(e) {
+	$j.get('game/megaupgrade3.php?' + e).done(function(r) { 
+	
+	 })	
 }
 
 function resetmd() {
