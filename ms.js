@@ -643,12 +643,12 @@ function getClanChat() {
 		$j('.clanbtn').html('Fastfood Clan')
 	})
 	$j.get('game/turnieranz.php').done(function(r) {		
-		if (new Date().getDay() === 0 || new Date().getDay() === 3 || new Date().getDay() === 5) {
-			trackData.push([new Date().toLocaleString(), (r.playermaxlvl[1] || 0) + ' - ' + (r.playermaxlvl[2] || 0) ])
-		}
 		let data = []
 		data.push(r.turniertxt.includes('Last') ? ' LAST TOURNAMENT\n' :  ' TOURNAMENT\n')
 		if (r.playeranz) {
+			if (new Date().getDay() === 0 || new Date().getDay() === 3 || new Date().getDay() === 5) {
+				trackData.push([new Date().toLocaleString(), (r.playermaxlvl[1] || 0) + ' - ' + (r.playermaxlvl[2] || 0) ])
+			}
 			let max = r.playeranz < 9 ? r.playeranz : 9
 			for (let i = 1; i <= max; i++) {
 				let rank = pl(r.turnierrank[i],2) + ' | '
