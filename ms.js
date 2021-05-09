@@ -647,7 +647,7 @@ function getClanChat() {
 		data.push(r.turniertxt.includes('Last') ? ' LAST TOURNAMENT\n' :  ' TOURNAMENT\n')
 		if (r.playeranz) {
 			let now = new Date()
-			if (now.getDay() === 0 ||now.getDay() === 3 || now.getDay() === 5) trackData.push([now.toLocaleString(), (r.playermaxlvl[1] || '') + ' - ' + (r.playermaxlvl[2] || '') ])
+			if (now.getDay() === 0 || now.getDay() === 3 || now.getDay() === 5) trackData.push([now.toLocaleTimeString(), (r.playermaxlvl[1] || '') + ' - ' + (r.playermaxlvl[2] || '') ])
 			let max = r.playeranz < 9 ? r.playeranz : 9
 			for (let i = 1; i <= max; i++) {
 				let rank = pl(r.turnierrank[i],2) + ' | '
