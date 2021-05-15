@@ -648,8 +648,8 @@ function getClanChat() {
 		if (r.playeranz) {
 			let now = new Date()
 			if (now.getDay() === 0 || now.getDay() === 3 || now.getDay() === 5) {	
-				if (!trackData.length || r.playermaxlvl[1] != trackData[trackData.length-1][1] || r.playermaxlvl[2] != trackData[trackData.length-1][2]) { 
-					trackData.push([now.toLocaleTimeString(), (r.playermaxlvl[1] || ''), (r.playermaxlvl[2] || '')])
+				if (!trackData.length || r.playermaxlvl[1] != trackData[trackData.length-1][1] || r.playermaxlvl[2] != trackData[trackData.length-1][2] || r.playermaxlvl[3] != trackData[trackData.length-1][3]) { 
+					trackData.push([now.toLocaleTimeString(), (r.playermaxlvl[1] || ''), (r.playermaxlvl[2] || ''), (r.playermaxlvl[3] || '')])
 				}
 			}
 			let max = r.playeranz < 9 ? r.playeranz : 9
