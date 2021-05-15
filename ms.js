@@ -1105,19 +1105,19 @@ function msGrowth() {
 				let doubleProd = (msTotal/(msRun*maxRuns+farm24)).toFixed(2) + ' days'
 				let ms24 = msRun * maxRuns	
 				let sumOld = ms24 + farm24
-				addInfo('MS Farm: ' + pl(convertValue(farmCollect),8) + ' / ' + pl(convertValue(farm24),8))
+				addInfo('MS Farm: ' + pl(convertValue(farmCollect),8) + '  /  ' + pl(convertValue(farm24),8))
 				farmCollect *= newSkill/100+1
 				farm24 *= newSkill/100+1
-				addInfo('MS Farm: ' + pl(convertValue(farmCollect),8) + ' / ' + pl(convertValue(farm24),8))			
-				addInfo('')	
-				addInfo('MS Run:  ' + pl(convertValue(msRun),8) + ' / ' + pl(convertValue(ms24),8))
+				addInfo('MS Farm: ' + pl(convertValue(farmCollect),8) + '  /  ' + pl(convertValue(farm24),8))			
+				addInfo(seperator)	
+				addInfo('MS Run:  ' + pl(convertValue(msRun),8) + '  /  ' + pl(convertValue(ms24),8))
 				msRun *= newSkill/100+1
 				ms24 *= newSkill/100+1
-				addInfo('MS Run:  ' + pl(convertValue(msRun),8) + ' / ' + pl(convertValue(ms24),8))		
+				addInfo('MS Run:  ' + pl(convertValue(msRun),8) + '  /  ' + pl(convertValue(ms24),8))		
 				let sumNew = ms24 + farm24
 				let newMS = sumNew - sumOld
 				addInfo('')	
-				addInfo('Total:   ' + pl(convertValue(sumOld),8) + ' / ' + pl(convertValue(sumNew),8))				
+				addInfo('Total:   ' + pl(convertValue(sumOld),8) + '  /  ' + pl(convertValue(sumNew),8))				
 				addInfo(seperator)	
 				addInfo('Prod 2:  ' + doubleProd)
 				addInfo('Growth:  ' + newSkill.toFixed(2) + ' % - ' + convertValue(newMS))
