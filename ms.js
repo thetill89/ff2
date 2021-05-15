@@ -867,7 +867,7 @@ function statsGrowth() {
 		runs = pl(now[1].r,4)
 		lvl = pl(now[1].l - next[1].l,5)
 		mst = pl(convertValue(now[1].t - next[1].t), 10)
-		prod =  now[1].p > next[1].p ? Math.round(now[1].p / next[1].p * 100 - 100) + ' % ' : '0 %'
+		prod =  now[1].p > next[1].p ? now[1].p > next[1].p * 100 ? '1000 %' : Math.round(now[1].p / next[1].p * 100 - 100) + ' %' : '0 %'	
 		prod = pl(prod, 10)
 		ms = now[1].m > next[1].m ? convertValue(now[1].m - next[1].m) : '0.00 B'
 		ms = pl(ms, 10)
@@ -1109,14 +1109,14 @@ function msGrowth() {
 				farmCollect *= newSkill/100+1
 				farm24 *= newSkill/100+1
 				addInfo('MS Farm: ' + pl(convertValue(farmCollect),8) + ' / ' + pl(convertValue(farm24),8))			
-				addInfo(seperator)	
+				addInfo('')	
 				addInfo('MS Run:  ' + pl(convertValue(msRun),8) + ' / ' + pl(convertValue(ms24),8))
 				msRun *= newSkill/100+1
 				ms24 *= newSkill/100+1
 				addInfo('MS Run:  ' + pl(convertValue(msRun),8) + ' / ' + pl(convertValue(ms24),8))		
 				let sumNew = ms24 + farm24
 				let newMS = sumNew - sumOld
-				addInfo(seperator)	
+				addInfo('')	
 				addInfo('Total:   ' + pl(convertValue(sumOld),8) + ' / ' + pl(convertValue(sumNew),8))				
 				addInfo(seperator)	
 				addInfo('Prod 2:  ' + doubleProd)
