@@ -2974,7 +2974,7 @@ function megaanz() {
 									'</div>' +
 									'<div class="megabtn1" onclick="megaupgrade(' + aktmegaid + ')">Buy x1</div>' +
 									'<div class="megabtn2" onclick="megaupgrade3(' + aktmegaid + ')">Buy x100</div>' +
-									'<div class="megabtn3" onclick="mega1000(' + aktmegaid + ')">Buy x1000</div>' +
+									'<div class="megabtn3" onclick="megaupgradeX(' + aktmegaid + ')">Buy x1000</div>' +
 								'</div>';
 			}
 			if (e.megaanz < 10) {
@@ -3003,10 +3003,13 @@ function megaanz() {
 	});
 }
 
-function mega1000(e) {
-	$j.get('game/megaupgrade3.php?' + e).done(function(r) { 
-	
-	 })	
+function megaupgradeX(e) {
+	for (let i = 1; i <= 10; i++) {
+		$j.get('game/megaupgrade3.php?' + e).done(function() {
+			if (i%2 === 0) megaanz()
+			console.log(i)
+		)}
+	}
 }
 
 function resetmd() {
