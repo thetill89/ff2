@@ -697,7 +697,7 @@ function showClanRanking() {
 }
 
 
-let autoReward
+let autoReward = false
 function checkReward(forced=false) {
 	if (autoReward && (!new Date().getHours() || forced)) {
 		$j.get('game/eventanz.php').done(function(r) { 
@@ -3007,9 +3007,9 @@ function megaanz() {
 function megaupgradeX(e) {
 	let cost = 0
 	for (let j = 1; j <= 10; j++) {
-		cost += getValue(megacost[e])* Math.pow(1.005, 10) * 100
+		cost += getValue(megacost[e]) * Math.pow(1.005, 10) * 100
 	}
-	if (cost > getDollar(true)) {
+	if (cost < getDollar(true)) {
 		for (let i = 1; i <= 10; i++) {
 			$j.get('game/megaupgrade3.php?' + e).done(function() {
 				if (i === 10) megaanz()
