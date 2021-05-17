@@ -2690,12 +2690,11 @@ function homeanz() {
 let lastBought = Array(8).fill(0)
 function buildingbuy(nbr, amount=aktbuystufe) {
 	  let canBuy = getGold() - getValue(bcost[(nbr*4)-(4-amount)])
-	  if (Date.now() - buyStepTimer > 10000 && autoPlay) startIdleMode()
+	  if (Date.now() - buyStepTimer > 15000 && autoPlay) startIdleMode()
 	  else if (canBuy > 0 && !lastBought[nbr-1]) {
 			lastBought[nbr-1] = true
 			buyStepTimer = Date.now()
 			document.getElementsByClassName('gold')[0].innerText = convertValue(canBuy)
-			//console.log(getSessionTime().toFixed(2) + ' | ' + nbr + ' | ' + building[nbr] + ' | ' + (amount === 4 ? 'Max' : 100))
 			$j.get('game/buildingbuy.php?b=' + nbr + '&s=' + amount, function(e) {
 				if (e.erfolg == 1) {
 					building = []
@@ -2990,7 +2989,7 @@ function megaanz() {
 				$j('.megalvl' + i).html('Lv. ' + megabonus[i] + ' (next: +' + megabonusnext[i] + ')');
 				let cost100 = cost1000 = 0
 				for (let j = 1; j <= 10; j++) {
-					cost1000 += getValue(megacost[i])* Math.pow(1.005, i)* 100
+					cost1000 += getValue(megacost[i])* Math.pow(1.005, 10) * 100
 					if (j === 1) cost100 = convertValue(cost1000)
 				}
 				cost1000 = convertValue(cost1000)
@@ -3003,14 +3002,22 @@ function megaanz() {
 	});
 }
 
+
+
 function megaupgradeX(e) {
-	for (let i = 1; i <= 10; i++) {
-		$j.get('game/megaupgrade3.php?' + e).done(function() {
-			if (i%2 === 0) megaanz()
-			console.log(i)
-		})
+	let cost = 0
+	for (let j = 1; j <= 10; j++) {
+		cost += getValue(megacost[e])* Math.pow(1.005, 10) * 100
+	}
+	if (cost > getDollar(true)) {
+		for (let i = 1; i <= 10; i++) {
+			$j.get('game/megaupgrade3.php?' + e).done(function() {
+				if (i === 10) megaanz()
+			})
+		}
 	}
 }
+
 
 function resetmd() {
 	$j.get('game/resetmd.php?rscode=' + rscode, function(e) {
