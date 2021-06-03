@@ -933,7 +933,6 @@ function statsFarm() {
 function getFarmData(all=false) {
 	let res = {}
 	let data = log.value.split('\n')
-	if (!data) return ["", "0", "0", "0", "0"]
 	for (let i = 0; i < data.length; i++) {
 		let entry = data[i].match(/(.*)\|(.*)\|(.*)\,(.*)\,(.*)\,(.*)/)
 		if (entry) { 
@@ -946,6 +945,7 @@ function getFarmData(all=false) {
 		}
 	}
 	res = Object.keys(res).map(function(k) { return [k, convertValue(res[k][0]),pl(res[k][1],4),pl(res[k][2],3),pl(res[k][3],3)] })
+	if (!res.length) return ["", "0", "0", "0", "0"]
 	if (!all) res = [res[0][0],res[0][1],res[0][2],res[0][3],res[0][4]]
 	return res
 }
